@@ -1,0 +1,114 @@
+---
+interface Tier {
+  tier: string;
+  label: string;
+  price: number;
+  unit?: string;
+}
+interface Props {
+  slug: string;
+  title: string;
+  priceTiers: Tier[];
+}
+const { slug, title, priceTiers } = Astro.props;
+---
+<form class="order-form" data-product={title} data-slug={slug}>
+  <h3>Замовити</h3>
+
+  {priceTiers.length > 1 && (
+    <label>
+      Варіант
+      <select name="tier" required>
+        {priceTiers.map((t) => (
+          <option value={t.tier}>{t.label} — {t.price} грн</option>
+        ))}
+      </select>
+    </label>
+  )}
+
+  <label>
+    Кількість
+    <input type="number" name="qty" min="1" value="1" required />
+  </label>
+  <label>
+    Ваше ім'я
+    <input type="text" name="name" placeholder="Ім'я" required />
+  </label>
+  <label>
+    Телефон
+    <input type="tel" name="phone" placeholder="+380" required />
+  </label>
+  <label>
+    Коментар
+    <textarea name="comment" placeholder="Необов'язково"></textarea>
+  </label>
+  <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <button type="submit">Замовити</button>
+  <p class="form-status" hidden></p>
+</form>
+
+<style>
+  .order-form { border: 1px solid #e5e0da; border-radius: 12px; padding: 20px; max-width: 360px; }
+  .order-form h3 { margin: 0 0 14px; }
+  .order-form label { display: block; font-size: 0.85rem; color: #6b6b6b; margin-bottom: 12px; }
+  .order-form input, .order-form select, .order-form textarea {
+    display: block; width: 100%; margin-top: 4px; padding: 9px 10px;
+    border: 1px solid #ddd6cc; border-radius: 6px; font: inherit; color: #2b2b2b;
+  }
+  .order-form textarea { resize: vertical; min-height: 60px; }
+  .honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .order-form button {
+    width: 100%; background: #e8772e; color: #fff; border: none; padding: 12px;
+    border-radius: 999px; font-weight: 700; font-size: 1rem; cursor: pointer;
+  }
+  .order-form button:disabled { opacity: 0.6; cursor: default; }
+  .form-status { margin: 12px 0 0; font-size: 0.9rem; }
+</style>
+
+<script>
+  /** @type {NodeListOf<HTMLFormElement>} */
+  const forms = document.querySelectorAll('.order-form');
+  const qtyFromUrl = new URLSearchParams(window.location.search).get('qty');
+  if (qtyFromUrl && /^\d+$/.test(qtyFromUrl)) {
+    forms.forEach((form) => {
+      const qtyInput = /** @type {HTMLInputElement | null} */ (form.querySelector('input[name="qty"]'));
+      if (qtyInput) qtyInput.value = qtyFromUrl;
+    });
+  }
+
+  forms.forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = /** @type {HTMLElement | null} */ (form.querySelector('.form-status'));
+      const button = /** @type {HTMLButtonElement | null} */ (form.querySelector('button'));
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.product = form.dataset.product ?? '';
+      data.slug = form.dataset.slug ?? '';
+
+      if (button) button.disabled = true;
+      try {
+        const res = await fetch('/api/order.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (status) {
+          status.textContent = json.ok
+            ? "Дякуємо! Ми зв'яжемося з вами найближчим часом."
+            : 'Не вдалося відправити заявку. Зателефонуйте нам напряму.';
+          status.hidden = false;
+        }
+        if (json.ok) form.reset();
+      } catch {
+        if (status) {
+          status.textContent = "Помилка з'єднання. Зателефонуйте нам напряму.";
+          status.hidden = false;
+        }
+      } finally {
+        if (button) button.disabled = false;
+      }
+    });
+  });
+</script>

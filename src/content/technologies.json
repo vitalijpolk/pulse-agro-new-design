@@ -1,0 +1,30 @@
+[
+  {
+    "id": "expresssan",
+    "name": "ExpressSan (Гранстар)"
+  },
+  {
+    "id": "classic",
+    "name": "Класична"
+  },
+  {
+    "id": "clearfild-ievrolaitninh",
+    "name": "Clearfild (Євролайтнінг)"
+  },
+  {
+    "id": "clearfild-plus-ievrolaitninh-plius",
+    "name": "Clearfild Plus (Євролайтнінг плюс)"
+  },
+  {
+    "id": "universalna",
+    "name": "Універсальна"
+  },
+  {
+    "id": "ekstensyvna",
+    "name": "Екстенсивна"
+  },
+  {
+    "id": "intensyvna",
+    "name": "Інтенсивна"
+  }
+]

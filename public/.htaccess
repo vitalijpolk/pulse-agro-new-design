@@ -1,0 +1,6 @@
+# WooCommerce utility pages with no SEO value (noindexed by default on the
+# old site) — redirected instead of rebuilt; see migration plan §5.
+Redirect 301 /cart/ /product-category/seed/
+Redirect 301 /checkout/ /product-category/seed/
+Redirect 301 /my-account/ /
+Redirect 301 /shop/ /product-category/seed/

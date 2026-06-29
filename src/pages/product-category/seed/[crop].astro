@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CategoryListing from '../../../components/CategoryListing.astro';
+
+export function getStaticPaths() {
+  const crops = {
+    sunflower: 'Соняшник',
+    corn: 'Кукурудза',
+    wheat: 'Пшениця',
+    rapeseed: 'Рапс',
+    barley: 'Ячмінь',
+    pea: 'Горох',
+    soy: 'Соя',
+  };
+  return Object.entries(crops).map(([slug, label]) => ({ params: { crop: slug }, props: { label } }));
+}
+
+const { crop } = Astro.params;
+const { label } = Astro.props;
+---
+<BaseLayout title={label} description={`Насіння та гібриди: ${label}. Каталог Pulse Agro з доставкою по Україні.`}>
+  <CategoryListing categoryGroup="seed" category={crop} title={label} />
+</BaseLayout>

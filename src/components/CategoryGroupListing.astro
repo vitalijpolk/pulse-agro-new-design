@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  categoryGroup: 'seed' | 'zzr';
+  title: string;
+}
+const { categoryGroup, title } = Astro.props;
+
+const allProducts = await getCollection('products');
+const products = allProducts.filter((p) => p.data.categoryGroup === categoryGroup);
+---
+<div class="category-listing">
+  <h1>{title}</h1>
+  <p class="count">{products.length} товар(ів)</p>
+  {products.length === 0 ? (
+    <p class="empty">Наразі товарів немає. Зв'яжіться з нами — підкажемо альтернативу.</p>
+  ) : (
+    <div class="grid">
+      {products.map((p) => (
+        <ProductCard
+          slug={p.data.slug}
+          title={p.data.title}
+          image={p.data.images[0]}
+          minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
+          tagline={p.data.tagline}
+        />
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .category-listing { max-width: 1180px; margin: 0 auto; padding: 30px 20px 60px; }
+  .count { color: #6b6b6b; margin-bottom: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+  .empty { color: #6b6b6b; }
+</style>

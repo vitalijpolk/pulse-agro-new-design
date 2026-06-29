@@ -1,0 +1,115 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  image?: string;
+  minPrice: number;
+  tagline?: string;
+}
+const { slug, title, image, minPrice, tagline } = Astro.props;
+const priceLabel = minPrice > 0 ? `від ${minPrice.toLocaleString('uk-UA')} грн` : 'ціна за запитом';
+---
+<div class="product-card">
+  <a class="card-link" href={`/product/${slug}/`}>
+    <div class="photo-crop">
+      {image && <img src={image} alt={title} loading="lazy" />}
+    </div>
+    <div class="info">
+      <h3>{title}</h3>
+      {tagline && <p class="subtitle">{tagline}</p>}
+    </div>
+  </a>
+
+  <div class="footer">
+    <span class="price">{priceLabel}</span>
+    <div class="order-row">
+      <div class="qty-stepper">
+        <button type="button" class="qty-btn minus" aria-label="Зменшити кількість">−</button>
+        <span class="qty-value">1</span>
+        <button type="button" class="qty-btn plus" aria-label="Збільшити кількість">+</button>
+      </div>
+      <a class="cta" href={`/product/${slug}/?qty=1`}>
+        Замовити <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-card {
+    background: #fff; border: 1px solid #ece7de; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(28,26,20,0.05);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .product-card:hover { transform: translateY(-3px); box-shadow: 0 14px 26px rgba(28,26,20,0.12); }
+
+  .card-link { display: block; }
+
+  .photo-crop {
+    aspect-ratio: 1 / 1; background: #f6f4f0;
+    display: flex; align-items: center; justify-content: center; padding: 22px;
+  }
+  .photo-crop img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; transition: transform 0.3s ease; }
+  .product-card:hover .photo-crop img { transform: scale(1.03); }
+
+  .info { padding: 14px 16px 0; }
+  h3 { font-size: 0.98rem; font-weight: 700; line-height: 1.3; margin: 0; color: #1a1a1a; min-height: 2.6em; }
+  .subtitle {
+    margin: 5px 0 0; font-size: 0.82rem; color: #8c8678;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .footer { padding: 14px 16px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .price { font-weight: 800; font-size: 1.15rem; color: #1a1a1a; white-space: nowrap; }
+
+  .order-row { display: flex; align-items: center; gap: 8px; }
+
+  .qty-stepper {
+    display: flex; align-items: center; height: 36px; border: 1px solid #e3ded3; border-radius: 9px; overflow: hidden;
+  }
+  .qty-btn {
+    width: 28px; height: 100%; background: none; border: none; font-size: 1rem; line-height: 1;
+    color: #1a1a1a; cursor: pointer; transition: background 0.12s;
+  }
+  .qty-btn:hover { background: #f6f4f0; }
+  .qty-value {
+    min-width: 22px; text-align: center; font-weight: 600; font-size: 0.88rem; color: #1a1a1a;
+    border-left: 1px solid #e3ded3; border-right: 1px solid #e3ded3; padding: 0 8px; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+    background: #e8772e; color: #fff; font-weight: 700; font-size: 0.86rem;
+    border-radius: 9px; padding: 9px 15px;
+    transition: background 0.15s;
+  }
+  .cta:hover { background: #d9691f; }
+  .arrow { transition: transform 0.15s ease; }
+  .cta:hover .arrow { transform: translateX(2px); }
+</style>
+
+<script>
+  document.querySelectorAll('.product-card').forEach((card) => {
+    const valueEl = card.querySelector('.qty-value');
+    const cta = /** @type {HTMLAnchorElement | null} */ (card.querySelector('.cta'));
+    const baseHref = cta?.getAttribute('href')?.split('?')[0];
+    let qty = 1;
+
+    function update() {
+      if (valueEl) valueEl.textContent = String(qty);
+      if (cta && baseHref) cta.setAttribute('href', `${baseHref}?qty=${qty}`);
+    }
+
+    card.querySelector('.minus')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      qty = Math.max(1, qty - 1);
+      update();
+    });
+    card.querySelector('.plus')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      qty = Math.min(999, qty + 1);
+      update();
+    });
+  });
+</script>

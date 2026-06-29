@@ -1,0 +1,233 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+
+const seedCrops = [
+  { slug: 'sunflower', label: 'Соняшник' },
+  { slug: 'corn', label: 'Кукурудза' },
+  { slug: 'wheat', label: 'Пшениця' },
+  { slug: 'rapeseed', label: 'Рапс' },
+  { slug: 'barley', label: 'Ячмінь' },
+  { slug: 'pea', label: 'Горох' },
+  { slug: 'soy', label: 'Соя' },
+];
+const zzrTypes = [
+  { slug: 'herbicides', label: 'Гербіциди' },
+  { slug: 'fungicides', label: 'Фунгіциди' },
+  { slug: 'insecticides', label: 'Інсектициди' },
+  { slug: 'pesticides', label: 'Протруйники' },
+  { slug: 'desiccants', label: 'Дисиканти' },
+];
+
+const contactsPage = (await getCollection('pages')).find((p) => p.data.slug === 'contacts');
+const phone = contactsPage?.data.phone ?? '+38 (097) 312-53-18';
+const topBarPhones = [
+  { label: '+38 (097) 312-53-18', href: 'tel:+380973125318' },
+  { label: '+38 (099) 15-333-25', href: 'tel:+380991533325' },
+];
+---
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Pulse Agro</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="top-bar">
+        <div class="wrap">
+          <span>Інтернет-магазин насіння агрокультур</span>
+          <div class="top-phones">
+            {topBarPhones.map((p) => (
+              <a href={p.href}>{p.label}</a>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="main-nav">
+        <div class="wrap main-nav-inner">
+          <a class="logo" href="/"><img src="/images/site/logo-original.png" alt="Pulse Agro" /></a>
+
+          <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false" aria-controls="main-nav">
+            <span></span><span></span><span></span>
+          </button>
+
+          <nav id="main-nav">
+            <a href="/">Головна</a>
+            <div class="dropdown">
+              <button type="button" class="dropdown-toggle">Насіння, гібриди</button>
+              <div class="dropdown-menu">
+                {seedCrops.map((c) => (
+                  <a href={`/product-category/seed/${c.slug}/`}>{c.label}</a>
+                ))}
+              </div>
+            </div>
+            <div class="dropdown">
+            <button type="button" class="dropdown-toggle">ЗЗР</button>
+            <div class="dropdown-menu">
+              {zzrTypes.map((t) => (
+                <a href={`/product-category/zzr/${t.slug}/`}>{t.label}</a>
+              ))}
+            </div>
+          </div>
+          <a href="/about-company/">Про компанію</a>
+          <a href="/pay-delivery-terms/">Доставка і оплата</a>
+          <a href="/category/blog/">Новини</a>
+          <a href="/contacts/">Контакти</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <a class="logo" href="/"><img src="/images/site/logo-original.png" alt="Pulse Agro" /></a>
+          <p>Компанія пропонує широкий вибір гібридів, стійких до посухи та хвороб.</p>
+        </div>
+        <div>
+          <h4>Каталог насіння</h4>
+          <ul>
+            {seedCrops.map((c) => (
+              <li><a href={`/product-category/seed/${c.slug}/`}>{c.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4>Засоби захисту</h4>
+          <ul>
+            {zzrTypes.map((t) => (
+              <li><a href={`/product-category/zzr/${t.slug}/`}>{t.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4>Контакти</h4>
+          <p>{contactsPage?.data.address}</p>
+          <p><a href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</a></p>
+          <p><a href={`mailto:${contactsPage?.data.email}`}>{contactsPage?.data.email}</a></p>
+        </div>
+      </div>
+      <p class="copy">© {new Date().getFullYear()} Pulse Agro</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --orange: #e8772e;
+    --dark: #1c1c1c;
+    --text: #2b2b2b;
+    --muted: #6b6b6b;
+    --border: #e5e0da;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--text);
+    background: #fff;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+  .top-bar { background: var(--dark); color: #cfcfcf; font-size: 0.85rem; }
+  .top-bar .wrap { display: flex; justify-content: space-between; padding: 8px 20px; flex-wrap: wrap; gap: 8px; }
+  .top-bar a { color: var(--orange); font-weight: 600; }
+  .top-phones { display: flex; gap: 18px; flex-wrap: wrap; }
+
+  .main-nav { background: var(--dark); color: #fff; border-top: 1px solid rgba(255,255,255,0.08); }
+  .main-nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; position: relative; }
+  .logo { display: inline-flex; }
+  .logo img { height: 68px; width: auto; display: block; margin: -13px 0; }
+  .footer-grid .logo img { height: 44px; margin: 0; }
+  nav { display: flex; gap: 22px; align-items: center; font-size: 0.95rem; font-weight: 600; white-space: nowrap; }
+  nav > a:hover, .dropdown-toggle:hover { color: var(--orange); }
+  .dropdown { position: relative; cursor: default; }
+  .dropdown-toggle {
+    background: none; border: none; padding: 0; margin: 0; font: inherit; font-weight: 600;
+    color: inherit; cursor: pointer;
+  }
+  .dropdown-menu {
+    display: none; position: absolute; top: 100%; left: 0; background: #fff; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px; min-width: 180px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); z-index: 10;
+  }
+  .dropdown:hover .dropdown-menu, .dropdown.is-open .dropdown-menu { display: block; }
+  .dropdown-menu a { display: block; padding: 6px 10px; border-radius: 6px; font-weight: 500; white-space: normal; color: var(--text); }
+  .dropdown-menu a:hover { background: #f5f1ea; }
+
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 38px; height: 32px; background: none; border: none; cursor: pointer; padding: 0;
+  }
+  .nav-toggle span { display: block; height: 2px; background: #fff; border-radius: 2px; }
+
+  .site-footer { background: var(--dark); color: #c9c9c9; margin-top: 60px; padding: 50px 0 20px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 30px; }
+  .footer-grid h4 { color: #fff; margin: 0 0 12px; }
+  .footer-grid ul { list-style: none; padding: 0; margin: 0; }
+  .footer-grid li { margin-bottom: 6px; }
+  .footer-grid a:hover { color: var(--orange); }
+  .copy { text-align: center; color: #777; margin: 30px 0 0; font-size: 0.85rem; }
+
+  @media (max-width: 1024px) {
+    .nav-toggle { display: flex; }
+    nav {
+      display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 20;
+      flex-direction: column; align-items: stretch; gap: 0; background: #fff; color: var(--text);
+      border-top: 1px solid var(--border); box-shadow: 0 14px 24px rgba(0,0,0,0.08);
+      white-space: normal;
+    }
+    nav.is-open { display: flex; }
+    nav > a, .dropdown-toggle { padding: 14px 20px; border-bottom: 1px solid var(--border); text-align: left; width: 100%; color: var(--text); }
+    .dropdown { width: 100%; }
+    .dropdown-menu {
+      position: static; display: none; border: none; box-shadow: none; border-radius: 0;
+      padding: 0; background: #faf8f4;
+    }
+    .dropdown.is-open .dropdown-menu { display: block; }
+    .dropdown-menu a { padding: 12px 32px; }
+  }
+
+  @media (max-width: 480px) {
+    .top-bar .wrap { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('main-nav');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
+
+  document.querySelectorAll('.dropdown-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const dropdown = btn.closest('.dropdown');
+      const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+      if (!isMobile) return;
+      dropdown?.classList.toggle('is-open');
+    });
+  });
+</script>

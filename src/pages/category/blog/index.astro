@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+---
+<BaseLayout title="Новини" description="Статті про насіння, гібриди та технології вирощування від Pulse Agro.">
+  <div class="wrap blog-index">
+    <h1>Новини</h1>
+    <div class="grid">
+      {posts.map((post) => (
+        <a class="post-card" href={`/${post.data.slug}/`}>
+          {post.data.coverImage && <img src={post.data.coverImage} alt={post.data.title} loading="lazy" />}
+          <h2>{post.data.title}</h2>
+          <p>{post.data.excerpt}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .blog-index { padding: 30px 20px 60px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 20px; }
+  .post-card { display: block; border: 1px solid #e5e0da; border-radius: 10px; overflow: hidden; }
+  .post-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .post-card h2 { font-size: 1.05rem; margin: 14px 14px 6px; }
+  .post-card p { font-size: 0.9rem; color: #6b6b6b; margin: 0 14px 14px; }
+</style>

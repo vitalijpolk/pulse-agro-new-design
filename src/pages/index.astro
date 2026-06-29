@@ -1,0 +1,131 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import HeroSlider from '../components/HeroSlider.astro';
+
+const allProducts = await getCollection('products');
+const featured = allProducts.slice(0, 8);
+
+const seedCrops = [
+  { slug: 'sunflower', label: 'Соняшник' },
+  { slug: 'corn', label: 'Кукурудза' },
+  { slug: 'wheat', label: 'Пшениця' },
+  { slug: 'rapeseed', label: 'Рапс' },
+  { slug: 'barley', label: 'Ячмінь' },
+  { slug: 'pea', label: 'Горох' },
+  { slug: 'soy', label: 'Соя' },
+];
+---
+<BaseLayout title="Насіння для Вашого врожаю" description="Широкий асортимент насіння агрокультур за доступними цінами. Доставка по Україні.">
+  <HeroSlider />
+
+  <section class="wrap featured-section">
+    <h2>Новинки магазину</h2>
+    <div class="grid">
+      {featured.map((p) => (
+        <ProductCard
+          slug={p.data.slug}
+          title={p.data.title}
+          image={p.data.images[0]}
+          minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
+          tagline={p.data.tagline}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap categories-section">
+    <h2>Категорії товарів</h2>
+    <div class="cat-grid">
+      {seedCrops.map((c) => (
+        <a class="cat-card" href={`/product-category/seed/${c.slug}/`}>{c.label}</a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap about-section">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>Про компанію</h2>
+        <p>
+          ТОВ «ПУЛЬС АГРО» реалізує насіннєвий матеріал найвищої якості та потенціалу від найкращих
+          вітчизняних виробників. Нашою метою є розповсюдження нових сортів і гібридів та забезпечення
+          сільськогосподарських виробників високоякісним насінням з високими показниками урожайності
+          та за доступними цінами.
+        </p>
+        <p>Окрім насіннєвого матеріалу ми надаємо:</p>
+        <ul>
+          <li>Підбір гібридів під ґрунтові й кліматичні особливості вашого регіону та розрахунок норми висіву.</li>
+          <li>Консультації з технологій вирощування сільськогосподарських культур.</li>
+          <li>Допомогу з підбором засобів захисту рослин і добрив на всіх етапах вегетації.</li>
+        </ul>
+        <a href="/about-company/">Дізнатися більше →</a>
+      </div>
+      <div class="about-media">
+        <img class="media-tile van" src="/images/about/team-van.jpg" alt="Автомобіль Pulse Agro в полі" loading="lazy" />
+        <video
+          class="media-tile"
+          src="/video/about-clip.mp4"
+          poster="/images/about/clip-poster.jpg"
+          autoplay
+          loop
+          muted
+          playsinline
+        ></video>
+        <video
+          class="media-tile"
+          src="/video/about-clip2.mp4"
+          poster="/images/about/clip2-poster.jpg"
+          autoplay
+          loop
+          muted
+          playsinline
+        ></video>
+        <img class="media-tile" src="/images/about/bags-stack.jpg" alt="Насіння Pulse Agro на складі" loading="lazy" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-section, .featured-section, .categories-section { padding: 50px 20px; }
+  h2 { font-size: 1.6rem; border-bottom: 2px solid #e8772e; display: inline-block; padding-bottom: 6px; margin-bottom: 24px; }
+  .about-section a { display: inline-block; margin-top: 10px; font-weight: 700; color: #e8772e; }
+
+  .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; }
+  .about-text p { color: #4a4a4a; line-height: 1.6; }
+  .about-text ul { margin: 0 0 6px; padding-left: 20px; color: #4a4a4a; line-height: 1.6; }
+  .about-text li { margin-bottom: 6px; }
+
+  .about-media {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    width: 100%; max-width: 460px; margin: 0 auto;
+  }
+  .media-tile {
+    width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center;
+    border-radius: 10px; display: block;
+    box-shadow: 0 8px 20px rgba(28,26,20,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .media-tile.van { object-position: center 75%; }
+  .media-tile:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(28,26,20,0.2); }
+
+  @media (max-width: 800px) {
+    .about-grid { grid-template-columns: 1fr; gap: 30px; }
+    .about-media { max-width: 380px; }
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .cat-card {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    background: #f7f4ef; border-radius: 10px; padding: 30px 10px; font-weight: 700;
+  }
+  .cat-card:hover { background: #efe7da; }
+
+  @media (max-width: 700px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

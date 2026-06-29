@@ -1,0 +1,156 @@
+---
+// Filters/sorts purely client-side over the already-rendered cards via
+// data-attributes — the catalog is small (max ~15 products per category),
+// so there's no need for a separate JSON index or network request.
+import { getCollection, getEntry } from 'astro:content';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  categoryGroup: 'seed' | 'zzr';
+  category: string;
+  title: string;
+}
+const { categoryGroup, category, title } = Astro.props;
+
+const allProducts = await getCollection('products');
+const products = allProducts.filter(
+  (p) => p.data.categoryGroup === categoryGroup && p.data.category === category,
+);
+
+const manufacturerIds = [...new Set(products.map((p) => p.data.manufacturer).filter((m) => m !== 'unknown'))];
+const technologyIds = [...new Set(products.map((p) => p.data.technology).filter(Boolean))] as string[];
+
+const manufacturers = await Promise.all(manufacturerIds.map((id) => getEntry('manufacturers', id)));
+const technologies = await Promise.all(technologyIds.map((id) => getEntry('technologies', id)));
+
+const cards = products.map((p) => ({
+  slug: p.data.slug,
+  title: p.data.title,
+  image: p.data.images[0],
+  manufacturer: p.data.manufacturer,
+  technology: p.data.technology ?? '',
+  minPrice: Math.min(...p.data.priceTiers.map((t) => t.price)),
+  tagline: p.data.tagline,
+}));
+---
+<div class="category-listing">
+  <h1>{title}</h1>
+
+  <div class="layout">
+    {(manufacturers.length > 1 || technologies.length > 1) && (
+      <aside class="filters">
+        <h2>Фільтр товарів</h2>
+        {technologies.length > 1 && (
+          <fieldset>
+            <legend>Технологія</legend>
+            {technologies.map((t) => t && (
+              <label><input type="checkbox" class="filter-technology" value={t.id} /> {t.data.name}</label>
+            ))}
+          </fieldset>
+        )}
+        {manufacturers.length > 1 && (
+          <fieldset>
+            <legend>Виробник</legend>
+            {manufacturers.map((m) => m && (
+              <label><input type="checkbox" class="filter-manufacturer" value={m.id} /> {m.data.name}</label>
+            ))}
+          </fieldset>
+        )}
+      </aside>
+    )}
+
+    <div class="results">
+      <div class="toolbar">
+        <span class="count">{cards.length} товар(ів)</span>
+        <select class="sort">
+          <option value="default">Стандартне сортування</option>
+          <option value="price-asc">Ціна: спочатку дешевші</option>
+          <option value="price-desc">Ціна: спочатку дорожчі</option>
+        </select>
+      </div>
+
+      {cards.length === 0 ? (
+        <p class="empty">Наразі товарів у цій категорії немає. Зв'яжіться з нами — підкажемо альтернативу.</p>
+      ) : (
+        <div class="grid" id="product-grid">
+          {cards.map((c) => (
+            <div
+              class="grid-item"
+              data-manufacturer={c.manufacturer}
+              data-technology={c.technology}
+              data-price={c.minPrice}
+            >
+              <ProductCard slug={c.slug} title={c.title} image={c.image} minPrice={c.minPrice} tagline={c.tagline} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .category-listing { max-width: 1180px; margin: 0 auto; padding: 30px 20px 60px; }
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 30px; margin-top: 20px; }
+  .filters { border: 1px solid #e5e0da; border-radius: 10px; padding: 16px; align-self: start; }
+  .filters h2 { font-size: 1rem; margin: 0 0 10px; }
+  .filters fieldset { border: none; padding: 0; margin: 0 0 16px; }
+  .filters legend { font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; padding: 0; }
+  .filters label { display: block; font-size: 0.88rem; margin-bottom: 6px; cursor: pointer; }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; color: #6b6b6b; font-size: 0.9rem; }
+  .sort { padding: 6px 10px; border-radius: 6px; border: 1px solid #ddd6cc; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+  .grid-item.is-hidden { display: none; }
+  .empty { color: #6b6b6b; }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const container = document.querySelector('.category-listing');
+  if (container) {
+    const items = /** @type {HTMLElement[]} */ (Array.from(container.querySelectorAll('.grid-item')));
+    const grid = container.querySelector('#product-grid');
+    const techBoxes = /** @type {HTMLInputElement[]} */ (
+      Array.from(container.querySelectorAll('.filter-technology'))
+    );
+    const manBoxes = /** @type {HTMLInputElement[]} */ (
+      Array.from(container.querySelectorAll('.filter-manufacturer'))
+    );
+    const sortSelect = /** @type {HTMLSelectElement | null} */ (container.querySelector('.sort'));
+    const countEl = container.querySelector('.count');
+
+    function apply() {
+      const checkedTech = techBoxes.filter((b) => b.checked).map((b) => b.value);
+      const checkedMan = manBoxes.filter((b) => b.checked).map((b) => b.value);
+
+      let visibleCount = 0;
+      for (const item of items) {
+        const tech = item.dataset.technology ?? '';
+        const man = item.dataset.manufacturer ?? '';
+        const matchesTech = checkedTech.length === 0 || checkedTech.includes(tech);
+        const matchesMan = checkedMan.length === 0 || checkedMan.includes(man);
+        const visible = matchesTech && matchesMan;
+        item.classList.toggle('is-hidden', !visible);
+        if (visible) visibleCount++;
+      }
+      if (countEl) countEl.textContent = `${visibleCount} товар(ів)`;
+
+      if (grid && sortSelect) {
+        const sorted = [...items].sort((a, b) => {
+          const priceA = Number(a.dataset.price ?? 0);
+          const priceB = Number(b.dataset.price ?? 0);
+          if (sortSelect.value === 'price-asc') return priceA - priceB;
+          if (sortSelect.value === 'price-desc') return priceB - priceA;
+          return 0;
+        });
+        sorted.forEach((el) => grid.appendChild(el));
+      }
+    }
+
+    [...techBoxes, ...manBoxes].forEach((b) => b.addEventListener('change', apply));
+    sortSelect?.addEventListener('change', apply);
+  }
+</script>

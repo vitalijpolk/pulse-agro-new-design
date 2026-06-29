@@ -1,0 +1,148 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import OrderForm from '../../components/OrderForm.astro';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((p) => ({ params: { slug: p.data.slug }, props: { product: p.data } }));
+}
+
+const { product } = Astro.props;
+const allProducts = await getCollection('products');
+
+const manufacturerEntry =
+  product.manufacturer === 'unknown' ? undefined : await getEntry('manufacturers', product.manufacturer);
+const technologyEntry = product.technology ? await getEntry('technologies', product.technology) : undefined;
+
+const related = product.relatedProducts
+  .map((slug) => allProducts.find((p) => p.data.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
+---
+<BaseLayout title={product.title} description={product.description.slice(0, 160)}>
+  <div class="wrap product-page">
+    <nav class="breadcrumb">
+      <a href="/">Головна</a> /
+      <a href={`/product-category/${product.categoryGroup}/${product.category}/`}>{product.category}</a> /
+      {product.title}
+    </nav>
+
+    <div class="product-top">
+      <div class="gallery">
+        {product.images.map((img) => (
+          <div class="gallery-frame">
+            <img src={img} alt={product.title} />
+          </div>
+        ))}
+      </div>
+
+      <div class="summary">
+        <h1>{product.title}</h1>
+
+        <p class="meta-line">
+          {product.sku && <span>Артикул: <strong>{product.sku}</strong></span>}
+          {manufacturerEntry && <span>Виробник: <strong>{manufacturerEntry.data.name}</strong></span>}
+          {technologyEntry && <span>Технологія: <strong>{technologyEntry.data.name}</strong></span>}
+        </p>
+
+        <p class="price">
+          {product.priceTiers.length > 1
+            ? `від ${minPrice} грн`
+            : minPrice > 0 ? `${minPrice} грн` : 'Ціна за запитом'}
+        </p>
+
+        {product.priceTiers.length > 1 && (
+          <ul class="tiers">
+            {product.priceTiers.map((t) => (
+              <li>{t.label}: <strong>{t.price} грн</strong></li>
+            ))}
+          </ul>
+        )}
+
+        <p class="description">{product.description}</p>
+      </div>
+
+      <div class="order-column">
+        <OrderForm slug={product.slug} title={product.title} priceTiers={product.priceTiers} />
+      </div>
+    </div>
+
+    {product.specs.length > 0 && (
+      <section class="specs">
+        {product.specs.map((section) => (
+          <div class="spec-group">
+            <h2>{section.title}</h2>
+            <table>
+              <tbody>
+                {section.items.map((item) => (
+                  <tr><th>{item.label}</th><td>{item.value}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </section>
+    )}
+
+    {related.length > 0 && (
+      <section class="related">
+        <h2>Супутні товари</h2>
+        <div class="grid">
+          {related.map((p) => (
+            <ProductCard
+              slug={p.data.slug}
+              title={p.data.title}
+              image={p.data.images[0]}
+              minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
+              tagline={p.data.tagline}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .product-page { padding: 30px 20px 60px; }
+  .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 20px; text-transform: capitalize; }
+  .product-top { display: grid; grid-template-columns: minmax(260px, 380px) 1fr minmax(280px, 340px); gap: 32px; align-items: start; }
+  .gallery-frame {
+    aspect-ratio: 1 / 1; background: #f6f4f0; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; padding: 28px; margin-bottom: 12px;
+  }
+  .gallery-frame img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+  h1 { margin-top: 0; }
+  .meta-line { display: flex; flex-wrap: wrap; gap: 6px 18px; color: #6b6b6b; font-size: 0.88rem; margin: 10px 0 16px; }
+  .meta-line strong { color: #1a1a1a; }
+  .price { font-size: 1.6rem; font-weight: 800; color: #e8772e; margin: 10px 0; }
+  .tiers { list-style: none; padding: 0; margin: 0 0 18px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .tiers li { background: #f7f4ef; padding: 8px 14px; border-radius: 8px; font-size: 0.9rem; }
+  .description { color: #444; line-height: 1.6; margin-bottom: 24px; }
+  .order-column { position: sticky; top: 20px; }
+
+  .specs { margin-top: 50px; columns: 3 260px; column-gap: 40px; }
+  .spec-group { break-inside: avoid; margin-bottom: 24px; }
+  .spec-group h2 { font-size: 1.05rem; border-bottom: 2px solid #e8772e; display: inline-block; padding-bottom: 4px; margin: 0 0 10px; }
+  .spec-group table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  .spec-group tr { border-bottom: 1px solid #ece7de; }
+  .spec-group tr:last-child { border-bottom: none; }
+  .spec-group th, .spec-group td { padding: 7px 4px; text-align: left; font-weight: 400; }
+  .spec-group th { color: #6b6b6b; width: 55%; }
+  .spec-group td { color: #1a1a1a; font-weight: 600; }
+
+  .related { margin-top: 60px; }
+  .related .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; margin-top: 16px; }
+
+  @media (max-width: 1000px) {
+    .product-top { grid-template-columns: 1fr 1fr; }
+    .order-column { grid-column: 1 / -1; position: static; }
+  }
+
+  @media (max-width: 700px) {
+    .product-top { grid-template-columns: 1fr; }
+  }
+</style>

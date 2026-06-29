@@ -1,0 +1,125 @@
+---
+const slides = [
+  {
+    image: '/images/site/hero-wheat-field.jpg',
+    title: 'Насіння для Вашого врожаю',
+    text: 'Широкий асортимент насіння агрокультур за доступними цінами. Почніть урожай з кращого насіння! Доставка по Україні.',
+  },
+  {
+    image: '/images/site/hero-field-sun.jpg',
+    title: 'Підвищуйте врожайність!',
+    text: 'Краще насіння для сільського господарства! Ми пропонуємо тільки якісне насіння від перевірених виробників.',
+  },
+  {
+    image: '/images/site/hero-corn-field.jpg',
+    title: 'Насіння агрокультур',
+    text: '«Пульс Агро» — ваш партнер в агробізнесі! Довіряйте урожай професіоналам! Великий вибір насіння різних агрокультур.',
+  },
+  {
+    image: '/images/site/hero-tractor.jpg',
+    title: 'Насіння від «Пульс Агро»',
+    text: 'Широкий асортимент насіння зернових та олійних культур для вашого успіху. Швидка доставка та консультації фахівців!',
+  },
+];
+---
+<section class="hero-slider">
+  <div class="slides">
+    {slides.map((s, i) => (
+      <div class:list={['slide', { active: i === 0 }]} style={`background-image: url(${s.image})`}>
+        <div class="overlay"></div>
+        <div class="wrap content">
+          <h1>{s.title}</h1>
+          <p>{s.text}</p>
+          <a class="cta" href="/product-category/seed/">Каталог продукції</a>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <button class="arrow prev" type="button" aria-label="Попередній слайд">‹</button>
+  <button class="arrow next" type="button" aria-label="Наступний слайд">›</button>
+
+  <div class="dots">
+    {slides.map((_, i) => (
+      <button type="button" class:list={['dot', { active: i === 0 }]} data-index={i} aria-label={`Слайд ${i + 1}`}></button>
+    ))}
+  </div>
+</section>
+
+<style>
+  .hero-slider { position: relative; height: 460px; overflow: hidden; color: #fff; }
+  .slides { position: relative; height: 100%; }
+  .slide {
+    position: absolute; inset: 0; background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 0.6s ease; display: flex; align-items: center;
+  }
+  .slide.active { opacity: 1; }
+  .overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,18,10,0.72), rgba(20,18,10,0.3)); }
+  .content { position: relative; z-index: 1; text-align: left; max-width: 560px; }
+  .content h1 { font-size: 2.2rem; margin: 0 0 16px; }
+  .content p { opacity: 0.92; margin: 0 0 26px; }
+  .cta {
+    display: inline-block; background: #e8772e; color: #fff; padding: 14px 30px;
+    border-radius: 999px; font-weight: 700;
+  }
+
+  .arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+    background: rgba(0,0,0,0.35); color: #fff; border: none; width: 42px; height: 42px;
+    border-radius: 50%; font-size: 1.4rem; cursor: pointer; line-height: 1;
+  }
+  .arrow:hover { background: rgba(0,0,0,0.55); }
+  .prev { left: 20px; }
+  .next { right: 20px; }
+
+  .dots { position: absolute; bottom: 18px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; z-index: 2; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; border: none; background: rgba(255,255,255,0.45); cursor: pointer; padding: 0; }
+  .dot.active { background: #e8772e; }
+
+  @media (max-width: 800px) {
+    .hero-slider { height: 520px; }
+    .content { text-align: center; max-width: none; padding: 0 16px; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector('.hero-slider');
+  if (root) {
+    const slides = Array.from(root.querySelectorAll('.slide'));
+    const dots = Array.from(root.querySelectorAll('.dot'));
+    let current = 0;
+    let timer;
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    function next() {
+      show(current + 1);
+    }
+
+    function restart() {
+      clearInterval(timer);
+      timer = setInterval(next, 6000);
+    }
+
+    root.querySelector('.prev')?.addEventListener('click', () => {
+      show(current - 1);
+      restart();
+    });
+    root.querySelector('.next')?.addEventListener('click', () => {
+      show(current + 1);
+      restart();
+    });
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        show(Number(dot.dataset.index ?? 0));
+        restart();
+      });
+    });
+
+    restart();
+  }
+</script>
