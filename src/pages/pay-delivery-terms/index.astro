@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Доставка і оплата" description="Умови доставки по Україні та способи оплати замовлень Pulse Agro. Нова Пошта, Укрпошта, Делівері, Інтайм. Безготівковий розрахунок, переказ на карту, накладений платіж.">
+  <div class="wrap pay-page">
+
+    <nav class="breadcrumb">
+      <a href="/">Головна</a> /
+      <span>Доставка і оплата</span>
+    </nav>
+
+    <h1>Доставка і оплата</h1>
+    <p class="lead">Прагнемо зробити покупку максимально зручною. Обирайте зручну службу доставки та спосіб оплати — менеджер підтвердить замовлення і узгодить деталі.</p>
+
+    <!-- ───── DELIVERY ───── -->
+    <section class="section">
+      <h2 class="section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Доставка замовлень
+      </h2>
+      <p class="section-note">Доставка здійснюється протягом <strong>1–3 робочих днів</strong> після підтвердження замовлення. Вартість визначається тарифами транспортної компанії.</p>
+
+      <div class="delivery-grid">
+
+        <div class="carrier-card">
+          <div class="carrier-logo np">НП</div>
+          <div class="carrier-info">
+            <strong>Нова Пошта</strong>
+            <span class="carrier-tag">1–2 дні</span>
+          </div>
+          <p class="carrier-desc">Доставка до відділення або кур'єром за вашою адресою по всій Україні.</p>
+        </div>
+
+        <div class="carrier-card">
+          <div class="carrier-logo up">УП</div>
+          <div class="carrier-info">
+            <strong>Укрпошта</strong>
+            <span class="carrier-tag">2–4 дні</span>
+          </div>
+          <p class="carrier-desc">Економічний варіант для замовлень в будь-який куточок України.</p>
+        </div>
+
+        <div class="carrier-card">
+          <div class="carrier-logo del">DL</div>
+          <div class="carrier-info">
+            <strong>Делівері</strong>
+            <span class="carrier-tag">1–2 дні</span>
+          </div>
+          <p class="carrier-desc">Швидка доставка для великих і важких замовлень.</p>
+        </div>
+
+        <div class="carrier-card">
+          <div class="carrier-logo it">IT</div>
+          <div class="carrier-info">
+            <strong>Інтайм</strong>
+            <span class="carrier-tag">1–3 дні</span>
+          </div>
+          <p class="carrier-desc">Зручна доставка по регіонах — широка мережа відділень.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ───── PAYMENT ───── -->
+    <section class="section">
+      <h2 class="section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+        Оплата замовлень
+      </h2>
+
+      <div class="payment-grid">
+
+        <div class="payment-card">
+          <div class="payment-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+          </div>
+          <strong>Банківська карта</strong>
+          <p>Після підтвердження замовлення ви отримаєте реквізити для переказу на карту ПриватБанку.</p>
+        </div>
+
+        <div class="payment-card">
+          <div class="payment-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <strong>Рахунок-фактура</strong>
+          <p>Для юридичних осіб — оплата за рахунком. Виставляємо документи з усіма реквізитами.</p>
+        </div>
+
+        <div class="payment-card">
+          <div class="payment-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <strong>Накладений платіж</strong>
+          <p>Оплата готівкою при отриманні замовлення у відділенні транспортної компанії.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ───── REQUISITES ───── -->
+    <section class="section">
+      <h2 class="section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v4H4z"/><rect x="4" y="12" width="16" height="8" rx="1"/><path d="M8 12V8"/><path d="M16 12V8"/></svg>
+        Реквізити для оплати
+      </h2>
+      <div class="requisites">
+        <div class="req-row"><span>Компанія</span><strong>ТОВ «ПУЛЬС АГРО»</strong></div>
+        <div class="req-row"><span>Код ЄДРПОУ</span><strong>45435512</strong></div>
+        <div class="req-row"><span>ІПН</span><strong>454355120369</strong></div>
+        <div class="req-row"><span>Рахунок</span><strong class="mono">UA143515330000026007015906854</strong></div>
+        <div class="req-row"><span>МФО</span><strong>351533</strong></div>
+        <div class="req-row"><span>Банк</span><strong>ПАТ КБ «ПриватБанк»</strong></div>
+        <div class="req-row"><span>Директор</span><strong>Копилов Сергій Ігорович</strong></div>
+      </div>
+    </section>
+
+    <!-- ───── CTA ───── -->
+    <div class="cta-block">
+      <p>Залишились питання щодо доставки або оплати? Зателефонуйте нам — відповімо в робочий час.</p>
+      <div class="cta-buttons">
+        <a class="btn-primary" href="/product-category/seed/">Перейти до каталогу</a>
+        <a class="btn-secondary" href="/contacts/">Зв'язатись з нами</a>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .pay-page { padding: 30px 20px 70px; max-width: 900px; }
+
+  .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 22px; }
+  .breadcrumb a:hover { color: #e8772e; }
+
+  h1 { font-size: 2rem; margin: 0 0 12px; }
+  .lead { color: #555; line-height: 1.65; margin: 0 0 48px; font-size: 1.02rem; max-width: 680px; }
+
+  /* section titles */
+  .section { margin-bottom: 50px; }
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.25rem; font-weight: 800; margin: 0 0 6px;
+    color: #1a1a1a; border-left: 4px solid #e8772e; padding-left: 14px;
+  }
+  .section-title svg { flex-shrink: 0; color: #e8772e; }
+  .section-note { color: #6b6b6b; font-size: 0.92rem; margin: 0 0 22px; padding-left: 18px; }
+
+  /* delivery cards */
+  .delivery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  .carrier-card {
+    border: 1px solid #ece7de; border-radius: 14px; padding: 20px;
+    display: grid; grid-template-columns: 52px 1fr; grid-template-rows: auto auto;
+    column-gap: 16px; row-gap: 10px; align-items: start;
+    background: #fff; transition: box-shadow 0.15s;
+  }
+  .carrier-card:hover { box-shadow: 0 6px 20px rgba(28,26,20,0.1); }
+
+  .carrier-logo {
+    grid-row: 1 / 3; width: 52px; height: 52px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.82rem; letter-spacing: 0.04em; color: #fff; flex-shrink: 0;
+  }
+  .carrier-logo.np { background: #cf0000; }
+  .carrier-logo.up { background: #f5a800; color: #1a1a1a; }
+  .carrier-logo.del { background: #1a3fa0; }
+  .carrier-logo.it { background: #e8772e; }
+
+  .carrier-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .carrier-info strong { font-size: 1rem; font-weight: 700; }
+  .carrier-tag {
+    background: #f0ebe3; color: #6b6b6b; font-size: 0.78rem; font-weight: 600;
+    padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+  }
+  .carrier-desc { color: #555; font-size: 0.9rem; line-height: 1.5; margin: 0; }
+
+  /* payment cards */
+  .payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .payment-card {
+    border: 1px solid #ece7de; border-radius: 14px; padding: 24px 20px;
+    background: #fff; display: flex; flex-direction: column; gap: 10px;
+    transition: box-shadow 0.15s;
+  }
+  .payment-card:hover { box-shadow: 0 6px 20px rgba(28,26,20,0.1); }
+  .payment-icon { width: 48px; height: 48px; background: #fff5ed; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .payment-card strong { font-size: 1rem; font-weight: 700; color: #1a1a1a; }
+  .payment-card p { color: #555; font-size: 0.88rem; line-height: 1.55; margin: 0; }
+
+  /* requisites */
+  .requisites { border: 1px solid #ece7de; border-radius: 14px; overflow: hidden; }
+  .req-row {
+    display: flex; align-items: baseline; gap: 16px; padding: 12px 20px;
+    border-bottom: 1px solid #ece7de; font-size: 0.92rem;
+  }
+  .req-row:last-child { border-bottom: none; }
+  .req-row span { color: #6b6b6b; min-width: 140px; flex-shrink: 0; }
+  .req-row strong { color: #1a1a1a; font-weight: 600; }
+  .req-row .mono { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; letter-spacing: 0.03em; word-break: break-all; }
+
+  /* CTA block */
+  .cta-block {
+    background: linear-gradient(135deg, #1c1c1c 0%, #2e2a24 100%);
+    border-radius: 18px; padding: 36px 40px; display: flex;
+    align-items: center; justify-content: space-between; gap: 30px;
+    flex-wrap: wrap; margin-top: 20px;
+  }
+  .cta-block p { color: #d0ccc4; font-size: 1rem; line-height: 1.6; margin: 0; max-width: 400px; }
+  .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+
+  .btn-primary {
+    background: #e8772e; color: #fff; font-weight: 700; border-radius: 999px;
+    padding: 12px 26px; font-size: 0.95rem; transition: background 0.15s; white-space: nowrap;
+  }
+  .btn-primary:hover { background: #d9691f; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.1); color: #fff; font-weight: 600; border-radius: 999px;
+    padding: 12px 26px; font-size: 0.95rem; border: 1px solid rgba(255,255,255,0.2);
+    transition: background 0.15s; white-space: nowrap;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+  /* responsive */
+  @media (max-width: 700px) {
+    .delivery-grid { grid-template-columns: 1fr; }
+    .payment-grid { grid-template-columns: 1fr; }
+    .cta-block { padding: 28px 24px; flex-direction: column; align-items: flex-start; }
+    .section-title { font-size: 1.1rem; }
+  }
+
+  @media (max-width: 500px) {
+    .req-row { flex-direction: column; gap: 2px; }
+    .req-row span { min-width: unset; }
+  }
+</style>

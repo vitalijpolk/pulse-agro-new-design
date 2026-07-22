@@ -1,0 +1,170 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Контакти" description="Контакти Pulse Agro — телефони, email, адреса. Харків. Працюємо Пн–Пт 9:00–18:00.">
+  <div class="wrap contacts-page">
+
+    <nav class="breadcrumb">
+      <a href="/">Головна</a> / <span>Контакти</span>
+    </nav>
+
+    <h1>Контакти</h1>
+
+    <div class="contacts-grid">
+
+      <!-- phones -->
+      <div class="contact-card">
+        <div class="card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h2>Телефони</h2>
+        <p class="card-hint">Дзвінки приймаємо Пн–Пт, 9:00–18:00</p>
+        <a class="contact-btn" href="tel:+380973125318">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +38 (097) 312-53-18
+        </a>
+        <a class="contact-btn" href="tel:+380991533325">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.59 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +38 (099) 15-333-25
+        </a>
+      </div>
+
+      <!-- email -->
+      <div class="contact-card">
+        <div class="card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h2>Електронна пошта</h2>
+        <p class="card-hint">Відповідаємо протягом робочого дня</p>
+        <a class="contact-btn" href="mailto:info@pulse-agro.com">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          info@pulse-agro.com
+        </a>
+      </div>
+
+      <!-- address -->
+      <div class="contact-card">
+        <div class="card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h2>Адреса</h2>
+        <p class="card-hint">Юридична адреса компанії</p>
+        <div class="address-block">
+          <p>Україна, 61172, м. Харків</p>
+          <p class="address-detail">вул. Зубарєва, буд. 35, оф. 36</p>
+        </div>
+      </div>
+
+      <!-- hours -->
+      <div class="contact-card">
+        <div class="card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h2>Графік роботи</h2>
+        <p class="card-hint">Харківський час (UTC+3)</p>
+        <div class="hours-table">
+          <div class="hours-row"><span>Понеділок – П'ятниця</span><strong>9:00 – 18:00</strong></div>
+          <div class="hours-row muted"><span>Субота – Неділя</span><strong>вихідний</strong></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- requisites -->
+    <section class="req-section">
+      <h2 class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        Реквізити ТОВ «ПУЛЬС АГРО»
+      </h2>
+      <div class="requisites">
+        <div class="req-row"><span>Код ЄДРПОУ</span><strong>45435512</strong></div>
+        <div class="req-row"><span>ІПН</span><strong>454355120369</strong></div>
+        <div class="req-row"><span>Рахунок</span><strong class="mono">UA143515330000026007015906854</strong></div>
+        <div class="req-row"><span>МФО</span><strong>351533</strong></div>
+        <div class="req-row"><span>Банк</span><strong>ПАТ КБ «ПриватБанк»</strong></div>
+        <div class="req-row"><span>Директор</span><strong>Копилов Сергій Ігорович</strong></div>
+      </div>
+    </section>
+
+    <div class="cta-block">
+      <p>Готові допомогти з вибором насіння під ваш регіон та культуру.</p>
+      <a class="btn-primary" href="/product-category/seed/">Переглянути каталог →</a>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .contacts-page { padding: 30px 20px 70px; max-width: 900px; }
+
+  .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 22px; }
+  .breadcrumb a:hover { color: #e8772e; }
+  h1 { font-size: 2rem; margin: 0 0 32px; }
+
+  .contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 50px; }
+
+  .contact-card {
+    border: 1px solid #ece7de; border-radius: 16px; padding: 24px;
+    display: flex; flex-direction: column; gap: 0; background: #fff;
+  }
+  .card-icon {
+    width: 48px; height: 48px; background: #fff5ed; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+  }
+  .contact-card h2 { font-size: 1.05rem; font-weight: 700; margin: 0 0 4px; }
+  .card-hint { color: #8c8678; font-size: 0.84rem; margin: 0 0 16px; }
+
+  .contact-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: #f6f3ee; color: #1a1a1a; font-weight: 600; font-size: 0.95rem;
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 8px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .contact-btn:last-child { margin-bottom: 0; }
+  .contact-btn:hover { background: #e8772e; color: #fff; }
+  .contact-btn svg { flex-shrink: 0; }
+  .contact-btn:hover svg { stroke: #fff; }
+
+  .address-block p { margin: 0 0 4px; font-size: 0.95rem; font-weight: 600; color: #1a1a1a; }
+  .address-detail { color: #6b6b6b !important; font-weight: 400 !important; font-size: 0.88rem !important; }
+
+  .hours-table { display: flex; flex-direction: column; gap: 8px; }
+  .hours-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; gap: 10px; }
+  .hours-row span { color: #555; }
+  .hours-row strong { color: #1a1a1a; font-weight: 700; }
+  .hours-row.muted span, .hours-row.muted strong { color: #aaa; }
+
+  /* requisites */
+  .req-section { margin-bottom: 50px; }
+  .section-title {
+    display: flex; align-items: center; gap: 10px; font-size: 1.15rem; font-weight: 800;
+    margin: 0 0 18px; border-left: 4px solid #e8772e; padding-left: 14px; color: #1a1a1a;
+  }
+  .section-title svg { color: #e8772e; flex-shrink: 0; }
+  .requisites { border: 1px solid #ece7de; border-radius: 14px; overflow: hidden; }
+  .req-row { display: flex; align-items: baseline; gap: 16px; padding: 12px 20px; border-bottom: 1px solid #ece7de; font-size: 0.92rem; }
+  .req-row:last-child { border-bottom: none; }
+  .req-row span { color: #6b6b6b; min-width: 130px; flex-shrink: 0; }
+  .req-row strong { color: #1a1a1a; font-weight: 600; }
+  .req-row .mono { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; letter-spacing: 0.03em; word-break: break-all; }
+
+  /* CTA */
+  .cta-block {
+    background: linear-gradient(135deg, #1c1c1c 0%, #2e2a24 100%);
+    border-radius: 18px; padding: 30px 36px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .cta-block p { color: #d0ccc4; margin: 0; font-size: 1rem; }
+  .btn-primary {
+    background: #e8772e; color: #fff; font-weight: 700; border-radius: 999px;
+    padding: 12px 28px; white-space: nowrap; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #d9691f; }
+
+  @media (max-width: 640px) {
+    .contacts-grid { grid-template-columns: 1fr; }
+    .cta-block { flex-direction: column; align-items: flex-start; padding: 24px; }
+    .req-row { flex-direction: column; gap: 2px; }
+    .req-row span { min-width: unset; }
+  }
+</style>

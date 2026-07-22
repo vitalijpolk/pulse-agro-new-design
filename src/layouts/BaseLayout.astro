@@ -16,13 +16,6 @@ const seedCrops = [
   { slug: 'pea', label: 'Горох' },
   { slug: 'soy', label: 'Соя' },
 ];
-const zzrTypes = [
-  { slug: 'herbicides', label: 'Гербіциди' },
-  { slug: 'fungicides', label: 'Фунгіциди' },
-  { slug: 'insecticides', label: 'Інсектициди' },
-  { slug: 'pesticides', label: 'Протруйники' },
-  { slug: 'desiccants', label: 'Дисиканти' },
-];
 
 const contactsPage = (await getCollection('pages')).find((p) => p.data.slug === 'contacts');
 const phone = contactsPage?.data.phone ?? '+38 (097) 312-53-18';
@@ -51,7 +44,8 @@ const topBarPhones = [
       <div class="top-bar">
         <div class="wrap">
           <span>Інтернет-магазин насіння агрокультур</span>
-          <div class="top-phones">
+          <div class="top-right">
+            <span class="top-hours">Пн–Пт: 9:00–18:00</span>
             {topBarPhones.map((p) => (
               <a href={p.href}>{p.label}</a>
             ))}
@@ -76,14 +70,6 @@ const topBarPhones = [
                 ))}
               </div>
             </div>
-            <div class="dropdown">
-            <button type="button" class="dropdown-toggle">ЗЗР</button>
-            <div class="dropdown-menu">
-              {zzrTypes.map((t) => (
-                <a href={`/product-category/zzr/${t.slug}/`}>{t.label}</a>
-              ))}
-            </div>
-          </div>
           <a href="/about-company/">Про компанію</a>
           <a href="/pay-delivery-terms/">Доставка і оплата</a>
           <a href="/category/blog/">Новини</a>
@@ -101,7 +87,7 @@ const topBarPhones = [
       <div class="wrap footer-grid">
         <div>
           <a class="logo" href="/"><img src="/images/site/logo-original.png" alt="Pulse Agro" /></a>
-          <p>Компанія пропонує широкий вибір гібридів, стійких до посухи та хвороб.</p>
+          <p>Реалізуємо насіння гібридів соняшнику, кукурудзи, пшениці, рапсу, ячменю та сої від перевірених вітчизняних виробників. Підбір під регіон, консультації з технологій вирощування.</p>
         </div>
         <div>
           <h4>Каталог насіння</h4>
@@ -111,19 +97,12 @@ const topBarPhones = [
             ))}
           </ul>
         </div>
-        <div>
-          <h4>Засоби захисту</h4>
-          <ul>
-            {zzrTypes.map((t) => (
-              <li><a href={`/product-category/zzr/${t.slug}/`}>{t.label}</a></li>
-            ))}
-          </ul>
-        </div>
-        <div>
+        <div class="footer-contacts">
           <h4>Контакти</h4>
           <p>{contactsPage?.data.address}</p>
-          <p><a href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</a></p>
-          <p><a href={`mailto:${contactsPage?.data.email}`}>{contactsPage?.data.email}</a></p>
+          <p class="hours-line">Пн–Пт: 9:00–18:00</p>
+          <a class="contact-link" href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</a>
+          <a class="contact-link" href={`mailto:${contactsPage?.data.email}`}>{contactsPage?.data.email}</a>
         </div>
       </div>
       <p class="copy">© {new Date().getFullYear()} Pulse Agro</p>
@@ -150,9 +129,10 @@ const topBarPhones = [
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
 
   .top-bar { background: var(--dark); color: #cfcfcf; font-size: 0.85rem; }
-  .top-bar .wrap { display: flex; justify-content: space-between; padding: 8px 20px; flex-wrap: wrap; gap: 8px; }
+  .top-bar .wrap { display: flex; justify-content: space-between; padding: 8px 20px; flex-wrap: wrap; gap: 8px; align-items: center; }
   .top-bar a { color: var(--orange); font-weight: 600; }
-  .top-phones { display: flex; gap: 18px; flex-wrap: wrap; }
+  .top-right { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .top-hours { color: #8c8678; font-size: 0.8rem; }
 
   .main-nav { background: var(--dark); color: #fff; border-top: 1px solid rgba(255,255,255,0.08); }
   .main-nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; position: relative; }
@@ -182,12 +162,27 @@ const topBarPhones = [
   .nav-toggle span { display: block; height: 2px; background: #fff; border-radius: 2px; }
 
   .site-footer { background: var(--dark); color: #c9c9c9; margin-top: 60px; padding: 50px 0 20px; }
-  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 30px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.3fr; gap: 30px; align-items: start; }
   .footer-grid h4 { color: #fff; margin: 0 0 12px; }
   .footer-grid ul { list-style: none; padding: 0; margin: 0; }
   .footer-grid li { margin-bottom: 6px; }
   .footer-grid a:hover { color: var(--orange); }
   .copy { text-align: center; color: #777; margin: 30px 0 0; font-size: 0.85rem; }
+
+  .footer-contacts {
+    background: var(--orange); border-radius: 14px; padding: 18px 20px;
+  }
+  .footer-contacts h4 { color: #fff; margin: 0 0 10px; }
+  .footer-contacts p { color: rgba(255,255,255,0.85); margin: 0 0 6px; font-size: 0.9rem; }
+  .footer-contacts .hours-line { color: rgba(255,255,255,0.7); font-size: 0.82rem; margin-bottom: 12px; }
+  .footer-contacts .contact-link {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.18); color: #fff; font-weight: 600; font-size: 0.88rem;
+    border-radius: 8px; padding: 8px 12px; margin-bottom: 8px;
+    transition: background 0.15s;
+  }
+  .footer-contacts .contact-link:last-child { margin-bottom: 0; }
+  .footer-contacts .contact-link:hover { background: rgba(255,255,255,0.3); color: #fff; }
 
   @media (max-width: 1024px) {
     .nav-toggle { display: flex; }
@@ -214,6 +209,7 @@ const topBarPhones = [
 
   @media (max-width: 800px) {
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px 20px; }
+    .footer-contacts { grid-column: 1 / -1; }
   }
 
   @media (max-width: 480px) {
