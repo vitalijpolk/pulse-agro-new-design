@@ -32,6 +32,17 @@ const topBarPhones = [
     <title>{title} — Pulse Agro</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" href="/favicon.svg" />
+    <script is:inline type="application/ld+json">{`{
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Pulse Agro",
+      "url": "https://pulse-agro.com",
+      "logo": "https://pulse-agro.com/images/site/logo-original.png",
+      "contactPoint": [
+        { "@type": "ContactPoint", "telephone": "+380973125318", "contactType": "customer service", "availableLanguage": "Ukrainian" },
+        { "@type": "ContactPoint", "telephone": "+380991533325", "contactType": "customer service", "availableLanguage": "Ukrainian" }
+      ]
+    }`}</script>
     <slot name="head" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
