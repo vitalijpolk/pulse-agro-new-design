@@ -1,0 +1,29 @@
+# ZZR pages removed — redirect to seed catalog
+/product-category/zzr/                     /product-category/seed/  301
+/product-category/zzr/desiccants/          /product-category/seed/  301
+/product-category/zzr/insecticides/        /product-category/seed/  301
+/product-category/zzr/fungicides/          /product-category/seed/  301
+/product-category/zzr/herbicides/          /product-category/seed/  301
+/product-category/zzr/pesticides/          /product-category/seed/  301
+
+# WordPress shop page
+/shop/                                      /product-category/seed/  301
+
+# Product tags → relevant categories
+/product-tag/nasinnya-kukurudzy-kupyty/     /product-category/seed/corn/       301
+/product-tag/nasinnya-kukurudzy-320-fao/    /product-category/seed/corn/       301
+/product-tag/nasinnya-kukurudzy-280-fao/    /product-category/seed/corn/       301
+/product-tag/nasinnya-kukurudzy-250-fao/    /product-category/seed/corn/       301
+/product-tag/nasinnya-kukurudzy-hotyn/      /product/hotyn/                    301
+/product-tag/gibrydy-kukurudzy/             /product-category/seed/corn/       301
+/product-tag/gibrydy-kukurudzy-magazyn/     /product-category/seed/corn/       301
+/product-tag/gibrydy-sonyashnyka/           /product-category/seed/sunflower/  301
+/product-tag/nasinnya-sonyashnyka-pid-yevrolajtning-plyus/ /product-category/seed/sunflower/ 301
+/product-tag/nasinnya-sonyashnyka-pid-granstar/            /product-category/seed/sunflower/ 301
+/product-tag/kupyty-nasinnya-sonyashnyka/   /product-category/seed/sunflower/  301
+/product-tag/nasinnya-soyi-pid-raundap/     /product-category/seed/soy/        301
+/product-tag/nasinnya-soyi-ukrayina/        /product-category/seed/soy/        301
+/product-tag/sorta-gorohu/                  /product-category/seed/pea/        301
+/product-tag/nasinnya-gorohu-oplot/         /product/oplot/                    301
+/product-tag/nasinnya-ozymoyi-pshenyczi/    /product-category/seed/wheat/      301
+/product-tag/kupyty-nasinnya/               /product-category/seed/            301
