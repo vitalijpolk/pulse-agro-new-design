@@ -12,7 +12,17 @@ interface Props {
 }
 const { slug, title, priceTiers } = Astro.props;
 ---
-<form class="order-form" data-product={title} data-slug={slug}>
+<form
+  class="order-form"
+  name="order"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="company"
+>
+  <input type="hidden" name="form-name" value="order" />
+  <input type="hidden" name="product" value={title} />
+  <input type="hidden" name="product-slug" value={slug} />
+
   <h3>Замовити</h3>
 
   {priceTiers.length > 1 && (
@@ -42,6 +52,7 @@ const { slug, title, priceTiers } = Astro.props;
     Коментар
     <textarea name="comment" placeholder="Необов'язково"></textarea>
   </label>
+
   <input type="text" name="company" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
   <button type="submit">Замовити</button>
@@ -61,18 +72,22 @@ const { slug, title, priceTiers } = Astro.props;
   .order-form button {
     width: 100%; background: #e8772e; color: #fff; border: none; padding: 12px;
     border-radius: 999px; font-weight: 700; font-size: 1rem; cursor: pointer;
+    transition: background 0.15s;
   }
+  .order-form button:hover { background: #d9691f; }
   .order-form button:disabled { opacity: 0.6; cursor: default; }
-  .form-status { margin: 12px 0 0; font-size: 0.9rem; }
+  .form-status { margin: 12px 0 0; font-size: 0.9rem; text-align: center; }
+  .form-status.ok { color: #2a7a2a; }
+  .form-status.err { color: #c00; }
 </style>
 
 <script>
-  /** @type {NodeListOf<HTMLFormElement>} */
-  const forms = document.querySelectorAll('.order-form');
+  const forms = document.querySelectorAll<HTMLFormElement>('.order-form');
+
   const qtyFromUrl = new URLSearchParams(window.location.search).get('qty');
   if (qtyFromUrl && /^\d+$/.test(qtyFromUrl)) {
     forms.forEach((form) => {
-      const qtyInput = /** @type {HTMLInputElement | null} */ (form.querySelector('input[name="qty"]'));
+      const qtyInput = form.querySelector<HTMLInputElement>('input[name="qty"]');
       if (qtyInput) qtyInput.value = qtyFromUrl;
     });
   }
@@ -80,30 +95,32 @@ const { slug, title, priceTiers } = Astro.props;
   forms.forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const status = /** @type {HTMLElement | null} */ (form.querySelector('.form-status'));
-      const button = /** @type {HTMLButtonElement | null} */ (form.querySelector('button'));
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.product = form.dataset.product ?? '';
-      data.slug = form.dataset.slug ?? '';
+      const status = form.querySelector<HTMLElement>('.form-status');
+      const button = form.querySelector<HTMLButtonElement>('button');
 
       if (button) button.disabled = true;
+
       try {
-        const res = await fetch('/api/order.php', {
+        const res = await fetch('/', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString(),
         });
-        const json = await res.json();
-        if (status) {
-          status.textContent = json.ok
-            ? "Дякуємо! Ми зв'яжемося з вами найближчим часом."
-            : 'Не вдалося відправити заявку. Зателефонуйте нам напряму.';
-          status.hidden = false;
+
+        if (res.ok) {
+          if (status) {
+            status.textContent = "Дякуємо! Ми зв'яжемося з вами найближчим часом.";
+            status.className = 'form-status ok';
+            status.hidden = false;
+          }
+          form.reset();
+        } else {
+          throw new Error('error');
         }
-        if (json.ok) form.reset();
       } catch {
         if (status) {
-          status.textContent = "Помилка з'єднання. Зателефонуйте нам напряму.";
+          status.textContent = 'Не вдалося відправити. Зателефонуйте нам напряму.';
+          status.className = 'form-status err';
           status.hidden = false;
         }
       } finally {
