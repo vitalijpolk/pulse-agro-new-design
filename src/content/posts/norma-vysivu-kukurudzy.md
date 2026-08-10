@@ -1,4 +1,4 @@
----
+﻿---
 title: "Норма висіву кукурудзи: густота посіву по регіонах і ФАО"
 slug: "norma-vysivu-kukurudzy"
 publishDate: 2026-04-18
@@ -41,14 +41,14 @@ tags: []
 
 | Група ФАО | Гібриди Пульс Агро | Густота на зерно (тис. рослин/га) | Густота на силос (тис. рослин/га) |
 | --- | --- | --- | --- |
-| ФАО 180 | [ДН Півіха](https://pulse-agro.com/product/piviha/) | 75–85 | 90–110 |
-| ФАО 240 | [ДН Хортиця](https://pulse-agro.com/product/hortyczya/) | 72–80 | 88–105 |
-| ФАО 250 | [Бентота](https://pulse-agro.com/product/bentota/) | 70–78 | 85–100 |
-| ФАО 260 | [Ангора](https://pulse-agro.com/product/gibryd-kukurudzy-angora-fao-260/) | 68–76 | 85–100 |
-| ФАО 280 | [ДН Хотин](https://pulse-agro.com/product/hotyn/), [Мірісса](https://pulse-agro.com/product/mirissa/) | 65–73 | 82–95 |
-| ФАО 300 | [Самарія](https://pulse-agro.com/product/gibryd-kukurudzy-samariya-fao-300/) | 62–70 | 80–95 |
-| ФАО 320 | [Тавіра](https://pulse-agro.com/product/tavira/) | 60–68 | 78–92 |
-| ФАО 350 | [Сігірія](https://pulse-agro.com/product/gibryd-kukurudzy-sigiriya-fao-350/) | 55–65 | 75–90 |
+| ФАО 180 | [ДН Півіха](/product/piviha/) | 75–85 | 90–110 |
+| ФАО 240 | [ДН Хортиця](/product/hortyczya/) | 72–80 | 88–105 |
+| ФАО 250 | [Бентота](/product/bentota/) | 70–78 | 85–100 |
+| ФАО 260 | [Ангора](/product/gibryd-kukurudzy-angora-fao-260/) | 68–76 | 85–100 |
+| ФАО 280 | [ДН Хотин](/product/hotyn/), [Мірісса](/product/mirissa/) | 65–73 | 82–95 |
+| ФАО 300 | [Самарія](/product/gibryd-kukurudzy-samariya-fao-300/) | 62–70 | 80–95 |
+| ФАО 320 | [Тавіра](/product/tavira/) | 60–68 | 78–92 |
+| ФАО 350 | [Сігірія](/product/gibryd-kukurudzy-sigiriya-fao-350/) | 55–65 | 75–90 |
 
 ## Як розрахувати норму висіву кукурудзи в кг/га
 
@@ -99,17 +99,17 @@ tags: []
 
 Для вирощування на зерно і силос в каталозі Пульс Агро представлено 9 гібридів кукурудзи для всіх регіонів України:
 
-*   [ДН Півіха (ФАО 180)](https://pulse-agro.com/product/piviha/) — для Полісся і Північ
-*   [ДН Хортиця (ФАО 240)](https://pulse-agro.com/product/hortyczya/) — для Центру і Лісостепу
-*   [Бентота (ФАО 250)](https://pulse-agro.com/product/bentota/) — для Центру і Лісостепу
-*   [Ангора (ФАО 260)](https://pulse-agro.com/product/gibryd-kukurudzy-angora-fao-260/) — для Центру і Північ
-*   [ДН Хотин (ФАО 280)](https://pulse-agro.com/product/hotyn/) — для Центру і Лісостепу
-*   [Мірісса (ФАО 280)](https://pulse-agro.com/product/mirissa/) — для Центру і Півдня
-*   [Самарія (ФАО 300)](https://pulse-agro.com/product/gibryd-kukurudzy-samariya-fao-300/) — для Центру і Півдня
-*   [Тавіра (ФАО 320)](https://pulse-agro.com/product/tavira/) — для Центру і Півдня
-*   [Сігірія (ФАО 350)](https://pulse-agro.com/product/gibryd-kukurudzy-sigiriya-fao-350/) — для Півдня і Степу
+*   [ДН Півіха (ФАО 180)](/product/piviha/) — для Полісся і Північ
+*   [ДН Хортиця (ФАО 240)](/product/hortyczya/) — для Центру і Лісостепу
+*   [Бентота (ФАО 250)](/product/bentota/) — для Центру і Лісостепу
+*   [Ангора (ФАО 260)](/product/gibryd-kukurudzy-angora-fao-260/) — для Центру і Північ
+*   [ДН Хотин (ФАО 280)](/product/hotyn/) — для Центру і Лісостепу
+*   [Мірісса (ФАО 280)](/product/mirissa/) — для Центру і Півдня
+*   [Самарія (ФАО 300)](/product/gibryd-kukurudzy-samariya-fao-300/) — для Центру і Півдня
+*   [Тавіра (ФАО 320)](/product/tavira/) — для Центру і Півдня
+*   [Сігірія (ФАО 350)](/product/gibryd-kukurudzy-sigiriya-fao-350/) — для Півдня і Степу
 
-Детальний огляд всіх гібридів — у статті [Гібриди кукурудзи 2026](https://pulse-agro.com/gibrydy-kukurudzy-2026/).
+Детальний огляд всіх гібридів — у статті [Гібриди кукурудзи 2026](/gibrydy-kukurudzy-2026/).
 
 ## Часті запитання про норму висіву кукурудзи
 
@@ -135,4 +135,4 @@ tags: []
 
 ## Купити насіння кукурудзи з доставкою по Україні
 
-В каталозі [Пульс Агро](https://pulse-agro.com/product-category/seed/) — 9 гібридів кукурудзи для всіх регіонів і ФАО груп. Зерно і силос, ранньостиглі і середньостиглі. Доставка по всій Україні.
+В каталозі [Пульс Агро](/product-category/seed/) — 9 гібридів кукурудзи для всіх регіонів і ФАО груп. Зерно і силос, ранньостиглі і середньостиглі. Доставка по всій Україні.

@@ -1,4 +1,4 @@
----
+﻿---
 title: "Як вибрати гібрид соняшнику: ФАО, стійкість до хвороб, урожайність"
 slug: "gibrydy-sonyashnyka"
 publishDate: 2026-04-25
@@ -49,38 +49,38 @@ tags: []
 
 ### Класична технологія
 
-#### [Гібрид Ампара](https://pulse-agro.com/product/gibryd-sonyashnyka-ampara/)
+#### [Гібрид Ампара](/product/gibryd-sonyashnyka-ampara/)
 
 Продуктивний гібрид соняшника для центральних і південних регіонів України. Підходить для інтенсивних технологій вирощування з класичною системою захисту від бур’янів.
 
 *   Технологія: класична
 *   Регіон: Центр, Південь
 
-[Купити насіння Ампара →](https://pulse-agro.com/product/gibryd-sonyashnyka-ampara/)
+[Купити насіння Ампара →](/product/gibryd-sonyashnyka-ampara/)
 
-#### [Гібрид ЄС Белла](https://pulse-agro.com/product/es-bella/)
+#### [Гібрид ЄС Белла](/product/es-bella/)
 
 Продуктивний гібрид від компанії Euralis для класичної технології вирощування. Відмінна олійність і стабільна врожайність у різних кліматичних умовах.
 
 *   Технологія: класична
 *   Регіон: Центр, Південь
 
-[Купити насіння ЄС Белла →](https://pulse-agro.com/product/es-bella/)
+[Купити насіння ЄС Белла →](/product/es-bella/)
 
-#### [Гібрид Набаро](https://pulse-agro.com/product/nabaro/)
+#### [Гібрид Набаро](/product/nabaro/)
 
 Надійний гібрид соняшника для широкого спектру умов вирощування. Стійкий до вилягання і основних хвороб, підходить для класичної технології.
 
 *   Технологія: класична
 *   Регіон: Центр, Лісостеп, Південь
 
-[Купити насіння Набаро →](https://pulse-agro.com/product/nabaro/)
+[Купити насіння Набаро →](/product/nabaro/)
 
 ### Clearfield (Євролайтнінг)
 
 Гібриди технології Clearfield стійкі до гербіциду Євролайтнінг. Ефективно контролює широкий спектр бур’янів і вовчок рас A–E. Оптимальний вибір для полів із засміченням вовчком.
 
-#### [Гібрид ЄС Генезіс (Clearfield)](https://pulse-agro.com/product/es-genezis/)
+#### [Гібрид ЄС Генезіс (Clearfield)](/product/es-genezis/)
 
 Високоврожайний гібрид Euralis технології Clearfield. Поєднує максимальний потенціал врожайності з надійним захистом від вовчку і бур’янів.
 
@@ -88,9 +88,9 @@ tags: []
 *   Регіон: Центр, Південь
 *   Стійкість до вовчку: раси A–E
 
-[Купити насіння ЄС Генезіс →](https://pulse-agro.com/product/es-genezis/)
+[Купити насіння ЄС Генезіс →](/product/es-genezis/)
 
-#### [Гібрид ЄС Генераліс (Clearfield)](https://pulse-agro.com/product/es-generalis/)
+#### [Гібрид ЄС Генераліс (Clearfield)](/product/es-generalis/)
 
 Високопродуктивний гібрид Euralis технології Clearfield з відмінним потенціалом врожайності. Стійкий до вовчку і основних хвороб соняшника.
 
@@ -98,9 +98,9 @@ tags: []
 *   Регіон: Центр, Південь
 *   Стійкість до вовчку: раси A–E
 
-[Купити насіння ЄС Генераліс →](https://pulse-agro.com/product/es-generalis/)
+[Купити насіння ЄС Генераліс →](/product/es-generalis/)
 
-#### [Гібрид Ласса (Clearfield)](https://pulse-agro.com/product/lassa/)
+#### [Гібрид Ласса (Clearfield)](/product/lassa/)
 
 Високопродуктивний гібрид технології Clearfield для центральних і південних регіонів. Стійкий до вовчку, показує стабільну врожайність при правильному застосуванні гербіциду Євролайтнінг.
 
@@ -108,9 +108,9 @@ tags: []
 *   Регіон: Центр, Південь
 *   Стійкість до вовчку: раси A–E
 
-[Купити насіння Ласса →](https://pulse-agro.com/product/lassa/)
+[Купити насіння Ласса →](/product/lassa/)
 
-#### [Гібрид Страйк (Clearfield)](https://pulse-agro.com/product/strajk/)
+#### [Гібрид Страйк (Clearfield)](/product/strajk/)
 
 Продуктивний гібрид технології Clearfield для різних типів ґрунтів і кліматичних умов України. Ефективний захист від вовчку при застосуванні Євролайтнінгу.
 
@@ -118,13 +118,13 @@ tags: []
 *   Регіон: Центр, Південь
 *   Стійкість до вовчку: раси A–E
 
-[Купити насіння Страйк →](https://pulse-agro.com/product/strajk/)
+[Купити насіння Страйк →](/product/strajk/)
 
 ### Clearfield Plus (Євролайтнінг плюс)
 
 Покращена технологія Clearfield Plus зі стійкістю до гербіциду Євролайтнінг плюс. Ефективна проти вовчку рас A–F — більш широкий спектр ніж у стандартному Clearfield.
 
-#### [Гібрид Сілена (Clearfield Plus)](https://pulse-agro.com/product/silena/)
+#### [Гібрид Сілена (Clearfield Plus)](/product/silena/)
 
 Стабільний гібрид соняшника технології Clearfield Plus. Добре реагує на високий агрофон і забезпечення елементами живлення. Ефективний захист від вовчку рас A–F.
 
@@ -132,9 +132,9 @@ tags: []
 *   Регіон: Центр, Лісостеп
 *   Стійкість до вовчку: раси A–F
 
-[Купити насіння Сілена →](https://pulse-agro.com/product/silena/)
+[Купити насіння Сілена →](/product/silena/)
 
-#### [Гібрид Браун (Clearfield Plus)](https://pulse-agro.com/product/gibryd-sonyashnyka-braun/)
+#### [Гібрид Браун (Clearfield Plus)](/product/gibryd-sonyashnyka-braun/)
 
 Високоврожайний гібрид технології Clearfield Plus з відмінною олійністю. Підходить для вирощування в усіх соняшникових зонах України при застосуванні Євролайтнінг плюс.
 
@@ -142,13 +142,13 @@ tags: []
 *   Регіон: Центр, Південь
 *   Стійкість до вовчку: раси A–F
 
-[Купити насіння Браун →](https://pulse-agro.com/product/gibryd-sonyashnyka-braun/)
+[Купити насіння Браун →](/product/gibryd-sonyashnyka-braun/)
 
 ### ExpressSun (Гранстар)
 
 Технологія ExpressSun зі стійкістю до гербіциду Гранстар — найширший спектр захисту від вовчку рас A–G. Оптимальна для сильно засмічених полів з новими расами вовчку.
 
-#### [Гібрид Аркона (ExpressSun)](https://pulse-agro.com/product/arkona/)
+#### [Гібрид Аркона (ExpressSun)](/product/arkona/)
 
 Стабільний гібрид соняшника технології ExpressSun з хорошою адаптацією до умов України. Показує стійку врожайність в різні за погодою роки, стійкий до основних хвороб.
 
@@ -156,9 +156,9 @@ tags: []
 *   Регіон: Центр, Лісостеп, Південь
 *   Стійкість до вовчку: раси A–G
 
-[Купити насіння Аркона →](https://pulse-agro.com/product/arkona/)
+[Купити насіння Аркона →](/product/arkona/)
 
-#### [Гібрид ЄС Ароматік (ExpressSun)](https://pulse-agro.com/product/es-aromatik/)
+#### [Гібрид ЄС Ароматік (ExpressSun)](/product/es-aromatik/)
 
 Продуктивний гібрид від Euralis технології ExpressSun. Відмінна олійність, стійкість до пероноспорозу і вовчку рас A–G. Один з популярних гібридів серед українських агрономів.
 
@@ -166,9 +166,9 @@ tags: []
 *   Регіон: Центр, Південь
 *   Стійкість до вовчку: раси A–G
 
-[Купити насіння ЄС Ароматік →](https://pulse-agro.com/product/es-aromatik/)
+[Купити насіння ЄС Ароматік →](/product/es-aromatik/)
 
-#### [Гібрид Каскара (ExpressSun)](https://pulse-agro.com/product/kaskara/)
+#### [Гібрид Каскара (ExpressSun)](/product/kaskara/)
 
 Надійний гібрид технології ExpressSun з хорошою посухостійкістю. Підходить для регіонів з нестабільним зволоженням і проблемою вовчку нових рас.
 
@@ -176,9 +176,9 @@ tags: []
 *   Регіон: Центр, Південь, Степ
 *   Стійкість до вовчку: раси A–G
 
-[Купити насіння Каскара →](https://pulse-agro.com/product/kaskara/)
+[Купити насіння Каскара →](/product/kaskara/)
 
-#### [Гібрид Сонора (ExpressSun)](https://pulse-agro.com/product/sonora/)
+#### [Гібрид Сонора (ExpressSun)](/product/sonora/)
 
 Гібрид соняшника технології ExpressSun для вирощування у центральних і південних регіонах. Хороша посухостійкість і стабільна врожайність в умовах степового клімату.
 
@@ -186,9 +186,9 @@ tags: []
 *   Регіон: Центр, Південь, Степ
 *   Стійкість до вовчку: раси A–G
 
-[Купити насіння Сонора →](https://pulse-agro.com/product/sonora/)
+[Купити насіння Сонора →](/product/sonora/)
 
-#### [Гібрид Лусон (ExpressSun)](https://pulse-agro.com/product/gibryd-sonyashnyka-luson/)
+#### [Гібрид Лусон (ExpressSun)](/product/gibryd-sonyashnyka-luson/)
 
 Продуктивний гібрид технології ExpressSun з високою олійністю та стійкістю до посухи. Підходить для вирощування в центральних і південних регіонах України.
 
@@ -196,26 +196,26 @@ tags: []
 *   Регіон: Центр, Південь
 *   Стійкість до вовчку: раси A–G
 
-[Купити насіння Лусон →](https://pulse-agro.com/product/gibryd-sonyashnyka-luson/)
+[Купити насіння Лусон →](/product/gibryd-sonyashnyka-luson/)
 
 ## Таблиця порівняння гібридів соняшника 2026
 
 | Гібрид | Технологія | Гербіцид | Регіон | Вовчок |
 | --- | --- | --- | --- | --- |
-| [Ампара](https://pulse-agro.com/product/gibryd-sonyashnyka-ampara/) | Класична | — | Центр, Південь | — |
-| [ЄС Белла](https://pulse-agro.com/product/es-bella/) | Класична | — | Центр, Південь | — |
-| [Набаро](https://pulse-agro.com/product/nabaro/) | Класична | — | Центр, Лісостеп, Південь | — |
-| [ЄС Генезіс](https://pulse-agro.com/product/es-genezis/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
-| [ЄС Генераліс](https://pulse-agro.com/product/es-generalis/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
-| [Ласса](https://pulse-agro.com/product/lassa/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
-| [Страйк](https://pulse-agro.com/product/strajk/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
-| [Сілена](https://pulse-agro.com/product/silena/) | Clearfield Plus | Євролайтнінг плюс | Центр, Лісостеп | A–F |
-| [Браун](https://pulse-agro.com/product/gibryd-sonyashnyka-braun/) | Clearfield Plus | Євролайтнінг плюс | Центр, Південь | A–F |
-| [Аркона](https://pulse-agro.com/product/arkona/) | ExpressSun | Гранстар | Центр, Лісостеп, Південь | A–G |
-| [ЄС Ароматік](https://pulse-agro.com/product/es-aromatik/) | ExpressSun | Гранстар | Центр, Південь | A–G |
-| [Каскара](https://pulse-agro.com/product/kaskara/) | ExpressSun | Гранстар | Центр, Південь, Степ | A–G |
-| [Сонора](https://pulse-agro.com/product/sonora/) | ExpressSun | Гранстар | Центр, Південь, Степ | A–G |
-| [Лусон](https://pulse-agro.com/product/gibryd-sonyashnyka-luson/) | ExpressSun | Гранстар | Центр, Південь | A–G |
+| [Ампара](/product/gibryd-sonyashnyka-ampara/) | Класична | — | Центр, Південь | — |
+| [ЄС Белла](/product/es-bella/) | Класична | — | Центр, Південь | — |
+| [Набаро](/product/nabaro/) | Класична | — | Центр, Лісостеп, Південь | — |
+| [ЄС Генезіс](/product/es-genezis/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
+| [ЄС Генераліс](/product/es-generalis/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
+| [Ласса](/product/lassa/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
+| [Страйк](/product/strajk/) | Clearfield | Євролайтнінг | Центр, Південь | A–E |
+| [Сілена](/product/silena/) | Clearfield Plus | Євролайтнінг плюс | Центр, Лісостеп | A–F |
+| [Браун](/product/gibryd-sonyashnyka-braun/) | Clearfield Plus | Євролайтнінг плюс | Центр, Південь | A–F |
+| [Аркона](/product/arkona/) | ExpressSun | Гранстар | Центр, Лісостеп, Південь | A–G |
+| [ЄС Ароматік](/product/es-aromatik/) | ExpressSun | Гранстар | Центр, Південь | A–G |
+| [Каскара](/product/kaskara/) | ExpressSun | Гранстар | Центр, Південь, Степ | A–G |
+| [Сонора](/product/sonora/) | ExpressSun | Гранстар | Центр, Південь, Степ | A–G |
+| [Лусон](/product/gibryd-sonyashnyka-luson/) | ExpressSun | Гранстар | Центр, Південь | A–G |
 
 ## Норма висіву соняшника: таблиця по регіонах
 
@@ -276,7 +276,7 @@ tags: []
 
 ### Який гібрид соняшника найврожайніший?
 
-Врожайність залежить від гібриду, регіону, технології і погодних умов. Серед гібридів Clearfield і Express Sun від Euralis — [ЄС Генезіс](https://pulse-agro.com/product/es-genezis/) і [ЄС Генераліс](https://pulse-agro.com/product/es-generalis/) мають один з найвищих потенціалів врожайності. Серед класичних — [Браун](https://pulse-agro.com/product/gibryd-sonyashnyka-braun/) і [Лусон](https://pulse-agro.com/product/gibryd-sonyashnyka-luson/).
+Врожайність залежить від гібриду, регіону, технології і погодних умов. Серед гібридів Clearfield і Express Sun від Euralis — [ЄС Генезіс](/product/es-genezis/) і [ЄС Генераліс](/product/es-generalis/) мають один з найвищих потенціалів врожайності. Серед класичних — [Браун](/product/gibryd-sonyashnyka-braun/) і [Лусон](/product/gibryd-sonyashnyka-luson/).
 
 ### Що таке вовчок і як з ним боротись?
 
@@ -284,4 +284,4 @@ tags: []
 
 ## Купити насіння соняшника з доставкою по Україні
 
-Всі гібриди соняшника з цього огляду є в наявності в каталозі [Пульс Агро](https://pulse-agro.com/product-category/seed/). Класичні гібриди, Clearfield, Clearfield Plus і ExpressSun — широкий вибір для будь-якого регіону і технології. Доставка по всій Україні.
+Всі гібриди соняшника з цього огляду є в наявності в каталозі [Пульс Агро](/product-category/seed/). Класичні гібриди, Clearfield, Clearfield Plus і ExpressSun — широкий вибір для будь-якого регіону і технології. Доставка по всій Україні.

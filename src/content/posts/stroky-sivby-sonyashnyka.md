@@ -1,4 +1,4 @@
----
+﻿---
 title: "Строки сівби соняшнику в Україні: коли і як сіяти"
 slug: "stroky-sivby-sonyashnyka"
 publishDate: 2026-04-18
@@ -102,24 +102,24 @@ tags: []
 
 ### Для Півдня і Степу
 
-*   [Сонора (ExpressSun)](https://pulse-agro.com/product/sonora/) — висока посухостійкість для степового клімату
-*   [Каскара (ExpressSun)](https://pulse-agro.com/product/kaskara/) — стабільна врожайність в посушливих умовах
-*   [Лусон (ExpressSun)](https://pulse-agro.com/product/gibryd-sonyashnyka-luson/) — висока олійність і посухостійкість
+*   [Сонора (ExpressSun)](/product/sonora/) — висока посухостійкість для степового клімату
+*   [Каскара (ExpressSun)](/product/kaskara/) — стабільна врожайність в посушливих умовах
+*   [Лусон (ExpressSun)](/product/gibryd-sonyashnyka-luson/) — висока олійність і посухостійкість
 
 ### Для Центру і Лісостепу
 
-*   [ЄС Генераліс (Clearfield)](https://pulse-agro.com/product/es-generalis/) — високий потенціал врожайності
-*   [ЄС Генезіс (Clearfield)](https://pulse-agro.com/product/es-genezis/) — стабільна врожайність і захист від вовчку
-*   [Аркона (ExpressSun)](https://pulse-agro.com/product/arkona/) — широка адаптація до різних умов
-*   [Браун (Clearfield Plus)](https://pulse-agro.com/product/gibryd-sonyashnyka-braun/) — висока олійність
+*   [ЄС Генераліс (Clearfield)](/product/es-generalis/) — високий потенціал врожайності
+*   [ЄС Генезіс (Clearfield)](/product/es-genezis/) — стабільна врожайність і захист від вовчку
+*   [Аркона (ExpressSun)](/product/arkona/) — широка адаптація до різних умов
+*   [Браун (Clearfield Plus)](/product/gibryd-sonyashnyka-braun/) — висока олійність
 
 ### Для Північної України і Полісся
 
-*   [Набаро (класичний)](https://pulse-agro.com/product/nabaro/) — широка адаптація, стійкість до хвороб
-*   [Сілена (Clearfield Plus)](https://pulse-agro.com/product/silena/) — для Лісостепу і Центру
-*   [Ласса (Clearfield)](https://pulse-agro.com/product/lassa/) — надійний захист від вовчку
+*   [Набаро (класичний)](/product/nabaro/) — широка адаптація, стійкість до хвороб
+*   [Сілена (Clearfield Plus)](/product/silena/) — для Лісостепу і Центру
+*   [Ласса (Clearfield)](/product/lassa/) — надійний захист від вовчку
 
-Повний каталог гібридів соняшнику — [в каталозі Пульс Агро](https://pulse-agro.com/product-category/seed/).
+Повний каталог гібридів соняшнику — [в каталозі Пульс Агро](/product-category/seed/).
 
 ## Часті запитання про строки сівби соняшнику
 
@@ -145,4 +145,4 @@ tags: []
 
 ## Купити насіння соняшнику з доставкою по Україні
 
-Підбираєте гібрид соняшнику під ваш регіон і технологію? В каталозі [Пульс Агро](https://pulse-agro.com/product-category/seed/) — 14 гібридів соняшнику: класичні, Clearfield, Clearfield Plus і ExpressSun. Доставка по всій Україні.
+Підбираєте гібрид соняшнику під ваш регіон і технологію? В каталозі [Пульс Агро](/product-category/seed/) — 14 гібридів соняшнику: класичні, Clearfield, Clearfield Plus і ExpressSun. Доставка по всій Україні.

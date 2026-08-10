@@ -1,4 +1,4 @@
----
+﻿---
 title: "Норма висіву соняшнику: таблиця по регіонах і гібридах"
 slug: "norma-vysivu-sonyashnyka"
 publishDate: 2026-05-05
@@ -46,35 +46,35 @@ tags: []
 
 | Гібрид | Технологія | Норма висіву (тис. насінин/га) | Регіон |
 | --- | --- | --- | --- |
-| [Ампара](https://pulse-agro.com/product/gibryd-sonyashnyka-ampara/) | Класична | 45–55 | Центр, Південь |
-| [ЄС Белла](https://pulse-agro.com/product/es-bella/) | Класична | 45–55 | Центр, Південь |
-| [Набаро](https://pulse-agro.com/product/nabaro/) | Класична | 48–58 | Центр, Лісостеп, Південь |
+| [Ампара](/product/gibryd-sonyashnyka-ampara/) | Класична | 45–55 | Центр, Південь |
+| [ЄС Белла](/product/es-bella/) | Класична | 45–55 | Центр, Південь |
+| [Набаро](/product/nabaro/) | Класична | 48–58 | Центр, Лісостеп, Південь |
 
 ### Clearfield (Євролайтнінг)
 
 | Гібрид | Технологія | Норма висіву (тис. насінин/га) | Регіон |
 | --- | --- | --- | --- |
-| [ЄС Генезіс](https://pulse-agro.com/product/es-genezis/) | Clearfield | 45–55 | Центр, Південь |
-| [ЄС Генераліс](https://pulse-agro.com/product/es-generalis/) | Clearfield | 45–55 | Центр, Південь |
-| [Ласса](https://pulse-agro.com/product/lassa/) | Clearfield | 45–55 | Центр, Південь |
-| [Страйк](https://pulse-agro.com/product/strajk/) | Clearfield | 45–55 | Центр, Південь |
+| [ЄС Генезіс](/product/es-genezis/) | Clearfield | 45–55 | Центр, Південь |
+| [ЄС Генераліс](/product/es-generalis/) | Clearfield | 45–55 | Центр, Південь |
+| [Ласса](/product/lassa/) | Clearfield | 45–55 | Центр, Південь |
+| [Страйк](/product/strajk/) | Clearfield | 45–55 | Центр, Південь |
 
 ### Clearfield Plus (Євролайтнінг плюс)
 
 | Гібрид | Технологія | Норма висіву (тис. насінин/га) | Регіон |
 | --- | --- | --- | --- |
-| [Сілена](https://pulse-agro.com/product/silena/) | Clearfield Plus | 48–58 | Центр, Лісостеп |
-| [Браун](https://pulse-agro.com/product/gibryd-sonyashnyka-braun/) | Clearfield Plus | 45–55 | Центр, Південь |
+| [Сілена](/product/silena/) | Clearfield Plus | 48–58 | Центр, Лісостеп |
+| [Браун](/product/gibryd-sonyashnyka-braun/) | Clearfield Plus | 45–55 | Центр, Південь |
 
 ### ExpressSun (Гранстар)
 
 | Гібрид | Технологія | Норма висіву (тис. насінин/га) | Регіон |
 | --- | --- | --- | --- |
-| [Аркона](https://pulse-agro.com/product/arkona/) | ExpressSun | 48–58 | Центр, Лісостеп, Південь |
-| [ЄС Ароматік](https://pulse-agro.com/product/es-aromatik/) | ExpressSun | 45–55 | Центр, Південь |
-| [Каскара](https://pulse-agro.com/product/kaskara/) | ExpressSun | 43–53 | Центр, Південь, Степ |
-| [Сонора](https://pulse-agro.com/product/sonora/) | ExpressSun | 40–50 | Центр, Південь, Степ |
-| [Лусон](https://pulse-agro.com/product/gibryd-sonyashnyka-luson/) | ExpressSun | 42–52 | Центр, Південь |
+| [Аркона](/product/arkona/) | ExpressSun | 48–58 | Центр, Лісостеп, Південь |
+| [ЄС Ароматік](/product/es-aromatik/) | ExpressSun | 45–55 | Центр, Південь |
+| [Каскара](/product/kaskara/) | ExpressSun | 43–53 | Центр, Південь, Степ |
+| [Сонора](/product/sonora/) | ExpressSun | 40–50 | Центр, Південь, Степ |
+| [Лусон](/product/gibryd-sonyashnyka-luson/) | ExpressSun | 42–52 | Центр, Південь |
 
 ## Як розрахувати норму висіву соняшнику в кг/га
 
@@ -151,4 +151,4 @@ tags: []
 
 ## Купити насіння соняшнику з доставкою по Україні
 
-В каталозі [Пульс Агро](https://pulse-agro.com/product-category/seed/) — 14 гібридів соняшнику: класичні, Clearfield, Clearfield Plus і ExpressSun для всіх регіонів України. Детальний огляд гібридів — у статті [Гібриди соняшнику 2026](https://pulse-agro.com/gibrydy-sonyashnyka/). Доставка по всій Україні.
+В каталозі [Пульс Агро](/product-category/seed/) — 14 гібридів соняшнику: класичні, Clearfield, Clearfield Plus і ExpressSun для всіх регіонів України. Детальний огляд гібридів — у статті [Гібриди соняшнику 2026](/gibrydy-sonyashnyka/). Доставка по всій Україні.
