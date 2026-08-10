@@ -32,6 +32,7 @@ const topBarPhones = [
     <title>{title} — Pulse Agro</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" href="/favicon.svg" />
+    <slot name="head" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

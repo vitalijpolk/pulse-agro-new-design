@@ -23,6 +23,33 @@ const related = product.relatedProducts
 const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
 ---
 <BaseLayout title={product.title} description={product.description.slice(0, 160)}>
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.title,
+    "description": product.description || product.tagline || product.title,
+    "image": product.images.map(img => `https://pulse-agro.com${img}`),
+    "brand": {
+      "@type": "Brand",
+      "name": manufacturerEntry?.data.name ?? "Pulse Agro"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "UAH",
+      "lowPrice": minPrice,
+      "highPrice": Math.max(...product.priceTiers.map(t => t.price)),
+      "offerCount": product.priceTiers.length,
+      "availability": product.inStock
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      "url": `https://pulse-agro.com/product/${product.slug}/`,
+      "seller": {
+        "@type": "Organization",
+        "name": "Pulse Agro",
+        "url": "https://pulse-agro.com"
+      }
+    }
+  })} />
   <div class="wrap product-page">
     <nav class="breadcrumb">
       <a href="/">Головна</a> /
