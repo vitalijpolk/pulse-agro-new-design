@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Контакти" description="Контакти Pulse Agro — телефони, email, адреса. Харків. Працюємо Пн–Пт 9:00–18:00.">
-  <div class="wrap contacts-page">
+  <div class="contacts-page">
 
     <nav class="breadcrumb">
       <a href="/">Головна</a> / <span>Контакти</span>
@@ -95,7 +95,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  .contacts-page { padding: 30px 20px 70px; max-width: 900px; }
+  .contacts-page { padding: 48px 60px 80px; max-width: 960px; margin: 0 auto; }
 
   .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 22px; }
   .breadcrumb a:hover { color: #e8772e; }
@@ -161,7 +161,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
   .btn-primary:hover { background: #d9691f; }
 
+  @media (max-width: 900px) {
+    .contacts-page { padding: 40px 32px 70px; }
+  }
+
   @media (max-width: 640px) {
+    .contacts-page { padding: 32px 20px 60px; }
     .contacts-grid { grid-template-columns: 1fr; }
     .cta-block { flex-direction: column; align-items: flex-start; padding: 24px; }
     .req-row { flex-direction: column; gap: 2px; }

@@ -62,7 +62,7 @@ const pages = defineCollection({
 
 const manufacturers = defineCollection({
   loader: file('./src/content/manufacturers.json'),
-  schema: z.object({ id: z.string(), name: z.string() }),
+  schema: z.object({ id: z.string(), name: z.string(), sortOrder: z.number().default(99) }),
 });
 
 const technologies = defineCollection({

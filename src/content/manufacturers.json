@@ -1,22 +1,7 @@
 [
-  {
-    "id": "agroseeds",
-    "name": "Agroseeds"
-  },
-  {
-    "id": "pulse-agro",
-    "name": "Pulse-agro"
-  },
-  {
-    "id": "agro7trade",
-    "name": "Агро7трейд"
-  },
-  {
-    "id": "agronasinneprom",
-    "name": "Агронасінняпром"
-  },
-  {
-    "id": "ahroekspert",
-    "name": "Агроексперт"
-  }
+  { "id": "pulse-agro",       "name": "Pulse-agro",        "sortOrder": 1 },
+  { "id": "agro7trade",       "name": "Агро7трейд",        "sortOrder": 2 },
+  { "id": "agronasinneprom",  "name": "Агронасінняпром",   "sortOrder": 3 },
+  { "id": "agroseeds",        "name": "Agroseeds",          "sortOrder": 4 },
+  { "id": "ahroekspert",      "name": "Агроексперт",        "sortOrder": 5 }
 ]

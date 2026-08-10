@@ -116,9 +116,10 @@ const seedCrops = [
     .about-media { max-width: 380px; }
   }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; align-items: start; }
 
-  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .cat-grid { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+  .cat-grid > * { flex: 0 1 calc(25% - 12px); min-width: 140px; }
   .cat-card {
     display: flex; align-items: center; justify-content: center; text-align: center;
     background: #f7f4ef; border-radius: 10px; padding: 30px 10px; font-weight: 700;
@@ -126,6 +127,6 @@ const seedCrops = [
   .cat-card:hover { background: #efe7da; }
 
   @media (max-width: 700px) {
-    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .cat-grid > * { flex: 0 1 calc(50% - 8px); }
   }
 </style>

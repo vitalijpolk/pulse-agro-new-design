@@ -101,7 +101,9 @@ const topBarPhones = [
           <h4>Контакти</h4>
           <p>{contactsPage?.data.address}</p>
           <p class="hours-line">Пн–Пт: 9:00–18:00</p>
-          <a class="contact-link" href={`tel:${phone.replace(/[^+\d]/g, '')}`}>{phone}</a>
+          {topBarPhones.map((p) => (
+            <a class="contact-link" href={p.href}>{p.label}</a>
+          ))}
           <a class="contact-link" href={`mailto:${contactsPage?.data.email}`}>{contactsPage?.data.email}</a>
         </div>
       </div>

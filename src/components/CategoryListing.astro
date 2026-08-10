@@ -17,10 +17,13 @@ const products = allProducts.filter(
   (p) => p.data.categoryGroup === categoryGroup && p.data.category === category,
 );
 
-const manufacturerIds = [...new Set(products.map((p) => p.data.manufacturer).filter((m) => m !== 'unknown'))];
+const presentManufacturerIds = new Set(products.map((p) => p.data.manufacturer).filter((m) => m !== 'unknown'));
 const technologyIds = [...new Set(products.map((p) => p.data.technology).filter(Boolean))] as string[];
 
-const manufacturers = await Promise.all(manufacturerIds.map((id) => getEntry('manufacturers', id)));
+const allManufacturers = await getCollection('manufacturers');
+const manufacturers = allManufacturers
+  .filter((m) => presentManufacturerIds.has(m.id))
+  .sort((a, b) => (a.data.sortOrder ?? 99) - (b.data.sortOrder ?? 99));
 const technologies = await Promise.all(technologyIds.map((id) => getEntry('technologies', id)));
 
 const cards = products.map((p) => ({
@@ -36,7 +39,7 @@ const cards = products.map((p) => ({
 <div class="category-listing">
   <h1>{title}</h1>
 
-  <div class="layout">
+  <div class:list={['layout', { 'with-sidebar': manufacturers.length > 1 || technologies.length > 1 }]}>
     {(manufacturers.length > 1 || technologies.length > 1) && (
       <aside class="filters">
         <h2>Фільтр товарів</h2>
@@ -91,7 +94,8 @@ const cards = products.map((p) => ({
 
 <style>
   .category-listing { max-width: 1180px; margin: 0 auto; padding: 30px 20px 60px; }
-  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 30px; margin-top: 20px; }
+  .layout { display: block; margin-top: 20px; }
+  .layout.with-sidebar { display: grid; grid-template-columns: 220px 1fr; gap: 30px; }
   .filters { border: 1px solid #e5e0da; border-radius: 10px; padding: 16px; align-self: start; }
   .filters h2 { font-size: 1rem; margin: 0 0 10px; }
   .filters fieldset { border: none; padding: 0; margin: 0 0 16px; }
@@ -99,27 +103,23 @@ const cards = products.map((p) => ({
   .filters label { display: block; font-size: 0.88rem; margin-bottom: 6px; cursor: pointer; }
   .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; color: #6b6b6b; font-size: 0.9rem; }
   .sort { padding: 6px 10px; border-radius: 6px; border: 1px solid #ddd6cc; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 280px)); gap: 18px; justify-content: center; align-items: start; }
   .grid-item.is-hidden { display: none; }
   .empty { color: #6b6b6b; }
 
   @media (max-width: 800px) {
-    .layout { grid-template-columns: 1fr; }
+    .layout.with-sidebar { grid-template-columns: 1fr; }
   }
 </style>
 
 <script>
   const container = document.querySelector('.category-listing');
   if (container) {
-    const items = /** @type {HTMLElement[]} */ (Array.from(container.querySelectorAll('.grid-item')));
+    const items = Array.from(container.querySelectorAll<HTMLElement>('.grid-item'));
     const grid = container.querySelector('#product-grid');
-    const techBoxes = /** @type {HTMLInputElement[]} */ (
-      Array.from(container.querySelectorAll('.filter-technology'))
-    );
-    const manBoxes = /** @type {HTMLInputElement[]} */ (
-      Array.from(container.querySelectorAll('.filter-manufacturer'))
-    );
-    const sortSelect = /** @type {HTMLSelectElement | null} */ (container.querySelector('.sort'));
+    const techBoxes = Array.from(container.querySelectorAll<HTMLInputElement>('.filter-technology'));
+    const manBoxes = Array.from(container.querySelectorAll<HTMLInputElement>('.filter-manufacturer'));
+    const sortSelect = container.querySelector<HTMLSelectElement>('.sort');
     const countEl = container.querySelector('.count');
 
     function apply() {

@@ -6,20 +6,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-media">
-        <img class="hero-img main" src="/images/about/bags-stack.jpg" alt="Насіння Pulse Agro на складі" loading="eager" />
-        <img class="hero-img side" src="/images/about/team-van.jpg" alt="Автомобіль Pulse Agro" loading="lazy" />
-      </div>
-      <div class="hero-text">
+      <div class="wrap hero-content">
         <nav class="breadcrumb"><a href="/">Головна</a> / <span>Про компанію</span></nav>
-        <h1>Якісне насіння для стабільного врожаю</h1>
-        <p class="lead">
-          Pulse Agro постачає насіннєвий матеріал від перевірених вітчизняних виробників —
-          гібриди соняшнику, кукурудзи, пшениці, ячменю, рапсу, гороху та сої.
-          Наша мета: допомогти кожному господарству отримати максимальний урожай
-          за доступну ціну.
-        </p>
-        <a class="btn-primary" href="/product-category/seed/">Переглянути каталог →</a>
+        <div class="hero-body">
+          <div class="hero-logo">
+            <img src="/images/site/logo-original.png" alt="Pulse Agro" />
+          </div>
+          <div class="hero-text">
+            <h1>Якісне насіння для стабільного врожаю</h1>
+            <p class="lead">
+              Pulse Agro постачає насіннєвий матеріал від перевірених вітчизняних виробників —
+              гібриди соняшнику, кукурудзи, пшениці, ячменю, рапсу, гороху та сої.
+              Наша мета: допомогти кожному господарству отримати максимальний врожай за доступну ціну.
+            </p>
+            <a class="btn-primary" href="/product-category/seed/">Переглянути каталог →</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -93,26 +95,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <style>
   .about-page { padding-bottom: 70px; }
 
-  .breadcrumb { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 18px; }
-  .breadcrumb a { color: rgba(255,255,255,0.8); }
-  .breadcrumb span { color: rgba(255,255,255,0.5); }
+  .breadcrumb { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-bottom: 32px; }
+  .breadcrumb a { color: rgba(255,255,255,0.55); }
+  .breadcrumb a:hover { color: #fff; }
 
   /* HERO */
   .hero {
-    display: grid; grid-template-columns: 1fr 1fr; min-height: 480px;
-    background: #1c1c1c; color: #fff;
+    background: #111109;
+    display: flex; align-items: center; color: #fff;
   }
-  .hero-media { position: relative; overflow: hidden; background: #111; }
-  .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero-img.main { z-index: 1; }
-  .hero-img.side { z-index: 2; clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%); }
-  .hero-text { padding: 48px 48px 48px 44px; display: flex; flex-direction: column; justify-content: center; }
-  h1 { font-size: 2rem; margin: 0 0 18px; line-height: 1.2; }
-  .lead { color: rgba(255,255,255,0.8); line-height: 1.65; margin: 0 0 30px; font-size: 1rem; }
+  .hero-content { padding: 64px 20px 72px; }
+  .hero-body {
+    display: flex; align-items: center; gap: 48px;
+  }
+  .hero-logo { flex-shrink: 0; }
+  .hero-logo img { height: 100px; width: auto; display: block; }
+  .hero-text { flex: 1; }
+  h1 { font-size: 2.2rem; margin: 0 0 18px; line-height: 1.2; }
+  .lead { color: rgba(255,255,255,0.7); line-height: 1.7; margin: 0 0 32px; font-size: 1rem; max-width: 520px; }
 
   .btn-primary {
     display: inline-block; background: #e8772e; color: #fff; font-weight: 700;
-    border-radius: 999px; padding: 13px 28px; transition: background 0.15s; align-self: flex-start;
+    border-radius: 999px; padding: 13px 28px; transition: background 0.15s;
   }
   .btn-primary:hover { background: #d9691f; }
 
@@ -155,16 +159,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .btn-secondary:hover { background: rgba(255,255,255,0.18); color: #fff; }
 
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; }
-    .hero-media { height: 260px; position: relative; }
-    .hero-img.side { clip-path: none; }
-    .hero-text { padding: 32px 24px; }
+    .hero-content { padding: 48px 20px 56px; }
+    .hero-body { gap: 32px; }
+    .hero-logo img { height: 80px; }
+    h1 { font-size: 1.7rem; }
     .services-grid { grid-template-columns: 1fr; }
     .media-grid { grid-template-columns: repeat(2, 1fr); }
     .cta-block { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
+    .hero-content { padding: 40px 20px 48px; }
+    .hero-body { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .hero-logo img { height: 72px; }
     .media-grid { gap: 10px; }
     h1 { font-size: 1.6rem; }
   }

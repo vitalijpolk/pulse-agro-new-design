@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Доставка і оплата" description="Умови доставки по Україні та способи оплати замовлень Pulse Agro. Нова Пошта, Укрпошта, Делівері, Інтайм. Безготівковий розрахунок, переказ на карту, накладений платіж.">
-  <div class="wrap pay-page">
+  <div class="pay-page">
 
     <nav class="breadcrumb">
       <a href="/">Головна</a> /
@@ -127,7 +127,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  .pay-page { padding: 30px 20px 70px; max-width: 900px; }
+  .pay-page { padding: 48px 60px 80px; max-width: 960px; margin: 0 auto; }
 
   .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 22px; }
   .breadcrumb a:hover { color: #e8772e; }
@@ -221,7 +221,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .btn-secondary:hover { background: rgba(255,255,255,0.18); }
 
   /* responsive */
+  @media (max-width: 900px) {
+    .pay-page { padding: 40px 32px 70px; }
+  }
+
   @media (max-width: 700px) {
+    .pay-page { padding: 32px 20px 60px; }
     .delivery-grid { grid-template-columns: 1fr; }
     .payment-grid { grid-template-columns: 1fr; }
     .cta-block { padding: 28px 24px; flex-direction: column; align-items: flex-start; }
