@@ -49,10 +49,9 @@ const seedCrops = [
       <div class="about-text">
         <h2>Про компанію</h2>
         <p>
-          ТОВ «ПУЛЬС АГРО» реалізує насіннєвий матеріал найвищої якості та потенціалу від найкращих
-          вітчизняних виробників. Нашою метою є розповсюдження нових сортів і гібридів та забезпечення
-          сільськогосподарських виробників високоякісним насінням з високими показниками урожайності
-          та за доступними цінами.
+          Постачаємо сертифіковане насіння від перевірених українських виробників, яке вже демонструє стабільні
+          результати на полях по всій Україні. Допомагаємо підібрати оптимальний гібрид під умови вашого
+          господарства та забезпечуємо підтримку агронома на кожному етапі.
         </p>
         <p>Окрім насіннєвого матеріалу ми надаємо:</p>
         <ul>
@@ -95,8 +94,9 @@ const seedCrops = [
 
   .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; }
   .about-text p { color: #4a4a4a; line-height: 1.6; }
-  .about-text ul { margin: 0 0 6px; padding-left: 20px; color: #4a4a4a; line-height: 1.6; }
-  .about-text li { margin-bottom: 6px; }
+  .about-text ul { margin: 0 0 6px; padding-left: 0; list-style: none; color: #4a4a4a; line-height: 1.6; }
+  .about-text li { margin-bottom: 10px; padding-left: 22px; position: relative; }
+  .about-text li::before { content: ''; position: absolute; left: 0; top: 9px; width: 10px; height: 2px; background: #e8772e; border-radius: 2px; }
 
   .about-media {
     display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
@@ -128,5 +128,6 @@ const seedCrops = [
 
   @media (max-width: 700px) {
     .cat-grid > * { flex: 0 1 calc(50% - 8px); }
+    .cat-grid > *:last-child:nth-child(odd) { margin-left: auto; margin-right: auto; }
   }
 </style>

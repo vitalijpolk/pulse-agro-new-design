@@ -15,9 +15,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <div class="hero-text">
             <h1>Якісне насіння для стабільного врожаю</h1>
             <p class="lead">
-              Pulse Agro постачає насіннєвий матеріал від перевірених вітчизняних виробників —
-              гібриди соняшнику, кукурудзи, пшениці, ячменю, рапсу, гороху та сої.
-              Наша мета: допомогти кожному господарству отримати максимальний врожай за доступну ціну.
+              Pulse Agro постачає сертифіковане насіння від перевірених українських виробників, яке вже
+              демонструє стабільні результати на полях по всій Україні. Допомагаємо підібрати оптимальні
+              гібриди під ваші умови вирощування, щоб отримати максимальний урожай.
             </p>
             <a class="btn-primary" href="/product-category/seed/">Переглянути каталог →</a>
           </div>
@@ -31,34 +31,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="services-grid">
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
+          <span class="snum">01</span>
           <h3>Підбір гібридів</h3>
-          <p>Допоможемо підібрати насіння під ґрунтові та кліматичні особливості вашого регіону. Розрахуємо оптимальну норму висіву для кожної ділянки.</p>
+          <p>Підберемо насіння під ґрунтові та кліматичні особливості вашого регіону і розрахуємо оптимальну норму висіву.</p>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-            </svg>
-          </div>
-          <h3>Консультації з технологій</h3>
-          <p>Консультуємо з питань вирощування будь-яких агрокультур з нашого каталогу — від підготовки ґрунту до збирання врожаю.</p>
+          <span class="snum">02</span>
+          <h3>Технологічний супровід</h3>
+          <p>Консультуємо з питань вирощування від підготовки ґрунту до збирання врожаю — для кожної культури з каталогу.</p>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-              <path d="M12 6v6l4 2"/>
-            </svg>
-          </div>
-          <h3>Підбір засобів захисту</h3>
-          <p>Кваліфікована допомога з підбору засобів захисту рослин та добрив на всіх етапах вегетації під конкретні культури і умови.</p>
+          <span class="snum">03</span>
+          <h3>Засоби захисту і добрива</h3>
+          <p>Допомагаємо підібрати засоби захисту рослин та добрива під конкретний гібрид і умови вирощування.</p>
         </div>
 
       </div>
@@ -126,14 +113,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     font-size: 1.5rem; font-weight: 800; border-bottom: 2px solid #e8772e;
     display: inline-block; padding-bottom: 6px; margin: 0 0 28px;
   }
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .service-card { border: 1px solid #ece7de; border-radius: 16px; padding: 28px 24px; background: #fff; }
-  .service-icon {
-    width: 52px; height: 52px; background: #fff5ed; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: #e8e2d8; border-radius: 16px; overflow: hidden;
+  }
+  .service-card { background: #fff; padding: 32px 28px; }
+  .snum {
+    display: block; font-size: 0.72rem; font-weight: 800; color: #e8772e;
+    letter-spacing: 0.08em; margin-bottom: 14px;
   }
   .service-card h3 { font-size: 1rem; font-weight: 700; margin: 0 0 10px; color: #1a1a1a; }
-  .service-card p { color: #555; font-size: 0.9rem; line-height: 1.6; margin: 0; }
+  .service-card p { color: #5a5a5a; font-size: 0.88rem; line-height: 1.65; margin: 0; }
 
   /* MEDIA */
   .media-section { padding: 60px 20px 0; }
@@ -163,7 +153,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .hero-body { gap: 32px; }
     .hero-logo img { height: 80px; }
     h1 { font-size: 1.7rem; }
-    .services-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; border-radius: 12px; }
+    .cta-block { align-items: center; text-align: center; }
+    .cta-buttons { justify-content: center; width: 100%; }
     .media-grid { grid-template-columns: repeat(2, 1fr); }
     .cta-block { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
   }
