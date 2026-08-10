@@ -1,0 +1,30 @@
+# Pulse Agro
+
+> ТОВ «ПУЛЬС АГРО» — інтернет-магазин насіння агрокультур в Україні. Реалізуємо насіннєвий матеріал найвищої якості від перевірених вітчизняних виробників: соняшник, кукурудза, пшениця, рапс, ячмінь, горох, соя.
+
+## Про компанію
+
+Pulse Agro підбирає гібриди під ґрунтові й кліматичні особливості регіону, надає консультації з технологій вирощування та допомагає з підбором засобів захисту рослин. Доставка насіння по всій Україні.
+
+## Каталог насіння
+
+- [Насіння соняшнику](https://pulse-agro.com/product-category/seed/sunflower/) — гібриди під різні технології (класична, Євро-Лайтнінг, Гранстар, Clearfield)
+- [Насіння кукурудзи](https://pulse-agro.com/product-category/seed/corn/) — гібриди ФАО 180–350
+- [Насіння пшениці](https://pulse-agro.com/product-category/seed/wheat/) — озима пшениця
+- [Насіння рапсу](https://pulse-agro.com/product-category/seed/rapeseed/) — озимий і ярий рапс
+- [Насіння ячменю](https://pulse-agro.com/product-category/seed/barley/) — ярий і озимий ячмінь
+- [Насіння гороху](https://pulse-agro.com/product-category/seed/pea/) — сорти гороху
+- [Насіння сої](https://pulse-agro.com/product-category/seed/soy/) — сорти під Roundup Ready
+
+## Контакти
+
+- Сайт: https://pulse-agro.com
+- Телефон: +38 (097) 312-53-18, +38 (099) 15-333-25
+- Графік роботи: Пн–Пт 9:00–18:00
+
+## Додаткові сторінки
+
+- [Про компанію](https://pulse-agro.com/about-company/)
+- [Доставка і оплата](https://pulse-agro.com/pay-delivery-terms/)
+- [Контакти](https://pulse-agro.com/contacts/)
+- [Новини](https://pulse-agro.com/category/blog/)
