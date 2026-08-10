@@ -30,6 +30,9 @@ const products = defineCollection({
         }),
       )
       .min(1),
+    growingTips: z
+      .array(z.object({ title: z.string(), text: z.string() }))
+      .default([]),
     description: z.string().default(''),
     images: z.array(z.string()).default([]),
     relatedProducts: z.array(z.string()).default([]),
