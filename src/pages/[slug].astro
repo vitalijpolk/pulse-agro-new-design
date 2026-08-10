@@ -44,5 +44,16 @@ const { Content } = await render(entry);
   .prose :global(h2) { margin-top: 2em; }
   .prose :global(table) { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
   .prose :global(th), .prose :global(td) { border: 1px solid #e5e0da; padding: 8px 10px; text-align: left; }
-  .prose :global(blockquote) { border-left: 3px solid #e8772e; padding-left: 16px; color: #555; margin: 1.5em 0; }
+  .prose :global(blockquote) {
+    background: #fff8f2;
+    border: 1.5px solid #f0c89a;
+    border-left: 4px solid #e8772e;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 2em 0;
+    color: #1a1a0e;
+  }
+  .prose :global(blockquote p) { margin: 0 0 10px; }
+  .prose :global(blockquote p:last-child) { margin: 0; }
+  .prose :global(blockquote strong) { color: #e8772e; font-size: 1.05rem; }
 </style>
