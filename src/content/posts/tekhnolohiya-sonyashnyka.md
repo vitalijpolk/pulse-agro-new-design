@@ -212,4 +212,4 @@ tags: []
 
 ## Насіння соняшнику з доставкою по Україні
 
-В каталозі [Пульс Агро](/product-category/seed/) — 14 гібридів соняшнику: класичні, Clearfield, Clearfield Plus і ExpressSun. Детальний огляд — [Гібриди соняшника 2026](/gibrydy-sonyashnyka/). Доставка по всій Україні.
+В каталозі [Пульс Агро](/product-category/seed/) — 14 гібридів соняшнику: класичні, Clearfield, Clearfield Plus і ExpressSun. Детальний огляд — [Гібриди соняшника 2026](/gibrydy-sonyashnyka/). Захист від хвороб — [Фунгіциди для захисту посівів](/de-kupyty-fungiczydy-v-ukrayini/). Доставка по всій Україні.

@@ -21,64 +21,64 @@ const related = product.relatedProducts
   .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
 const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
+const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
 ---
 <BaseLayout title={product.title} description={product.description.slice(0, 160)}>
+  {minPrice > 0 && (
+    <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "@id": `https://pulse-agro.com/product/${product.slug}/`,
+      "url": `https://pulse-agro.com/product/${product.slug}/`,
+      "name": product.title,
+      "description": product.description || product.tagline || product.title,
+      "image": product.images.length > 0
+        ? product.images.map(img => `https://pulse-agro.com${img}`)
+        : undefined,
+      "sku": product.sku || product.slug,
+      "brand": {
+        "@type": "Brand",
+        "name": manufacturerEntry?.data.name ?? "Pulse Agro"
+      },
+      "offers": product.priceTiers.length === 1
+        ? {
+            "@type": "Offer",
+            "priceCurrency": "UAH",
+            "price": product.priceTiers[0].price,
+            "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            "itemCondition": "https://schema.org/NewCondition",
+            "priceValidUntil": priceValidUntil,
+            "url": `https://pulse-agro.com/product/${product.slug}/`,
+            "seller": { "@type": "Organization", "name": "Pulse Agro", "url": "https://pulse-agro.com" }
+          }
+        : {
+            "@type": "AggregateOffer",
+            "priceCurrency": "UAH",
+            "lowPrice": minPrice,
+            "highPrice": Math.max(...product.priceTiers.map(t => t.price)),
+            "offerCount": product.priceTiers.filter(t => t.price > 0).length,
+            "priceValidUntil": priceValidUntil,
+            "offers": product.priceTiers.filter(t => t.price > 0).map(t => ({
+              "@type": "Offer",
+              "name": t.label,
+              "priceCurrency": "UAH",
+              "price": t.price,
+              "priceValidUntil": priceValidUntil,
+              "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+              "itemCondition": "https://schema.org/NewCondition",
+              "url": `https://pulse-agro.com/product/${product.slug}/`,
+              "seller": { "@type": "Organization", "name": "Pulse Agro", "url": "https://pulse-agro.com" }
+            }))
+          }
+    })} />
+  )}
   <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Product",
-        "@id": `https://pulse-agro.com/product/${product.slug}/`,
-        "url": `https://pulse-agro.com/product/${product.slug}/`,
-        "name": product.title,
-        "description": product.description || product.tagline || product.title,
-        "image": product.images.length > 0
-          ? product.images.map(img => `https://pulse-agro.com${img}`)
-          : undefined,
-        "sku": product.sku || product.slug,
-        "brand": {
-          "@type": "Brand",
-          "name": manufacturerEntry?.data.name ?? "Pulse Agro"
-        },
-        "offers": minPrice > 0
-          ? (product.priceTiers.length === 1
-            ? {
-                "@type": "Offer",
-                "priceCurrency": "UAH",
-                "price": product.priceTiers[0].price,
-                "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-                "itemCondition": "https://schema.org/NewCondition",
-                "url": `https://pulse-agro.com/product/${product.slug}/`,
-                "seller": { "@type": "Organization", "name": "Pulse Agro", "url": "https://pulse-agro.com" }
-              }
-            : {
-                "@type": "AggregateOffer",
-                "priceCurrency": "UAH",
-                "lowPrice": minPrice,
-                "highPrice": Math.max(...product.priceTiers.map(t => t.price)),
-                "offerCount": product.priceTiers.filter(t => t.price > 0).length,
-                "offers": product.priceTiers.filter(t => t.price > 0).map(t => ({
-                  "@type": "Offer",
-                  "name": t.label,
-                  "priceCurrency": "UAH",
-                  "price": t.price,
-                  "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-                  "itemCondition": "https://schema.org/NewCondition",
-                  "url": `https://pulse-agro.com/product/${product.slug}/`,
-                  "seller": { "@type": "Organization", "name": "Pulse Agro", "url": "https://pulse-agro.com" }
-                }))
-              }
-            )
-          : undefined,
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Насіння", "item": "https://pulse-agro.com/product-category/seed/" },
-          { "@type": "ListItem", "position": 3, "name": product.title, "item": `https://pulse-agro.com/product/${product.slug}/` }
-        ]
-      }
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Насіння", "item": "https://pulse-agro.com/product-category/seed/" },
+      { "@type": "ListItem", "position": 3, "name": product.title, "item": `https://pulse-agro.com/product/${product.slug}/` }
     ]
   })} />
   <div class="wrap product-page">

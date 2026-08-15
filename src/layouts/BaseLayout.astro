@@ -6,6 +6,7 @@ interface Props {
   description?: string;
 }
 const { title, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, 'https://pulse-agro.com').href;
 
 const seedCrops = [
   { slug: 'sunflower', label: 'Соняшник' },
@@ -31,8 +32,9 @@ const topBarPhones = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} — Pulse Agro</title>
     {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" href="/favicon.svg" />
-    <script is:inline type="application/ld+json">{`{
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Pulse Agro",
@@ -42,7 +44,7 @@ const topBarPhones = [
         { "@type": "ContactPoint", "telephone": "+380973125318", "contactType": "customer service", "availableLanguage": "Ukrainian" },
         { "@type": "ContactPoint", "telephone": "+380991533325", "contactType": "customer service", "availableLanguage": "Ukrainian" }
       ]
-    }`}</script>
+    })}></script>
     <slot name="head" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
