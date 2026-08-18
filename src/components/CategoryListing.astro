@@ -76,14 +76,14 @@ const cards = products.map((p) => ({
         <p class="empty">Наразі товарів у цій категорії немає. Зв'яжіться з нами — підкажемо альтернативу.</p>
       ) : (
         <div class="grid" id="product-grid">
-          {cards.map((c) => (
+          {cards.map((c, i) => (
             <div
               class="grid-item"
               data-manufacturer={c.manufacturer}
               data-technology={c.technology}
               data-price={c.minPrice}
             >
-              <ProductCard slug={c.slug} title={c.title} image={c.image} minPrice={c.minPrice} tagline={c.tagline} />
+              <ProductCard slug={c.slug} title={c.title} image={c.image} minPrice={c.minPrice} tagline={c.tagline} eager={i < 4} />
             </div>
           ))}
         </div>

@@ -18,13 +18,14 @@ const products = allProducts.filter((p) => p.data.categoryGroup === categoryGrou
     <p class="empty">Наразі товарів немає. Зв'яжіться з нами — підкажемо альтернативу.</p>
   ) : (
     <div class="grid">
-      {products.map((p) => (
+      {products.map((p, i) => (
         <ProductCard
           slug={p.data.slug}
           title={p.data.title}
           image={p.data.images[0]}
           minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
           tagline={p.data.tagline}
+          eager={i < 4}
         />
       ))}
     </div>

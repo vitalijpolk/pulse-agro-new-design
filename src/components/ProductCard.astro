@@ -5,14 +5,15 @@ interface Props {
   image?: string;
   minPrice: number;
   tagline?: string;
+  eager?: boolean;
 }
-const { slug, title, image, minPrice, tagline } = Astro.props;
+const { slug, title, image, minPrice, tagline, eager = false } = Astro.props;
 const priceLabel = minPrice > 0 ? `від ${minPrice.toLocaleString('uk-UA')} грн` : 'ціна за запитом';
 ---
 <div class="product-card">
   <a class="card-link" href={`/product/${slug}/`}>
     <div class="photo-crop">
-      {image ? <img src={image} alt={title} loading="lazy" /> : <span class="no-photo">Фото незабаром</span>}
+      {image ? <img src={image} alt={title} loading={eager ? 'eager' : 'lazy'} /> : <span class="no-photo">Фото незабаром</span>}
     </div>
     <div class="info">
       <h3>{title}</h3>

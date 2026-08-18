@@ -23,13 +23,14 @@ const seedCrops = [
   <section class="wrap featured-section">
     <h2>Новинки магазину</h2>
     <div class="grid">
-      {featured.map((p) => (
+      {featured.map((p, i) => (
         <ProductCard
           slug={p.data.slug}
           title={p.data.title}
           image={p.data.images[0]}
           minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
           tagline={p.data.tagline}
+          eager={i < 4}
         />
       ))}
     </div>
