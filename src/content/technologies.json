@@ -26,5 +26,9 @@
   {
     "id": "intensyvna",
     "name": "Інтенсивна"
+  },
+  {
+    "id": "express-su",
+    "name": "Express (SU)"
   }
 ]

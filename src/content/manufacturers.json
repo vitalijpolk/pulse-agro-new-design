@@ -3,5 +3,11 @@
   { "id": "agro7trade",       "name": "Агро7трейд",        "sortOrder": 2 },
   { "id": "agronasinneprom",  "name": "Агронасінняпром",   "sortOrder": 3 },
   { "id": "agroseeds",        "name": "Agroseeds",          "sortOrder": 4 },
-  { "id": "ahroekspert",      "name": "Агроексперт",        "sortOrder": 5 }
+  { "id": "ahroekspert",      "name": "Агроексперт",        "sortOrder": 5 },
+  { "id": "sgi",               "name": "СГІ",                 "sortOrder": 6 },
+  { "id": "ifrig",             "name": "ІФРіГ",               "sortOrder": 7 },
+  { "id": "fg-bor",            "name": "ФГ «Бор»",            "sortOrder": 8 },
+  { "id": "ir-yurieva",        "name": "ІР ім. Юр'єва НААН",  "sortOrder": 9 },
+  { "id": "limagrain",         "name": "Лімагрейн Україна",   "sortOrder": 10 },
+  { "id": "kws",               "name": "KWS",                 "sortOrder": 11 }
 ]
