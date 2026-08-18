@@ -23,6 +23,12 @@ const related = product.relatedProducts
 const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
 const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
 
+const GENERIC_STOCK_PHOTOS = new Set([
+  '/images/products/gorodnyczya/psh02.jpg',
+  '/images/products/podolyanka/psh03.jpg',
+]);
+const usesGenericPhoto = product.images.some((img) => GENERIC_STOCK_PHOTOS.has(img));
+
 const priceLabel = minPrice > 0 ? `${minPrice} грн` : 'за запитом';
 const seoTitle = `Купити ${product.title} — ціна ${priceLabel}`;
 const seoDescription = `Купити ${product.title} в Pulse Agro. Ціна ${priceLabel}${product.tagline ? '. ' + product.tagline : ''}. Доставка по Україні, консультація агронома.`.slice(0, 160);
@@ -110,6 +116,7 @@ function parseScore(value: string): number | null {
             <span>Фото незабаром</span>
           </div>
         )}
+        {usesGenericPhoto && <p class="photo-note">Фото ілюстративне, не відповідає конкретному сорту</p>}
       </div>
 
       <div class="summary">
@@ -277,6 +284,7 @@ function parseScore(value: string): number | null {
   .gallery-frame img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
   .gallery-placeholder { border: 1.5px dashed #d9d2c4; }
   .gallery-placeholder span { color: #a39c8c; font-size: 0.88rem; text-align: center; }
+  .photo-note { color: #a39c8c; font-size: 0.78rem; text-align: center; margin: 0; }
   h1 { margin-top: 0; }
   .meta-line { display: flex; flex-wrap: wrap; gap: 6px 18px; color: #6b6b6b; font-size: 0.88rem; margin: 10px 0 16px; }
   .meta-line strong { color: #1a1a1a; }
