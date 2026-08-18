@@ -12,7 +12,7 @@ const priceLabel = minPrice > 0 ? `від ${minPrice.toLocaleString('uk-UA')} г
 <div class="product-card">
   <a class="card-link" href={`/product/${slug}/`}>
     <div class="photo-crop">
-      {image && <img src={image} alt={title} loading="lazy" />}
+      {image ? <img src={image} alt={title} loading="lazy" /> : <span class="no-photo">Фото незабаром</span>}
     </div>
     <div class="info">
       <h3>{title}</h3>
@@ -51,6 +51,7 @@ const priceLabel = minPrice > 0 ? `від ${minPrice.toLocaleString('uk-UA')} г
     display: flex; align-items: center; justify-content: center; padding: 22px;
   }
   .photo-crop img { max-width: 100%; max-height: 200px; width: auto; height: auto; object-fit: contain; display: block; transition: transform 0.3s ease; }
+  .no-photo { color: #a39c8c; font-size: 0.8rem; text-align: center; }
   .product-card:hover .photo-crop img { transform: scale(1.03); }
 
   .info { padding: 14px 16px 0; flex-shrink: 0; }

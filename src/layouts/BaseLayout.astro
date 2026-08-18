@@ -33,7 +33,9 @@ const topBarPhones = [
     <title>{title} — Pulse Agro</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",

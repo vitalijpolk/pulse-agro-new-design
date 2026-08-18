@@ -22,8 +22,19 @@ const related = product.relatedProducts
 
 const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
 const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
+
+const priceLabel = minPrice > 0 ? `${minPrice} грн` : 'за запитом';
+const seoTitle = `Купити ${product.title} — ціна ${priceLabel}`;
+const seoDescription = `Купити ${product.title} в Pulse Agro. Ціна ${priceLabel}${product.tagline ? '. ' + product.tagline : ''}. Доставка по Україні, консультація агронома.`.slice(0, 160);
+
+function parseScore(value: string): number | null {
+  const m = value.trim().match(/^(\d{1,2})(?:\s*\/\s*10)?$/);
+  if (!m) return null;
+  const n = Number(m[1]);
+  return n >= 1 && n <= 10 ? n : null;
+}
 ---
-<BaseLayout title={product.title} description={product.description.slice(0, 160)}>
+<BaseLayout title={seoTitle} description={seoDescription}>
   {minPrice > 0 && (
     <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -90,11 +101,15 @@ const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear()
 
     <div class="product-top">
       <div class="gallery">
-        {product.images.map((img) => (
+        {product.images.length > 0 ? product.images.map((img) => (
           <div class="gallery-frame">
             <img src={img} alt={product.title} />
           </div>
-        ))}
+        )) : (
+          <div class="gallery-frame gallery-placeholder">
+            <span>Фото незабаром</span>
+          </div>
+        )}
       </div>
 
       <div class="summary">
@@ -135,9 +150,22 @@ const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear()
             <h2>{section.title}</h2>
             <table>
               <tbody>
-                {section.items.map((item) => (
-                  <tr><th>{item.label}</th><td>{item.value}</td></tr>
-                ))}
+                {section.items.map((item) => {
+                  const score = parseScore(item.value);
+                  return (
+                    <tr>
+                      <th>{item.label}</th>
+                      <td>
+                        {score !== null ? (
+                          <span class="score">
+                            <span class="score-track"><span class="score-fill" style={`width:${score * 10}%`} /></span>
+                            <span class="score-num">{score}</span>
+                          </span>
+                        ) : item.value}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -247,6 +275,8 @@ const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear()
     display: flex; align-items: center; justify-content: center; padding: 28px; margin-bottom: 12px;
   }
   .gallery-frame img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+  .gallery-placeholder { border: 1.5px dashed #d9d2c4; }
+  .gallery-placeholder span { color: #a39c8c; font-size: 0.88rem; text-align: center; }
   h1 { margin-top: 0; }
   .meta-line { display: flex; flex-wrap: wrap; gap: 6px 18px; color: #6b6b6b; font-size: 0.88rem; margin: 10px 0 16px; }
   .meta-line strong { color: #1a1a1a; }
@@ -256,15 +286,23 @@ const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear()
   .description { color: #444; line-height: 1.6; margin-bottom: 24px; }
   .order-column { position: sticky; top: 20px; }
 
-  .specs { margin-top: 50px; columns: 3 260px; column-gap: 40px; }
-  .spec-group { break-inside: avoid; margin-bottom: 24px; }
-  .spec-group h2 { font-size: 1.05rem; border-bottom: 2px solid #e8772e; display: inline-block; padding-bottom: 4px; margin: 0 0 10px; }
-  .spec-group table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  .specs { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .spec-group { background: #fff; border: 1px solid #e8e2d8; border-radius: 14px; padding: 22px 24px 6px; }
+  .spec-group h2 {
+    font-size: 0.8rem; font-weight: 800; letter-spacing: 0.03em; color: #1a1a1a;
+    border-bottom: 2px solid #e8772e; display: inline-block; padding-bottom: 6px; margin: 0 0 14px;
+  }
+  .spec-group table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }
   .spec-group tr { border-bottom: 1px solid #ece7de; }
   .spec-group tr:last-child { border-bottom: none; }
-  .spec-group th, .spec-group td { padding: 7px 4px; text-align: left; font-weight: 400; }
-  .spec-group th { color: #6b6b6b; width: 55%; }
-  .spec-group td { color: #1a1a1a; font-weight: 600; }
+  .spec-group th, .spec-group td { padding: 12px 0; vertical-align: middle; font-weight: 400; }
+  .spec-group th { text-align: left; color: #6b6b6b; padding-right: 16px; }
+  .spec-group td { text-align: right; color: #1a1a1a; font-weight: 700; }
+
+  .score { display: inline-flex; align-items: center; gap: 8px; }
+  .score-track { width: 56px; height: 6px; border-radius: 3px; background: #ece7de; overflow: hidden; flex-shrink: 0; }
+  .score-fill { display: block; height: 100%; background: #e8772e; border-radius: 3px; }
+  .score-num { font-variant-numeric: tabular-nums; min-width: 1.1em; text-align: right; }
 
   .block-title { font-size: 1.15rem; font-weight: 700; margin: 0 0 20px; color: #1a1a1a; }
 
