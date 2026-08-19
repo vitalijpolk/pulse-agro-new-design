@@ -3,7 +3,7 @@ title: "Гібриди соняшнику 2026: як вибрати під ре�
 slug: "gibrydy-sonyashnyka"
 publishDate: 2026-04-25
 excerpt: "Як обрати гібрид соняшнику для України: що таке ФАО, які технології Clearfield та ExpressSun, норми висіву та огляд кращих гібридів. Каталог насіння — «Пульс Агро»."
-coverImage: "/images/posts/gibrydy-sonyashnyka/noah-g-nfdelc2unpi-unsplash-2.jpg"
+coverImage: "/images/posts/gibrydy-sonyashnyka/noah-g-nfdelc2unpi-unsplash-2.webp"
 tags: []
 ---
 Соняшник — одна з найприбутковіших культур в Україні. Але результат сезону на 50% залежить від правильного вибору гібриду. Помилитись дорого — насіння соняшника коштує від 1500 грн за посівну одиницю, і переграти ситуацію вже після сівби неможливо.

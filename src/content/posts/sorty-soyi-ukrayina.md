@@ -3,7 +3,7 @@ title: "Сорти сої для України 2026: яку вибрати і �
 slug: "sorty-soyi-ukrayina"
 publishDate: 2026-06-10
 excerpt: "Які сорти сої дають найбільше з гектара в Степу, Лісостепу та Поліссі? Порівнюємо по врожайності, стиглості та стійкості до хвороб. Насіння сої з доставкою по Україні."
-coverImage: "/images/posts/sorty-soyi-ukrayina/chatgpt-image-10-cherv.-2026-r.-16_36_06.png"
+coverImage: "/images/posts/sorty-soyi-ukrayina/chatgpt-image-10-cherv.-2026-r.-16_36_06.webp"
 tags: []
 ---
 *   [Чому вибір сорту — це половина врожаю](#chomu-sort)

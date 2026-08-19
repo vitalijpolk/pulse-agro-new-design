@@ -3,7 +3,7 @@ title: "Пшениця Подолянка: 61–75 ц/га, де купити н
 slug: "pshenytsya-podolyanka"
 publishDate: 2026-08-10
 excerpt: "Озима пшениця Подолянка — врожайність 61–75 ц/га, зимостійкість 8/10, клас «сильна». Строки сівби, норми висіву по зонах і де купити сертифіковане насіння з доставкою по Україні."
-coverImage: "/images/posts/pshenytsya-podolyanka/cover.jpg"
+coverImage: "/images/posts/pshenytsya-podolyanka/cover.webp"
 tags: ["пшениця", "озима пшениця", "подолянка"]
 ---
 

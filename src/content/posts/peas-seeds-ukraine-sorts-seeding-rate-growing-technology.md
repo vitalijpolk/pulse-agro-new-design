@@ -3,7 +3,7 @@ title: "Насіння гороху: сорти, норми висіву та т
 slug: "peas-seeds-ukraine-sorts-seeding-rate-growing-technology"
 publishDate: 2026-04-26
 excerpt: "Горох в Україні — сорти, оптимальні строки сівби, норми висіву по регіонах і технологія вирощування. Насіння гороху з доставкою по Україні."
-coverImage: "/images/posts/peas-seeds-ukraine-sorts-seeding-rate-growing-technology/jean-michel-garcia-bwkuj3y5js4-unsplash-scaled.jpg"
+coverImage: "/images/posts/peas-seeds-ukraine-sorts-seeding-rate-growing-technology/jean-michel-garcia-bwkuj3y5js4-unsplash-scaled.webp"
 tags: []
 ---
 **Зміст статті**

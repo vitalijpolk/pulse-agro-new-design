@@ -3,7 +3,7 @@ title: "Технологія вирощування кукурудзи: повн
 slug: "tekhnolohiya-kukurudzy"
 publishDate: 2026-05-05
 excerpt: "Повна технологія вирощування кукурудзи: попередники, норми добрив, захист посівів, строки збирання. Врожайність 7–14 т/га. Насіння кукурудзи ФАО 180–350 з доставкою по Україні — Pulse Agro."
-coverImage: "/images/posts/tekhnolohiya-kukurudzy/phoenix-han-4wwyxzm5bqw-unsplash-scaled.jpg"
+coverImage: "/images/posts/tekhnolohiya-kukurudzy/phoenix-han-4wwyxzm5bqw-unsplash-scaled.webp"
 tags: []
 ---
 **Зміст статті**

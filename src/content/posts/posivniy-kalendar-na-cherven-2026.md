@@ -3,7 +3,7 @@ title: "Посівний календар на червень 2026 року — 
 slug: "posivniy-kalendar-na-cherven-2026"
 publishDate: 2026-06-12
 excerpt: "Посівний календар на червень 2026 для аграріїв України. Що сіяти в червні, місячний календар, захист посівів кукурудзи та соняшнику, підживлення та ключові роботи в полі."
-coverImage: "/images/posts/posivniy-kalendar-na-cherven-2026/chatgpt-image-27-trav.-2026-r.-12_44_47.png"
+coverImage: "/images/posts/posivniy-kalendar-na-cherven-2026/chatgpt-image-27-trav.-2026-r.-12_44_47.webp"
 tags: []
 ---
 *   [Що ще можна посіяти в червні 2026](#scho-siyaty)

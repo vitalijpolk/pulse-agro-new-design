@@ -3,7 +3,7 @@ title: "Технологія вирощування соняшнику: від �
 slug: "tekhnolohiya-sonyashnyka"
 publishDate: 2026-05-05
 excerpt: "Повна технологія вирощування соняшнику: попередники, добрива, захист посівів, норми висіву та збирання. Врожайність 2,5–4 т/га. Насіння соняшнику Clearfield і ExpressSun з доставкою — Pulse Agro."
-coverImage: "/images/posts/tekhnolohiya-sonyashnyka/maria-oswalt-ns5valsrpho-unsplash-scaled.jpg"
+coverImage: "/images/posts/tekhnolohiya-sonyashnyka/maria-oswalt-ns5valsrpho-unsplash-scaled.webp"
 tags: []
 ---
 **Зміст статті**

@@ -3,7 +3,7 @@ title: "Посівний календар на липень 2026: роботи �
 slug: "posivniy-kalendar-na-lypen-2026"
 publishDate: 2026-06-12
 excerpt: "Посівний календар на липень 2026 для аграріїв України. Місячний посівний календар, що сіяти в липні, захист кукурудзи та соняшнику, підготовка до озимих."
-coverImage: "/images/posts/posivniy-kalendar-na-lypen-2026/chatgpt-image-28-trav.-2026-r.-20_08_17.png"
+coverImage: "/images/posts/posivniy-kalendar-na-lypen-2026/chatgpt-image-28-trav.-2026-r.-20_08_17.webp"
 tags: []
 ---
 *   [Що відбувається в полі в липні](#lypen-pole)

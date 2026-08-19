@@ -24,7 +24,7 @@ const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
 const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
 
 const GENERIC_STOCK_PHOTOS = new Set([
-  '/images/products/gorodnyczya/psh02.jpg',
+  '/images/products/gorodnyczya/psh02.webp',
   '/images/products/podolyanka/psh03.jpg',
 ]);
 const usesGenericPhoto = product.images.some((img) => GENERIC_STOCK_PHOTOS.has(img));
