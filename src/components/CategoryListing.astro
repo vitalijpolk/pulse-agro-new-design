@@ -63,6 +63,7 @@ const cards = products.map((p) => ({
     )}
 
     <div class="results">
+      {!(manufacturers.length > 1 || technologies.length > 1) && <h2 class="sr-only">Товари</h2>}
       <div class="toolbar">
         <span class="count">{cards.length} товар(ів)</span>
         <select class="sort">
@@ -94,6 +95,10 @@ const cards = products.map((p) => ({
 
 <style>
   .category-listing { max-width: 1180px; margin: 0 auto; padding: 30px 20px 60px; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
   .layout { display: block; margin-top: 20px; }
   .layout.with-sidebar { display: grid; grid-template-columns: 220px 1fr; gap: 30px; }
   .filters { border: 1px solid #e5e0da; border-radius: 10px; padding: 16px; align-self: start; }

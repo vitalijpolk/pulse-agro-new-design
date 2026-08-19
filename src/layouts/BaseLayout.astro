@@ -106,7 +106,7 @@ const topBarPhones = [
           <p>Постачаємо сертифіковане насіння соняшнику, кукурудзи, пшениці, рапсу, ячменю та сої від перевірених українських виробників. Консультації агронома, підбір під ваш регіон.</p>
         </div>
         <div>
-          <h4>Каталог насіння</h4>
+          <p class="footer-heading">Каталог насіння</p>
           <ul>
             {seedCrops.map((c) => (
               <li><a href={`/product-category/seed/${c.slug}/`}>{c.label}</a></li>
@@ -114,7 +114,7 @@ const topBarPhones = [
           </ul>
         </div>
         <div class="footer-contacts">
-          <h4>Контакти</h4>
+          <p class="footer-heading">Контакти</p>
           <p>{contactsPage?.data.address}</p>
           <p class="hours-line">Пн–Пт: 9:00–18:00</p>
           {topBarPhones.map((p) => (
@@ -181,7 +181,7 @@ const topBarPhones = [
 
   .site-footer { background: var(--dark); color: #c9c9c9; margin-top: 60px; padding: 50px 0 20px; }
   .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.3fr; gap: 30px; align-items: start; }
-  .footer-grid h4 { color: #fff; margin: 0 0 12px; }
+  .footer-heading { color: #fff; font-weight: 700; margin: 0 0 12px; }
   .footer-grid ul { list-style: none; padding: 0; margin: 0; }
   .footer-grid li { margin-bottom: 6px; }
   .footer-grid a:hover { color: var(--orange); }
@@ -190,7 +190,7 @@ const topBarPhones = [
   .footer-contacts {
     background: var(--orange); border-radius: 14px; padding: 18px 20px;
   }
-  .footer-contacts h4 { color: #fff; margin: 0 0 10px; }
+  .footer-contacts .footer-heading { margin: 0 0 10px; }
   .footer-contacts p { color: rgba(255,255,255,0.85); margin: 0 0 6px; font-size: 0.9rem; }
   .footer-contacts .hours-line { color: rgba(255,255,255,0.7); font-size: 0.82rem; margin-bottom: 12px; }
   .footer-contacts .contact-link {
