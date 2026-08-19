@@ -22,8 +22,8 @@ const [,, slug, description] = process.argv;
 if (!slug) { console.error('❌ Вкажи slug: node scripts/generate-image.js <slug> "<опис>"'); process.exit(1); }
 
 const prompt = description
-  ? `Professional agricultural photography for a Ukrainian farming website. ${description}. Realistic photo, Ukrainian countryside, beautiful natural lighting, no text, no watermarks, landscape orientation.`
-  : `Professional agricultural photography for Ukrainian farming article "${slug.replace(/-/g,' ')}". Realistic crops, Ukrainian fields, golden hour lighting. No text, no watermarks.`;
+  ? `Documentary photojournalism, shot on a DSLR with a 35mm or 50mm lens, natural unedited look. ${description}. Ukrainian countryside, candid real-world lighting and imperfections, authentic textures, no CGI or illustration look, no oversaturated colors, no plastic/airbrushed skin or surfaces, no text, no watermarks, landscape orientation.`
+  : `Documentary photojournalism, shot on a DSLR with a 35mm or 50mm lens, natural unedited look, for Ukrainian farming article "${slug.replace(/-/g,' ')}". Ukrainian fields, candid real-world lighting, authentic textures, no CGI or illustration look, no text, no watermarks.`;
 
 console.log(`\n🎨 Генерую обкладинку для: ${slug}`);
 console.log(`   Промпт: ${prompt.substring(0, 80)}...\n`);
