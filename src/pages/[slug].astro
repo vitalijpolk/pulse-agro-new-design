@@ -52,6 +52,20 @@ if (coverImage) {
       }
     })} />
   )}
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": kind === 'post'
+      ? [
+          { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://pulse-agro.com/category/blog/" },
+          { "@type": "ListItem", "position": 3, "name": entry.data.title, "item": `https://pulse-agro.com/${entry.data.slug}/` }
+        ]
+      : [
+          { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+          { "@type": "ListItem", "position": 2, "name": entry.data.title, "item": `https://pulse-agro.com/${entry.data.slug}/` }
+        ]
+  })} />
   <article class="wrap content-page">
     {kind === 'post' && coverImage && (
       <img class="cover" src={coverImage} alt={entry.data.title} width={coverSize?.width} height={coverSize?.height} />

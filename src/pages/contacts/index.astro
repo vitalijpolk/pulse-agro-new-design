@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Контакти" description="Контакти Pulse Agro — телефони, email, адреса. Харків. Працюємо Пн–Пт 9:00–18:00.">
+<BaseLayout title="Контакти — телефон, адреса, графік роботи" description="Контакти Pulse Agro — телефони, email, адреса. Харків. Працюємо Пн–Пт 9:00–18:00.">
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Контакти", "item": "https://pulse-agro.com/contacts/" }
+    ]
+  })} />
   <div class="contacts-page">
 
     <nav class="breadcrumb">

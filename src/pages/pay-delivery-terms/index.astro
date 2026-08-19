@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Доставка і оплата" description="Умови доставки по Україні та способи оплати замовлень Pulse Agro. Нова Пошта, Укрпошта, Делівері, Інтайм. Безготівковий розрахунок, переказ на карту, накладений платіж.">
+<BaseLayout title="Доставка і оплата" description="Умови доставки по Україні та способи оплати Pulse Agro. Нова Пошта, Укрпошта, Делівері. Безготівковий розрахунок, переказ на карту, накладений платіж.">
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Доставка і оплата", "item": "https://pulse-agro.com/pay-delivery-terms/" }
+    ]
+  })} />
   <div class="pay-page">
 
     <nav class="breadcrumb">

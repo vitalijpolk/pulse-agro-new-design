@@ -2,7 +2,7 @@
 title: "Початок посівної: якісне насіння та сучасна техніка в роботі"
 slug: "pochatok-posivnoyi-yakisne-nasinnya-ta-suchasna-tekhnika"
 publishDate: 2026-05-24
-excerpt: "Pulse Agro стартував посівну 2026: гібриди кукурудзи Бентота ФАО 250, Мірісса ФАО 280, Тавіра ФАО 320 та техніка Horsch у полі. Читайте про практичний підхід до сівби."
+excerpt: "Pulse Agro стартував посівну 2026: гібриди кукурудзи Бентота ФАО 250, Мірісса ФАО 280, Тавіра ФАО 320 та техніка Horsch у полі."
 coverImage: "/images/posts/pochatok-posivnoyi-yakisne-nasinnya-ta-suchasna-tekhnika/123123.jpg"
 tags: []
 ---

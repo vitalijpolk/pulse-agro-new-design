@@ -6,9 +6,9 @@ const posts = (await getCollection('posts')).sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
 ---
-<BaseLayout title="Новини" description="Статті про насіння, гібриди та технології вирощування від Pulse Agro.">
+<BaseLayout title="Блог про насіння та агротехнології" description="Статті про насіння, гібриди та технології вирощування від Pulse Agro.">
   <div class="wrap blog-index">
-    <h1>Новини</h1>
+    <h1>Блог Pulse Agro</h1>
     <div class="grid">
       {posts.map((post) => (
         <a class="post-card" href={`/${post.data.slug}/`}>

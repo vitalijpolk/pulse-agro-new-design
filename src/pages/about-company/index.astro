@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Про компанію" description="Pulse Agro — реалізація якісного насіння гібридів соняшнику, кукурудзи, пшениці, рапсу та інших агрокультур. Підбір гібридів, консультації, технологічний супровід.">
+<BaseLayout title="Про компанію — постачальник насіння агрокультур" description="Pulse Agro — реалізація якісного насіння гібридів соняшнику, кукурудзи, пшениці, рапсу та інших агрокультур. Підбір гібридів, консультації, технологічний супровід.">
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Про компанію", "item": "https://pulse-agro.com/about-company/" }
+    ]
+  })} />
   <div class="about-page">
 
     <!-- HERO -->
