@@ -3,7 +3,7 @@ title: "Тверда чи м'яка пшениця: в чому різниця �
 slug: "tverda-chy-myaka-pshenytsya"
 publishDate: 2026-08-19
 excerpt: "Тверда і м'яка пшениця: різниця у зерні, врожайності, ціні та технології вирощування. Коли обирати дурум, а коли — м'яку пшеницю. Насіння — Pulse Agro."
-coverImage: "/images/posts/pshenytsya-podolyanka/cover.webp"
+coverImage: "/images/posts/tverda-chy-myaka-pshenytsya/cover.webp"
 tags: []
 ---
 Тверда і м'яка пшениця — два різні ботанічні види (*Triticum durum* і *Triticum aestivum*), а не просто два сорти однієї культури. Вони відрізняються складом зерна, технологією вирощування, ціною реалізації і навіть регіонами, де їх вигідно сіяти. У цій статті — чим вони відрізняються на практиці і як обрати між ними.
