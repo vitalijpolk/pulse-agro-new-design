@@ -3,6 +3,8 @@ import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import OrderForm from '../../components/OrderForm.astro';
+import sharp from 'sharp';
+import path from 'node:path';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -28,6 +30,13 @@ const GENERIC_STOCK_PHOTOS = new Set([
   '/images/products/podolyanka/psh03.jpg',
 ]);
 const usesGenericPhoto = product.images.some((img) => GENERIC_STOCK_PHOTOS.has(img));
+
+const imageSizes = await Promise.all(
+  product.images.map(async (img) => {
+    const meta = await sharp(path.join(process.cwd(), 'public', img)).metadata();
+    return meta.width && meta.height ? { width: meta.width, height: meta.height } : undefined;
+  }),
+);
 
 const priceLabel = minPrice > 0 ? `${minPrice} грн` : 'за запитом';
 const seoTitle = `Купити ${product.title} — ціна ${priceLabel}`;
@@ -105,9 +114,9 @@ if (offers) productLd.offers = offers;
 
     <div class="product-top">
       <div class="gallery">
-        {product.images.length > 0 ? product.images.map((img) => (
+        {product.images.length > 0 ? product.images.map((img, i) => (
           <div class="gallery-frame">
-            <img src={img} alt={product.title} />
+            <img src={img} alt={product.title} width={imageSizes[i]?.width} height={imageSizes[i]?.height} />
           </div>
         )) : (
           <div class="gallery-frame gallery-placeholder">

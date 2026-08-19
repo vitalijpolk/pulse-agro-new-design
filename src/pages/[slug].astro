@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import sharp from 'sharp';
+import path from 'node:path';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -20,6 +22,13 @@ export async function getStaticPaths() {
 
 const { kind, entry } = Astro.props;
 const { Content } = await render(entry);
+
+const coverImage = 'coverImage' in entry.data ? entry.data.coverImage : undefined;
+let coverSize: { width: number; height: number } | undefined;
+if (coverImage) {
+  const meta = await sharp(path.join(process.cwd(), 'public', coverImage)).metadata();
+  if (meta.width && meta.height) coverSize = { width: meta.width, height: meta.height };
+}
 ---
 <BaseLayout title={entry.data.title} description={'excerpt' in entry.data ? entry.data.excerpt : undefined}>
   {kind === 'post' && 'publishDate' in entry.data && (
@@ -44,8 +53,8 @@ const { Content } = await render(entry);
     })} />
   )}
   <article class="wrap content-page">
-    {kind === 'post' && 'coverImage' in entry.data && entry.data.coverImage && (
-      <img class="cover" src={entry.data.coverImage} alt={entry.data.title} />
+    {kind === 'post' && coverImage && (
+      <img class="cover" src={coverImage} alt={entry.data.title} width={coverSize?.width} height={coverSize?.height} />
     )}
     <h1>{entry.data.title}</h1>
     {kind === 'post' && 'publishDate' in entry.data && (
@@ -59,7 +68,7 @@ const { Content } = await render(entry);
 
 <style>
   .content-page { padding: 30px 20px 60px; max-width: 760px; }
-  .cover { width: 100%; border-radius: 12px; margin-bottom: 20px; }
+  .cover { width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; }
   .date { color: #6b6b6b; font-size: 0.9rem; }
   .prose { line-height: 1.7; }
   .prose :global(h2) { margin-top: 2em; }
