@@ -9,6 +9,11 @@
 # WordPress shop page
 /shop/                                      /product-category/seed/  301
 
+# Merged duplicate wheat products + slug transliteration cleanup
+/product/pshenicya-ozima-bogdana/           /product/pshenytsya-bogdana/           301
+/product/pshenyczya-ozyma-myaka-bogdana/    /product/pshenytsya-bogdana/           301
+/product/pshenyczya-ozyma-katrusya-odeska/  /product/pshenytsya-katrusya-odeska/   301
+
 # Product tags → relevant categories
 /product-tag/nasinnya-kukurudzy-kupyty/     /product-category/seed/corn/       301
 /product-tag/nasinnya-kukurudzy-320-fao/    /product-category/seed/corn/       301
