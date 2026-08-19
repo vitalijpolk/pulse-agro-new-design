@@ -25,7 +25,11 @@ const slides = [
 <section class="hero-slider">
   <div class="slides">
     {slides.map((s, i) => (
-      <div class:list={['slide', { active: i === 0 }]} style={`background-image: url(${s.image})`}>
+      <div
+        class:list={['slide', { active: i === 0 }]}
+        data-bg={s.image}
+        style={i === 0 ? `background-image: url(${s.image})` : undefined}
+      >
         <div class="overlay"></div>
         <div class="wrap content">
           {i === 0 ? <h1 class="slide-title">{s.title}</h1> : <p class="slide-title">{s.title}</p>}
@@ -90,6 +94,15 @@ const slides = [
     const dots = Array.from(root.querySelectorAll('.dot'));
     let current = 0;
     let timer;
+
+    // The first slide's background is set inline for fast LCP; the rest are
+    // only fetched after the page has settled, so they don't compete with it.
+    slides.forEach((s) => {
+      const bg = s.getAttribute('data-bg');
+      if (bg && !s.classList.contains('active')) {
+        (s as HTMLElement).style.backgroundImage = `url(${bg})`;
+      }
+    });
 
     function show(index) {
       current = (index + slides.length) % slides.length;
