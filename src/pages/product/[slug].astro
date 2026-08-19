@@ -11,6 +11,16 @@ export async function getStaticPaths() {
   return products.map((p) => ({ params: { slug: p.data.slug }, props: { product: p.data } }));
 }
 
+const CATEGORY_LABELS: Record<string, string> = {
+  sunflower: 'Соняшник',
+  corn: 'Кукурудза',
+  wheat: 'Пшениця',
+  rapeseed: 'Рапс',
+  barley: 'Ячмінь',
+  pea: 'Горох',
+  soy: 'Соя',
+};
+
 const { product } = Astro.props;
 const allProducts = await getCollection('products');
 
@@ -108,7 +118,7 @@ if (offers) productLd.offers = offers;
   <div class="wrap product-page">
     <nav class="breadcrumb">
       <a href="/">Головна</a> /
-      <a href={`/product-category/${product.categoryGroup}/${product.category}/`}>{product.category}</a> /
+      <a href={`/product-category/${product.categoryGroup}/${product.category}/`}>{CATEGORY_LABELS[product.category] ?? product.category}</a> /
       {product.title}
     </nav>
 
@@ -282,7 +292,7 @@ if (offers) productLd.offers = offers;
 
 <style>
   .product-page { padding: 30px 20px 60px; }
-  .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 20px; text-transform: capitalize; }
+  .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 20px; }
   .product-top { display: grid; grid-template-columns: minmax(260px, 380px) 1fr minmax(280px, 340px); gap: 32px; align-items: start; }
   .gallery-frame {
     aspect-ratio: 1 / 1; background: #f6f4f0; border-radius: 12px;
