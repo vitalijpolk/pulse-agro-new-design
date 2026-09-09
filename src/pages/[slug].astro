@@ -30,7 +30,7 @@ if (coverImage) {
   if (meta.width && meta.height) coverSize = { width: meta.width, height: meta.height };
 }
 ---
-<BaseLayout title={entry.data.title} description={'excerpt' in entry.data ? entry.data.excerpt : undefined}>
+<BaseLayout title={entry.data.title} description={'excerpt' in entry.data ? entry.data.excerpt : undefined} image={coverImage}>
   {kind === 'post' && 'publishDate' in entry.data && (
     <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -50,6 +50,17 @@ if (coverImage) {
         "url": "https://pulse-agro.com",
         "logo": { "@type": "ImageObject", "url": "https://pulse-agro.com/images/site/logo-original.png" }
       }
+    })} />
+  )}
+  {kind === 'post' && 'faq' in entry.data && entry.data.faq.length > 0 && (
+    <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": entry.data.faq.map((item) => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": { "@type": "Answer", "text": item.answer }
+      }))
     })} />
   )}
   <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
@@ -85,6 +96,9 @@ if (coverImage) {
   .cover { width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; }
   .date { color: #6b6b6b; font-size: 0.9rem; }
   .prose { line-height: 1.7; }
+  .prose :global(a) { color: #bc5615; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+  .prose :global(a:hover) { color: #e8772e; }
+  .prose :global(blockquote a) { color: #bc5615; }
   .prose :global(h2) { margin-top: 2em; }
   .prose :global(table) { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
   .prose :global(th), .prose :global(td) { border: 1px solid #e5e0da; padding: 8px 10px; text-align: left; }
