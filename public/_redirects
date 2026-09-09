@@ -19,6 +19,9 @@
 /koly-zbyraty-kukurudzu-2026/       /tekhnolohiya-kukurudzy/        301
 /koly-zbyraty-sonyashnyk-2026/      /tekhnolohiya-sonyashnyka/      301
 
+# Old WordPress slug (pre-migration), now renamed without the year
+/gibrydy-sonyashnyka-2026/          /gibrydy-sonyashnyka/           301
+
 # Product tags → relevant categories
 /product-tag/nasinnya-kukurudzy-kupyty/     /product-category/seed/corn/       301
 /product-tag/nasinnya-kukurudzy-320-fao/    /product-category/seed/corn/       301
