@@ -1,0 +1,185 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const contactsPage = (await getCollection('pages')).find((p) => p.data.slug === 'contacts');
+const phone = contactsPage?.data.phone ?? '+38 (097) 312-53-18';
+const phoneHref = `tel:${phone.replace(/[^\d+]/g, '')}`;
+const email = contactsPage?.data.email ?? 'info@pulse-agro.com';
+---
+<BaseLayout title="Опт — насіння оптом від Pulse Agro" description="Оптові умови на насіння кукурудзи, соняшника, пшениці, сої та ячменю. Від 100 посівних одиниць або від 20 тонн. Розрахунок ціни під ваш обсяг.">
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Опт", "item": "https://pulse-agro.com/opt/" }
+    ]
+  })} />
+  <div class="opt-page">
+
+    <nav class="breadcrumb">
+      <a href="/">Головна</a> /
+      <span>Опт</span>
+    </nav>
+
+    <h1>Насіння оптом</h1>
+    <p class="lead">Продаємо насіння кукурудзи, соняшника, пшениці, сої та ячменю оптовими партіями — для господарств, заготівельників і посередників. Ціна розраховується індивідуально під культуру, обсяг і форму співпраці.</p>
+    <p class="lead"><a href="/product-category/seed/corn/">Кукурудза оптом</a> та <a href="/product-category/seed/sunflower/">соняшник оптом</a> — від 100 посівних одиниць, <a href="/product-category/seed/wheat/">пшениця</a> та інша зернова група — від 20 тонн. Плануєте купити насіння кукурудзи оптом для перепродажу чи власного господарства — зв'яжіться з нами, порахуємо ціну під ваш обсяг.</p>
+
+    <!-- ───── THRESHOLDS ───── -->
+    <section class="section">
+      <h2 class="section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        З якого обсягу починається опт
+      </h2>
+      <p class="section-note">Пороги різні для насіння просапних культур і зернової групи — залежно від того, як культура зазвичай реалізується.</p>
+
+      <div class="threshold-grid">
+        <div class="threshold-card">
+          <span class="threshold-tag">Насіння гібридів</span>
+          <strong class="threshold-value">від 100 посівних одиниць</strong>
+          <p>Кукурудза, соняшник — облік іде посівними одиницями, а не тоннами.</p>
+        </div>
+        <div class="threshold-card">
+          <span class="threshold-tag">Зернова група</span>
+          <strong class="threshold-value">від 20 тонн</strong>
+          <p>Пшениця, соя, ячмінь — від обсягу однієї машини.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── TERMS ───── -->
+    <section class="section">
+      <h2 class="section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Умови для оптових клієнтів
+      </h2>
+
+      <div class="terms-grid">
+        <div class="term-card">
+          <div class="term-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <strong>ФОП і ТОВ</strong>
+          <p>Працюємо з фізичними особами-підприємцями і юридичними особами, зокрема з ПДВ — оформлюємо всі потрібні документи.</p>
+        </div>
+
+        <div class="term-card">
+          <div class="term-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+          </div>
+          <strong>Гнучка оплата</strong>
+          <p>Готівковий і безготівковий розрахунок, робота за договором. Для постійних партнерів можливі індивідуальні умови оплати.</p>
+        </div>
+
+        <div class="term-card">
+          <div class="term-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e8772e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <strong>Доставка по всій Україні</strong>
+          <p>Власним транспортом, найманою фурою, Новою поштою або самовивіз зі складу — крім тимчасово окупованих територій.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── HOW PRICE WORKS ───── -->
+    <section class="section">
+      <h2 class="section-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Як розрахувати ціну
+      </h2>
+      <p class="section-note">Ціни в каталозі — роздрібні, для кінцевого покупця. Оптова ціна залежить від культури, обсягу і форми співпраці, тому розраховується індивідуально під кожне замовлення.</p>
+      <p class="section-note">Зателефонуйте або залиште заявку — вкажіть культуру і орієнтовний обсяг, і ми порахуємо ціну під ваше замовлення.</p>
+    </section>
+
+    <!-- ───── CTA ───── -->
+    <div class="cta-block">
+      <p>Готові обговорити оптову партію? Зв'яжіться з нами — розрахуємо ціну і умови доставки під ваше замовлення.</p>
+      <div class="cta-buttons">
+        <a class="btn-primary" href={phoneHref}>{phone}</a>
+        <a class="btn-secondary" href="/contacts/">Зв'язатись з нами</a>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .opt-page { padding: 48px 60px 80px; max-width: 960px; margin: 0 auto; }
+
+  .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 22px; }
+  .breadcrumb a:hover { color: #bc5615; }
+
+  h1 { font-size: 2rem; margin: 0 0 12px; }
+  .lead { color: #555; line-height: 1.65; margin: 0 0 48px; font-size: 1.02rem; max-width: 680px; }
+
+  .section { margin-bottom: 50px; }
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.25rem; font-weight: 800; margin: 0 0 6px;
+    color: #1a1a1a; border-left: 4px solid #e8772e; padding-left: 14px;
+  }
+  .section-title svg { flex-shrink: 0; color: #bc5615; }
+  .section-note { color: #6b6b6b; font-size: 0.92rem; margin: 0 0 14px; padding-left: 18px; max-width: 680px; line-height: 1.6; }
+
+  /* threshold cards */
+  .threshold-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 18px; }
+  .threshold-card {
+    border: 1px solid #ece7de; border-radius: 14px; padding: 24px;
+    background: #fff; transition: box-shadow 0.15s;
+  }
+  .threshold-card:hover { box-shadow: 0 6px 20px rgba(28,26,20,0.1); }
+  .threshold-tag {
+    display: inline-block; background: #f0ebe3; color: #6b6b6b; font-size: 0.78rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 12px;
+  }
+  .threshold-value { display: block; font-size: 1.3rem; font-weight: 800; color: #bc5615; margin-bottom: 8px; }
+  .threshold-card p { color: #555; font-size: 0.9rem; line-height: 1.5; margin: 0; }
+
+  /* terms cards */
+  .terms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+  .term-card {
+    border: 1px solid #ece7de; border-radius: 14px; padding: 24px 20px;
+    background: #fff; display: flex; flex-direction: column; gap: 10px;
+    transition: box-shadow 0.15s;
+  }
+  .term-card:hover { box-shadow: 0 6px 20px rgba(28,26,20,0.1); }
+  .term-icon { width: 48px; height: 48px; background: #fff5ed; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .term-card strong { font-size: 1rem; font-weight: 700; color: #1a1a1a; }
+  .term-card p { color: #555; font-size: 0.88rem; line-height: 1.55; margin: 0; }
+
+  /* CTA block */
+  .cta-block {
+    background: linear-gradient(135deg, #1c1c1c 0%, #2e2a24 100%);
+    border-radius: 18px; padding: 36px 40px; display: flex;
+    align-items: center; justify-content: space-between; gap: 30px;
+    flex-wrap: wrap; margin-top: 20px;
+  }
+  .cta-block p { color: #d0ccc4; font-size: 1rem; line-height: 1.6; margin: 0; max-width: 400px; }
+  .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+
+  .btn-primary {
+    background: #e8772e; color: #fff; font-weight: 700; border-radius: 999px;
+    padding: 12px 26px; font-size: 0.95rem; transition: background 0.15s; white-space: nowrap;
+  }
+  .btn-primary:hover { background: #d9691f; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.1); color: #fff; font-weight: 600; border-radius: 999px;
+    padding: 12px 26px; font-size: 0.95rem; border: 1px solid rgba(255,255,255,0.2);
+    transition: background 0.15s; white-space: nowrap;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+  @media (max-width: 900px) {
+    .opt-page { padding: 40px 32px 70px; }
+  }
+
+  @media (max-width: 700px) {
+    .opt-page { padding: 32px 20px 60px; }
+    .threshold-grid { grid-template-columns: 1fr; }
+    .terms-grid { grid-template-columns: 1fr; }
+    .cta-block { padding: 28px 24px; flex-direction: column; align-items: flex-start; }
+    .section-title { font-size: 1.1rem; }
+  }
+</style>
