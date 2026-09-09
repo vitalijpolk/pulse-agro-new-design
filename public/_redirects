@@ -14,6 +14,11 @@
 /product/pshenyczya-ozyma-myaka-bogdana/    /product/pshenytsya-bogdana/           301
 /product/pshenyczya-ozyma-katrusya-odeska/  /product/pshenytsya-katrusya-odeska/   301
 
+# Dead URLs still ranking in Google — content merged into these posts
+/koly-siyaty-ozymyy-ryapak-2026/    /nasinnya-rapsu-v-ukrayini/     301
+/koly-zbyraty-kukurudzu-2026/       /tekhnolohiya-kukurudzy/        301
+/koly-zbyraty-sonyashnyk-2026/      /tekhnolohiya-sonyashnyka/      301
+
 # Product tags → relevant categories
 /product-tag/nasinnya-kukurudzy-kupyty/     /product-category/seed/corn/       301
 /product-tag/nasinnya-kukurudzy-320-fao/    /product-category/seed/corn/       301

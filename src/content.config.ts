@@ -49,6 +49,7 @@ const posts = defineCollection({
     excerpt: z.string().default(''),
     coverImage: z.string().optional(),
     tags: z.array(z.string()).default([]),
+    faq: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
   }),
 });
 
