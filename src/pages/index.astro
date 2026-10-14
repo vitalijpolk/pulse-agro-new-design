@@ -20,6 +20,15 @@ const seedCrops = [
 <BaseLayout title="Насіння для Вашого врожаю" description="Широкий асортимент насіння агрокультур за доступними цінами. Доставка по Україні.">
   <HeroSlider />
 
+  <section class="wrap categories-section">
+    <h2>Категорії товарів</h2>
+    <div class="cat-grid">
+      {seedCrops.map((c) => (
+        <a class="cat-card" href={`/product-category/seed/${c.slug}/`}>{c.label}</a>
+      ))}
+    </div>
+  </section>
+
   <section class="wrap featured-section">
     <h2>Новинки магазину</h2>
     <div class="grid">
@@ -32,15 +41,6 @@ const seedCrops = [
           tagline={p.data.tagline}
           eager={i < 4}
         />
-      ))}
-    </div>
-  </section>
-
-  <section class="wrap categories-section">
-    <h2>Категорії товарів</h2>
-    <div class="cat-grid">
-      {seedCrops.map((c) => (
-        <a class="cat-card" href={`/product-category/seed/${c.slug}/`}>{c.label}</a>
       ))}
     </div>
   </section>
@@ -90,6 +90,8 @@ const seedCrops = [
 
 <style>
   .about-section, .featured-section, .categories-section { padding: 50px 20px; }
+  .categories-section { padding-top: 40px; padding-bottom: 10px; }
+  .featured-section { padding-top: 30px; }
   h2 { font-size: 1.6rem; border-bottom: 2px solid #e8772e; display: inline-block; padding-bottom: 6px; margin-bottom: 24px; }
   .about-section a { display: inline-block; margin-top: 10px; font-weight: 700; color: #bc5615; }
 
