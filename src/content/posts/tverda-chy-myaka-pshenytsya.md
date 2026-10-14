@@ -3,7 +3,7 @@ title: "Тверда чи м'яка пшениця: в чому різниця �
 slug: "tverda-chy-myaka-pshenytsya"
 publishDate: 2026-08-19
 excerpt: "Тверда і м'яка пшениця: різниця у зерні, врожайності, ціні та технології вирощування. Коли обирати дурум, а коли — м'яку пшеницю. Насіння — Pulse Agro."
-coverImage: "/images/posts/tverda-chy-myaka-pshenytsya/cover.webp"
+coverImage: "/images/posts/tverda-chy-myaka-pshenytsya/cover.jpg"
 tags: []
 faq:
   - question: "Яка пшениця дорожча — тверда чи м'яка?"

@@ -3,7 +3,7 @@ title: "Технологія вирощування озимої пшениці:
 slug: "tekhnolohiya-pshenytsi"
 publishDate: 2026-08-19
 excerpt: "Повна технологія вирощування озимої пшениці: попередники, добрива, захист посівів, строки збирання. Врожайність 4–10 т/га. Насіння від Pulse Agro."
-coverImage: "/images/posts/tekhnolohiya-pshenytsi/cover.webp"
+coverImage: "/images/posts/tekhnolohiya-pshenytsi/cover.jpg"
 tags: []
 faq:
   - question: "Яка врожайність озимої пшениці в Україні?"

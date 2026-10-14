@@ -3,7 +3,7 @@ title: "Посівний календар на вересень 2026 року: �
 slug: "posivniy-kalendar-na-veresen-2026"
 publishDate: 2026-08-10
 excerpt: "Посівний календар на вересень 2026 для українських фермерів. Строки сівби озимої пшениці, ячменю і ріпаку по зонах: Степ, Лісостеп, Полісся."
-coverImage: "/images/posts/posivniy-kalendar-na-veresen-2026/cover.webp"
+coverImage: "/images/posts/posivniy-kalendar-na-veresen-2026/cover.jpg"
 tags: ["посівний календар", "вересень", "озима пшениця", "озимий ячмінь", "ріпак"]
 faq:
   - question: "Чи можна сіяти озиму пшеницю в жовтні, якщо не встигли у вересні?"

@@ -30,7 +30,7 @@ if (coverImage) {
   if (meta.width && meta.height) coverSize = { width: meta.width, height: meta.height };
 }
 ---
-<BaseLayout title={entry.data.title} description={'excerpt' in entry.data ? entry.data.excerpt : undefined} image={coverImage}>
+<BaseLayout title={entry.data.title} description={'excerpt' in entry.data ? entry.data.excerpt : undefined} image={coverImage} ogType={kind === 'post' ? 'article' : 'website'} publishedTime={kind === 'post' && 'publishDate' in entry.data ? entry.data.publishDate.toISOString() : undefined}>
   {kind === 'post' && 'publishDate' in entry.data && (
     <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -100,6 +100,8 @@ if (coverImage) {
   .prose :global(a:hover) { color: #e8772e; }
   .prose :global(blockquote a) { color: #bc5615; }
   .prose :global(h2) { margin-top: 2em; }
+  .prose :global(img) { display: block; width: 100%; height: auto; border-radius: 10px; margin: 1.5em 0 0.4em; }
+  .prose :global(p:has(> img) + p > em:only-child) { display: block; color: #6b6b6b; font-size: 0.9rem; margin-top: -0.6em; }
   .prose :global(table) { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
   .prose :global(th), .prose :global(td) { border: 1px solid #e5e0da; padding: 8px 10px; text-align: left; }
   .prose :global(blockquote) {

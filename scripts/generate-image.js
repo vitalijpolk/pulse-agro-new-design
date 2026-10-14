@@ -33,6 +33,7 @@ const body = JSON.stringify({
   prompt,
   n: 1,
   size: '1536x1024',
+  quality: 'medium',
   output_format: 'jpeg',
 });
 

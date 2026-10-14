@@ -25,3 +25,4 @@ api/config.php
 
 # jetbrains setting folder
 .idea/
+scripts/.stock-preview/
