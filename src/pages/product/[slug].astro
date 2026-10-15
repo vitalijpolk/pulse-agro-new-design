@@ -3,6 +3,7 @@ import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import OrderForm from '../../components/OrderForm.astro';
+import PriceListBlock from '../../components/PriceListBlock.astro';
 import sharp from 'sharp';
 import path from 'node:path';
 
@@ -31,6 +32,28 @@ const technologyEntry = product.technology ? await getEntry('technologies', prod
 const related = product.relatedProducts
   .map((slug) => allProducts.find((p) => p.data.slug === slug))
   .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+// Таблиці характеристик розкладаємо по колонках з вирівнюванням висоти (вага = рядки + заголовок).
+// Для 3+ таблиць пробуємо 2 і 3 колонки й беремо варіант з найменшою порожньою площею —
+// так не буває «3 блоки в ряд + 1 самотній знизу» і великих порожніх місць.
+type SpecGroup = (typeof product.specs)[number];
+function layoutSpecs(cols: number) {
+  const columns = Array.from({ length: cols }, () => ({ weight: 0, groups: [] as SpecGroup[] }));
+  for (const group of product.specs) {
+    const col = columns.reduce((min, c) => (c.weight < min.weight ? c : min));
+    col.groups.push(group);
+    col.weight += group.items.length + 2;
+  }
+  const max = Math.max(...columns.map((c) => c.weight));
+  const empty = columns.reduce((sum, c) => sum + (max - c.weight), 0);
+  return { columns, empty };
+}
+const specLayout =
+  product.specs.length <= 2
+    ? layoutSpecs(Math.max(1, product.specs.length))
+    : [layoutSpecs(3), layoutSpecs(2)].reduce((best, l) => (l.empty < best.empty ? l : best));
+const specColumns = specLayout.columns;
+const specColumnCount = specColumns.length;
 
 const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
 const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
@@ -151,8 +174,10 @@ if (offers) productLd.offers = offers;
     </div>
 
     {product.specs.length > 0 && (
-      <section class="specs">
-        {product.specs.map((section) => (
+      <section class="specs" style={`--spec-cols:${specColumnCount}`}>
+        {specColumns.map((col) => (
+          <div class="spec-col">
+          {col.groups.map((section) => (
           <div class="spec-group">
             <h2>{section.title}</h2>
             <table>
@@ -176,6 +201,8 @@ if (offers) productLd.offers = offers;
               </tbody>
             </table>
           </div>
+          ))}
+          </div>
         ))}
       </section>
     )}
@@ -194,6 +221,8 @@ if (offers) productLd.offers = offers;
         </div>
       </section>
     )}
+
+    <PriceListBlock slug={product.slug} />
 
     <section class="why-us">
       <div class="why-header">
@@ -294,7 +323,8 @@ if (offers) productLd.offers = offers;
   .description { color: #444; line-height: 1.6; margin-bottom: 24px; }
   .order-column { position: sticky; top: 20px; }
 
-  .specs { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .specs { margin-top: 50px; display: grid; grid-template-columns: repeat(var(--spec-cols, 3), minmax(0, 1fr)); gap: 24px; align-items: start; }
+  .spec-col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
   .spec-group { background: #fff; border: 1px solid #e8e2d8; border-radius: 14px; padding: 22px 24px 6px; }
   .spec-group h2 {
     font-size: 0.8rem; font-weight: 800; letter-spacing: 0.03em; color: #1a1a1a;
@@ -363,6 +393,10 @@ if (offers) productLd.offers = offers;
     .tip-card:nth-child(3) { border-right: none; }
     .tip-card:nth-child(4) { border-top: 1px solid #e8e2d8; }
     .tip-card:nth-child(5) { border-top: 1px solid #e8e2d8; border-right: none; }
+  }
+
+  @media (max-width: 900px) {
+    .specs { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 1000px) {

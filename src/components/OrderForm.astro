@@ -12,16 +12,10 @@ interface Props {
 }
 const { slug, title, priceTiers } = Astro.props;
 ---
-<form
-  class="order-form"
-  name="order"
-  method="POST"
-  data-netlify="true"
-  netlify-honeypot="company"
->
-  <input type="hidden" name="form-name" value="order" />
+<form class="order-form" name="order" method="POST" action="/api/order">
   <input type="hidden" name="product" value={title} />
-  <input type="hidden" name="product-slug" value={slug} />
+  <input type="hidden" name="slug" value={slug} />
+  <input type="hidden" name="startedAt" value="" />
 
   <h2>Замовити</h2>
 
@@ -30,7 +24,7 @@ const { slug, title, priceTiers } = Astro.props;
       Варіант
       <select name="tier" required>
         {priceTiers.map((t) => (
-          <option value={t.tier}>{t.label} — {t.price} грн</option>
+          <option value={`${t.label} — ${t.price} грн`}>{t.label} — {t.price} грн</option>
         ))}
       </select>
     </label>
@@ -93,6 +87,9 @@ const { slug, title, priceTiers } = Astro.props;
   }
 
   forms.forEach((form) => {
+    const startedAt = form.querySelector<HTMLInputElement>('input[name="startedAt"]');
+    if (startedAt) startedAt.value = String(Date.now());
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const status = form.querySelector<HTMLElement>('.form-status');
@@ -101,25 +98,28 @@ const { slug, title, priceTiers } = Astro.props;
       if (button) button.disabled = true;
 
       try {
-        const res = await fetch('/', {
+        const res = await fetch('/api/order', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString(),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
         });
+        const result = await res.json().catch(() => ({}));
 
-        if (res.ok) {
+        if (res.ok && result.ok) {
           if (status) {
             status.textContent = "Дякуємо! Ми зв'яжемося з вами найближчим часом.";
             status.className = 'form-status ok';
             status.hidden = false;
           }
           form.reset();
+          if (startedAt) startedAt.value = String(Date.now());
         } else {
-          throw new Error('error');
+          throw new Error(result.message || 'error');
         }
-      } catch {
+      } catch (err) {
         if (status) {
-          status.textContent = 'Не вдалося відправити. Зателефонуйте нам напряму.';
+          const msg = err instanceof Error && err.message !== 'error' ? err.message : '';
+          status.textContent = msg || 'Не вдалося відправити. Зателефонуйте нам: +38 (097) 312-53-18';
           status.className = 'form-status err';
           status.hidden = false;
         }

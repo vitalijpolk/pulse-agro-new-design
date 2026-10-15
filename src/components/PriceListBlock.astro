@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import { findPriceListTable, PRICE_LIST_PDF, PRICE_LIST_UPDATED, TIER_LABELS } from '../data/price-list';
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+const table = findPriceListTable(slug);
+
+const products = await getCollection('products');
+const priceOf = (rowSlug: string, tier: string) =>
+  products.find((p) => p.data.slug === rowSlug)?.data.priceTiers.find((t) => t.tier === tier)?.price;
+const fmt = (n: number | undefined) => (n && n > 0 ? n.toLocaleString('uk-UA') : '—');
+const cols = table ? table.tiers.length + 1 + (table.noteLabel ? 1 : 0) : 0;
+---
+
+{table && (
+  <section class="price-list" id="prais">
+    <div class="pl-head">
+      <div>
+        <h2>Прайс: {table.title.toLowerCase()}</h2>
+        <p class="pl-sub">Ціни за посівну одиницю, грн. Оновлено {PRICE_LIST_UPDATED}.</p>
+      </div>
+      <div class="pl-actions">
+        <a class="pl-btn" href={PRICE_LIST_PDF} target="_blank" rel="noopener">Відкрити прайс (PDF)</a>
+        <a class="pl-link" href={PRICE_LIST_PDF} download="Прайс Pulse Agro 2026.pdf">Завантажити</a>
+      </div>
+    </div>
+
+    <div class="pl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th class="pl-name">Гібрид</th>
+            {table.noteLabel && <th>{table.noteLabel}</th>}
+            {table.tiers.map((t) => <th class="pl-num">{TIER_LABELS[t]}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {table.groups.map((g) => (
+            <>
+              {g.title && (
+                <tr class="pl-group"><td colspan={cols}>{g.title}</td></tr>
+              )}
+              {g.rows.map((r) => (
+                <tr class={r.slug === slug ? 'pl-current' : undefined}>
+                  <td class="pl-name">
+                    {r.slug === slug ? (
+                      <strong>{r.name}</strong>
+                    ) : (
+                      <a href={`/product/${r.slug}/`}>{r.name}</a>
+                    )}
+                    {!table.noteLabel && r.note && <span class="pl-note">{r.note}</span>}
+                  </td>
+                  {table.noteLabel && <td>{r.note}</td>}
+                  {table.tiers.map((t) => <td class="pl-num">{fmt(priceOf(r.slug, t))}</td>)}
+                </tr>
+              ))}
+            </>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="pl-pack">{table.packaging}</p>
+    <p class="pl-foot">Для замовлень від 100 посівних одиниць — <a href="/opt/">оптові умови</a>.</p>
+  </section>
+)}
+
+<style>
+  .price-list { margin-top: 56px; background: #fff; border: 1px solid #e8e2d8; border-radius: 14px; padding: 24px 24px 18px; }
+  .pl-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .pl-head h2 { font-size: 1.15rem; font-weight: 700; margin: 0; color: #1a1a1a; }
+  .pl-sub { margin: 6px 0 0; color: #6b6b6b; font-size: 0.88rem; }
+  .pl-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .pl-btn { background: #e8772e; color: #fff; font-weight: 700; padding: 10px 18px; border-radius: 8px; font-size: 0.92rem; }
+  .pl-btn:hover { background: #bc5615; }
+  .pl-link { color: #bc5615; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; font-size: 0.9rem; }
+  .pl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.94rem; min-width: 420px; }
+  th, td { padding: 10px 12px; border-bottom: 1px solid #ece7de; text-align: left; }
+  thead th { color: #6b6b6b; font-weight: 600; font-size: 0.85rem; background: #f7f4ef; }
+  .pl-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pl-group td { background: #fbf3ea; color: #bc5615; font-weight: 700; font-size: 0.85rem; }
+  .pl-name a { color: #1a1a1a; text-decoration: underline; text-decoration-color: #d9d2c4; text-underline-offset: 3px; }
+  .pl-name a:hover { color: #bc5615; }
+  .pl-note { display: inline-block; margin-left: 8px; color: #6b6b6b; font-size: 0.8rem; }
+  .pl-current td { background: #fff4e8; font-weight: 700; }
+  .pl-current td:first-child { box-shadow: inset 3px 0 0 #e8772e; }
+  .pl-pack { margin: 14px 0 0; padding: 10px 14px; background: #f7f4ef; border-radius: 8px; color: #444; font-size: 0.88rem; line-height: 1.5; }
+  .pl-foot { margin: 12px 0 0; color: #6b6b6b; font-size: 0.85rem; }
+  .pl-foot a { color: #bc5615; text-decoration: underline; }
+  @media (max-width: 600px) {
+    .price-list { padding: 18px 14px 14px; }
+    th, td { padding: 9px 8px; }
+  }
+</style>

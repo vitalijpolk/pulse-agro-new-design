@@ -228,7 +228,7 @@ faq:
 | [Каскара](/product/kaskara/) | ExpressSun | Гранстар | Центр, Південь, Степ | A–F |
 | [Сонора](/product/sonora/) | ExpressSun | Гранстар | Центр, Південь, Степ | A–G |
 | [Лусон](/product/gibryd-sonyashnyka-luson/) | ExpressSun | Гранстар | Центр, Південь | A–G |
-| [Кейт](/product/kejt/) (високоолеїновий) | ExpressSun | Гранстар | — | — |
+| [Кейт](/product/kejt/) (високоолеїновий) | ExpressSun | Гранстар | Степ, Лісостеп, Полісся | A–G |
 
 ## Норма висіву соняшника: таблиця по регіонах
 
