@@ -1,0 +1,161 @@
+---
+// Плаваюча кнопка «Передзвоніть мені» + вікно з формою. Заявка йде в Telegram через /api/order (type: callback).
+---
+
+<div class="cb-wrap">
+  <span class="cb-hint" hidden>Хочете, щоб ми вам передзвонили? Залиште заявку!</span>
+  <button class="chat-bubble cb-bubble" type="button" aria-label="Замовити зворотний дзвінок" aria-haspopup="dialog">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+      <path d="M15 3h6v6M21 3l-7 7"/>
+    </svg>
+  </button>
+</div>
+
+<dialog class="cb-dialog" aria-labelledby="cb-title">
+  <form class="cb-form" method="dialog">
+    <button class="cb-close" type="button" aria-label="Закрити">×</button>
+    <h2 id="cb-title">Хочете, щоб ми вам передзвонили?</h2>
+    <p class="cb-sub">Залиште номер — агроном передзвонить і допоможе підібрати насіння. Пн–Пт, 9:00–18:00.</p>
+
+    <input type="hidden" name="type" value="callback" />
+    <input type="hidden" name="page" value="" />
+    <input type="hidden" name="startedAt" value="" />
+    <input type="text" name="company" class="cb-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+    <label>
+      Телефон
+      <input type="tel" name="phone" placeholder="+380" autocomplete="tel" required />
+    </label>
+    <label>
+      Ім'я <span class="cb-opt">(необов'язково)</span>
+      <input type="text" name="name" autocomplete="given-name" />
+    </label>
+    <label>
+      Що вас цікавить <span class="cb-opt">(необов'язково)</span>
+      <textarea name="comment" rows="2" placeholder="Наприклад: кукурудза на 100 га"></textarea>
+    </label>
+
+    <button class="cb-submit" type="submit">Передзвоніть мені</button>
+    <p class="cb-status" hidden></p>
+  </form>
+</dialog>
+
+<style>
+  .cb-wrap { position: relative; display: flex; align-items: center; }
+  .cb-bubble { background: #e8772e; border: none; cursor: pointer; animation-delay: 0.6s; }
+  .cb-hint {
+    position: absolute; right: 72px; top: 50%; transform: translateY(-50%);
+    background: #fff; color: #1a1a1a; font-size: 0.88rem; font-weight: 600; line-height: 1.35;
+    padding: 10px 14px; border-radius: 12px; width: max-content; max-width: 230px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.18); cursor: pointer;
+  }
+  .cb-hint::after {
+    content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%) rotate(45deg);
+    width: 12px; height: 12px; background: #fff;
+  }
+  .cb-wrap:hover .cb-hint { display: block !important; }
+
+  .cb-dialog {
+    border: none; border-radius: 16px; padding: 0; width: min(420px, calc(100vw - 32px));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .cb-dialog::backdrop { background: rgba(20, 20, 15, 0.55); }
+  .cb-form { position: relative; padding: 28px 26px 24px; }
+  .cb-form h2 { font-size: 1.25rem; margin: 0 28px 8px 0; color: #1a1a1a; }
+  .cb-sub { margin: 0 0 18px; color: #6b6b6b; font-size: 0.9rem; line-height: 1.5; }
+  .cb-close {
+    position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%;
+    border: none; background: #f3efe8; color: #444; font-size: 1.4rem; line-height: 1; cursor: pointer;
+  }
+  .cb-close:hover { background: #e9e2d7; }
+  .cb-form label { display: block; font-size: 0.85rem; color: #6b6b6b; margin-bottom: 12px; }
+  .cb-opt { color: #a09a8f; }
+  .cb-form input[type='tel'], .cb-form input[type='text'], .cb-form textarea {
+    display: block; width: 100%; margin-top: 4px; padding: 10px 12px; box-sizing: border-box;
+    border: 1px solid #ddd6cc; border-radius: 8px; font: inherit; color: #2b2b2b;
+  }
+  .cb-form textarea { resize: vertical; }
+  .cb-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .cb-submit {
+    width: 100%; margin-top: 4px; background: #e8772e; color: #fff; border: none; padding: 13px;
+    border-radius: 999px; font-weight: 700; font-size: 1rem; cursor: pointer;
+  }
+  .cb-submit:hover { background: #d9691f; }
+  .cb-submit:disabled { opacity: 0.6; cursor: default; }
+  .cb-status { margin: 12px 0 0; font-size: 0.92rem; text-align: center; }
+  .cb-status.ok { color: #2a7a2a; }
+  .cb-status.err { color: #c00; }
+
+  @media (max-width: 640px) {
+    .cb-hint { right: 62px; max-width: 190px; font-size: 0.82rem; }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('.cb-dialog');
+  const form = dialog?.querySelector<HTMLFormElement>('.cb-form');
+  const bubble = document.querySelector<HTMLButtonElement>('.cb-bubble');
+  const hint = document.querySelector<HTMLElement>('.cb-hint');
+
+  const open = () => {
+    if (!dialog || !form) return;
+    form.querySelector<HTMLInputElement>('input[name="page"]')!.value = window.location.href;
+    form.querySelector<HTMLInputElement>('input[name="startedAt"]')!.value = String(Date.now());
+    if (hint) hint.hidden = true;
+    dialog.showModal();
+    form.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
+  };
+
+  bubble?.addEventListener('click', open);
+  hint?.addEventListener('click', open);
+  dialog?.querySelector('.cb-close')?.addEventListener('click', () => dialog.close());
+  // Закрити кліком по затемненню навколо вікна
+  dialog?.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+
+  // Підказка біля кнопки: з'являється один раз за візит через 20 секунд і ховається через 10
+  let shown = false;
+  try { shown = sessionStorage.getItem('cbHintShown') === '1'; } catch {}
+  if (hint && !shown) {
+    setTimeout(() => {
+      if (dialog?.open) return;
+      hint.hidden = false;
+      try { sessionStorage.setItem('cbHintShown', '1'); } catch {}
+      setTimeout(() => { hint.hidden = true; }, 10000);
+    }, 20000);
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = form.querySelector<HTMLElement>('.cb-status');
+    const button = form.querySelector<HTMLButtonElement>('.cb-submit');
+    if (button) button.disabled = true;
+
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || !result.ok) throw new Error(result.message || 'error');
+
+      if (status) {
+        status.textContent = result.message || 'Дякуємо! Ми передзвонимо вам найближчим часом.';
+        status.className = 'cb-status ok';
+        status.hidden = false;
+      }
+      form.reset();
+      setTimeout(() => { dialog?.close(); if (status) status.hidden = true; }, 3500);
+    } catch (err) {
+      if (status) {
+        const msg = err instanceof Error && err.message !== 'error' ? err.message : '';
+        status.textContent = msg || 'Не вдалося відправити. Зателефонуйте нам: +38 (097) 312-53-18';
+        status.className = 'cb-status err';
+        status.hidden = false;
+      }
+    } finally {
+      if (button) button.disabled = false;
+    }
+  });
+</script>
