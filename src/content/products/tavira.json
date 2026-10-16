@@ -98,13 +98,13 @@
   ],
   "priceTiers": [
     {
-      "tier": "standart",
-      "label": "Стандарт",
+      "tier": "light",
+      "label": "Маса 1000 зерен до 200 г",
       "price": 2250
     },
     {
-      "tier": "ekstra",
-      "label": "Екстра",
+      "tier": "default",
+      "label": "Маса 1000 зерен від 200 г",
       "price": 3500
     }
   ],

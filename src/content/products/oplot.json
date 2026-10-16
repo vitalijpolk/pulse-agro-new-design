@@ -4,7 +4,7 @@
   "sku": "BN001",
   "categoryGroup": "seed",
   "category": "pea",
-  "manufacturer": "agroseeds",
+  "manufacturer": "pulse-agro",
   "tagline": "До 6 т/га, стійкий до вилягання",
   "specs": [
     {
@@ -79,10 +79,10 @@
     "/images/products/oplot/goroh.jpg"
   ],
   "relatedProducts": [
-    "es-bella",
+    "gibryd-sonyashnyka-ampara",
     "mirissa",
     "tavira",
-    "es-generalis"
+    "strajk"
   ],
   "inStock": true,
   "growingTips": [

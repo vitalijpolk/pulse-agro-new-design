@@ -119,8 +119,6 @@ faq:
 
 ### Для Центру і Лісостепу
 
-*   [ЄС Генераліс (Clearfield)](/product/es-generalis/) — високий потенціал врожайності
-*   [ЄС Генезіс (Clearfield)](/product/es-genezis/) — стабільна врожайність і захист від вовчку
 *   [Аркона (ExpressSun)](/product/arkona/) — широка адаптація до різних умов
 *   [Браун (Clearfield Plus)](/product/gibryd-sonyashnyka-braun/) — висока олійність
 

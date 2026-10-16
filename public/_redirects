@@ -41,3 +41,10 @@
 /product-tag/nasinnya-gorohu-oplot/         /product/oplot/                    301
 /product-tag/nasinnya-ozymoyi-pshenyczi/    /product-category/seed/wheat/      301
 /product-tag/kupyty-nasinnya/               /product-category/seed/            301
+
+# Гібриди ЕС прибрано з асортименту (16.10.2026) — на гібриди тієї ж технології
+/product/es-aromatik/      /product/arkona/                       301
+/product/es-bella/         /product/gibryd-sonyashnyka-ampara/    301
+/product/es-generalis/     /product/strajk/                       301
+/product/es-genezis/       /product/silena/                       301
+/gibrydy-sonyashnyka-es-bella-genezis/   /gibrydy-sonyashnyka/   301

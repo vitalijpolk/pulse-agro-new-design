@@ -11,6 +11,21 @@ const table = findPriceListTable(slug);
 const products = await getCollection('products');
 const priceOf = (rowSlug: string, tier: string) =>
   products.find((p) => p.data.slug === rowSlug)?.data.priceTiers.find((t) => t.tier === tier)?.price;
+// Гібрид з однією ціною (без категорій) — показуємо її на всю ширину колонок цін
+const singlePrice = (rowSlug: string) => {
+  const tiers = products.find((p) => p.data.slug === rowSlug)?.data.priceTiers ?? [];
+  return tiers.length === 1 && !table?.tiers.includes(tiers[0].tier as never) ? tiers[0].price : undefined;
+};
+// Колонки з однаковою ціною для всіх гібридів (напр. фракція до 200 г у кукурудзи) — одна об'єднана клітинка.
+// Лише для таблиць без підзаголовків груп, щоб rowspan не перетинав рядки-заголовки.
+const allRows = table ? table.groups.flatMap((g) => g.rows) : [];
+const canMerge = table ? table.groups.every((g) => !g.title) : false;
+const merged = new Map<string, number | undefined>();
+for (const tier of (canMerge && table?.mergeTiers) || []) {
+  const values = allRows.map((r) => priceOf(r.slug, tier));
+  if (values.every((v) => v === values[0])) merged.set(tier, values[0]);
+}
+const firstSlug = allRows[0]?.slug;
 const fmt = (n: number | undefined) => (n && n > 0 ? n.toLocaleString('uk-UA') : '—');
 const cols = table ? table.tiers.length + 1 + (table.noteLabel ? 1 : 0) : 0;
 ---
@@ -54,7 +69,17 @@ const cols = table ? table.tiers.length + 1 + (table.noteLabel ? 1 : 0) : 0;
                     {!table.noteLabel && r.note && <span class="pl-note">{r.note}</span>}
                   </td>
                   {table.noteLabel && <td>{r.note}</td>}
-                  {table.tiers.map((t) => <td class="pl-num">{fmt(priceOf(r.slug, t))}</td>)}
+                  {singlePrice(r.slug) !== undefined ? (
+                    <td class="pl-num pl-single" colspan={table.tiers.length}>{fmt(singlePrice(r.slug))}</td>
+                  ) : (
+                    table.tiers.map((t) =>
+                      merged.has(t) ? (
+                        r.slug === firstSlug && <td class="pl-num pl-merged" rowspan={allRows.length}>{fmt(merged.get(t))}</td>
+                      ) : (
+                        <td class="pl-num">{fmt(priceOf(r.slug, t))}</td>
+                      ),
+                    )
+                  )}
                 </tr>
               ))}
             </>
@@ -63,6 +88,7 @@ const cols = table ? table.tiers.length + 1 + (table.noteLabel ? 1 : 0) : 0;
       </table>
     </div>
     <p class="pl-pack">{table.packaging}</p>
+    {table.extraNote && <p class="pl-pack">{table.extraNote}</p>}
     <p class="pl-foot">Для замовлень від 100 посівних одиниць — <a href="/opt/">оптові умови</a>.</p>
   </section>
 )}
@@ -85,6 +111,9 @@ const cols = table ? table.tiers.length + 1 + (table.noteLabel ? 1 : 0) : 0;
   .pl-name a { color: #1a1a1a; text-decoration: underline; text-decoration-color: #d9d2c4; text-underline-offset: 3px; }
   .pl-name a:hover { color: #bc5615; }
   .pl-note { display: inline-block; margin-left: 8px; color: #6b6b6b; font-size: 0.8rem; }
+  .pl-single { text-align: center; }
+  .pl-merged { text-align: center; vertical-align: middle; font-weight: 700; background: #fbf7f1; }
+  .pl-current .pl-merged { background: #fbf7f1; font-weight: 700; }
   .pl-current td { background: #fff4e8; font-weight: 700; }
   .pl-current td:first-child { box-shadow: inset 3px 0 0 #e8772e; }
   .pl-pack { margin: 14px 0 0; padding: 10px 14px; background: #f7f4ef; border-radius: 8px; color: #444; font-size: 0.88rem; line-height: 1.5; }

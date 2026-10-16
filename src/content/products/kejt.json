@@ -4,7 +4,7 @@
   "sku": "SF023",
   "categoryGroup": "seed",
   "category": "sunflower",
-  "manufacturer": "agronasinneprom",
+  "manufacturer": "pulse-agro",
   "technology": "expresssan",
   "tagline": "Високоолеїновий під Гранстар, до 50 ц/га",
   "specs": [
@@ -126,7 +126,6 @@
   "relatedProducts": [
     "arkona",
     "sonora",
-    "es-aromatik",
     "kaskara"
   ],
   "inStock": true

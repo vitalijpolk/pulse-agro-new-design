@@ -4,7 +4,7 @@
   "sku": "WH005",
   "categoryGroup": "seed",
   "category": "wheat",
-  "manufacturer": "agroseeds",
+  "manufacturer": "pulse-agro",
   "technology": "intensyvna",
   "tagline": "Цінний сорт для всіх зон України",
   "specs": [
@@ -97,7 +97,7 @@
   "relatedProducts": [
     "kaskara",
     "silena",
-    "es-generalis",
+    "strajk",
     "hotyn"
   ],
   "inStock": true,
