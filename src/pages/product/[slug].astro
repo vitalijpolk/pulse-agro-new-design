@@ -150,6 +150,12 @@ if (offers) productLd.offers = offers;
           {manufacturerEntry && <span>Виробник: <strong>{manufacturerEntry.data.name}</strong></span>}
           {technologyEntry && <span>Технологія: <strong>{technologyEntry.data.name}</strong></span>}
         </p>
+        {(product.originator || product.registryYear) && (
+          <p class="origin-line">
+            {product.originator && <span>Оригінатор: <strong>{product.originator}</strong></span>}
+            {product.registryYear && <span>У Реєстрі сортів рослин України з <strong>{product.registryYear}</strong> року</span>}
+          </p>
+        )}
 
         <p class="price">
           {product.priceTiers.length > 1
@@ -173,6 +179,31 @@ if (offers) productLd.offers = offers;
       </div>
     </div>
 
+    {product.keyFacts.length > 0 && (
+      <section class="key-facts" aria-label="Ключові показники">
+        {product.keyFacts.map((f) => (
+          <div class="key-fact">
+            <span class="kf-value">{f.value}</span>
+            <span class="kf-label">{f.label}</span>
+          </div>
+        ))}
+      </section>
+    )}
+
+    {product.advantages.length > 0 && (
+      <section class="advantages">
+        <h2 class="block-title">Переваги сорту</h2>
+        <ul>
+          {product.advantages.map((a) => (
+            <li>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              {a}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
     {product.specs.length > 0 && (
       <section class="specs" style={`--spec-cols:${specColumnCount}`}>
         {specColumns.map((col) => (
@@ -190,7 +221,7 @@ if (offers) productLd.offers = offers;
                       <td>
                         {score !== null ? (
                           <span class="score">
-                            <span class="score-track"><span class="score-fill" style={`width:${score * 10}%`} /></span>
+                            <span class="score-track"><span class="score-fill" style={`width:${Math.round((score / (/1[–-]9/.test(section.title) ? 9 : 10)) * 100)}%`} /></span>
                             <span class="score-num">{score}</span>
                           </span>
                         ) : item.value}
@@ -305,6 +336,16 @@ if (offers) productLd.offers = offers;
 <style>
   .product-page { padding: 30px 20px 60px; }
   .breadcrumb { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 20px; }
+  .origin-line { display: flex; flex-direction: column; gap: 4px; margin: -6px 0 16px; padding: 10px 12px; background: #f7f4ef; border-radius: 8px; color: #6b6b6b; font-size: 0.86rem; line-height: 1.45; }
+  .origin-line strong { color: #1a1a1a; }
+  .key-facts { margin-top: 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+  .key-fact { background: #fff; border: 1px solid #e8e2d8; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; border-top: 4px solid #e8772e; }
+  .kf-value { font-size: 1.45rem; font-weight: 800; color: #1a1a1a; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .kf-label { font-size: 0.85rem; color: #6b6b6b; line-height: 1.35; }
+  .advantages { margin-top: 40px; }
+  .advantages ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .advantages li { display: flex; gap: 10px; align-items: flex-start; background: #fbf3ea; border-radius: 10px; padding: 14px 16px; font-size: 0.93rem; line-height: 1.45; color: #2b2b2b; }
+  .advantages svg { flex-shrink: 0; color: #e8772e; margin-top: 2px; }
   .product-top { display: grid; grid-template-columns: minmax(260px, 380px) 1fr minmax(280px, 340px); gap: 32px; align-items: start; }
   .gallery-frame {
     aspect-ratio: 1 / 1; background: #f6f4f0; border-radius: 12px;

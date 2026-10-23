@@ -37,6 +37,11 @@ const products = defineCollection({
     images: z.array(z.string()).default([]),
     relatedProducts: z.array(z.string()).default([]),
     inStock: z.boolean().default(true),
+    // Дані з каталогу оригінатора (поки — для пшениці)
+    originator: z.string().optional(),
+    registryYear: z.number().optional(),
+    keyFacts: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
+    advantages: z.array(z.string()).default([]),
   }),
 });
 
