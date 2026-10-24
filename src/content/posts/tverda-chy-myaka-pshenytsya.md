@@ -81,8 +81,6 @@ faq:
 *   Готові до трохи вищих вимог по технології і контролю якості зерна
 *   Хочете диверсифікувати структуру посівів і канали збуту
 
-В каталозі Пульс Агро — сорти твердої пшениці селекції СГІ: [Блискучий](/product/pshenytsya-tverda-blyskuchyy/), [Янтарний](/product/pshenytsya-tverda-yantarnyy/) і [Шляхетний](/product/pshenytsya-tverda-shlyahetnyy/).
-
 ## Коли обирати м'яку пшеницю
 
 *   Потрібна універсальна культура для хлібопекарського чи фуражного напряму
@@ -90,7 +88,7 @@ faq:
 *   Пріоритет — стабільна висока врожайність і ширший ринок збуту
 *   Плануєте отримати надбавку за клас сильної чи цінної пшениці
 
-Сильні сорти м'якої пшениці в каталозі — [Богдана](/product/pshenytsya-bogdana/), [Подолянка](/product/podolyanka/), [Даринка Київська](/product/darynka-kyyivska/), [Катруся Одеська](/product/pshenytsya-katrusya-odeska/) та інші.
+Сорти м'якої пшениці з якістю зерна сильної пшениці в каталозі — [Богдана](/product/pshenytsya-bogdana/), [Подолянка](/product/podolyanka/), [Мальованка](/product/pshenytsya-malyovanka/), [Тайра](/product/pshenytsya-tayra/), [Катруся Одеська](/product/pshenytsya-katrusya-odeska/).
 
 ## На що звернути увагу при купівлі насіння
 

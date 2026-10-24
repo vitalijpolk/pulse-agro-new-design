@@ -7,11 +7,13 @@ interface Props {
   title: string;
   image?: string;
   minPrice: number;
+  // «від» — лише коли в товару кілька варіантів ціни
+  hasRange?: boolean;
   tagline?: string;
   eager?: boolean;
 }
-const { slug, title, image, minPrice, tagline, eager = false } = Astro.props;
-const priceLabel = minPrice > 0 ? `від ${minPrice.toLocaleString('uk-UA')} грн` : 'ціна за запитом';
+const { slug, title, image, minPrice, tagline, eager = false, hasRange = true } = Astro.props;
+const priceLabel = minPrice > 0 ? `${hasRange ? 'від ' : ''}${minPrice.toLocaleString('uk-UA')} грн` : 'ціна за запитом';
 
 let imageSize: { width: number; height: number } | undefined;
 if (image) {

@@ -25,6 +25,7 @@ const products = allProducts.filter((p) => p.data.categoryGroup === categoryGrou
           title={p.data.title}
           image={p.data.images[0]}
           minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
+          hasRange={p.data.priceTiers.length > 1}
           tagline={p.data.tagline}
           eager={i < 4}
         />

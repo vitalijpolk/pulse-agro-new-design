@@ -76,7 +76,7 @@ faq:
 
 Для більшості регіонів України критична морозостійкість сорту — здатність витримувати морози до -18…-20°C на глибині вузла кущіння без снігового покриву. У північних і східних регіонах з нестабільним сніговим покривом варто надавати перевагу сортам з підвищеною зимостійкістю (8–9 балів), навіть якщо це означає невеликий компроміс за врожайністю.
 
-В каталозі Пульс Агро представлені сильні сорти м'якої пшениці — [Богдана](/product/pshenytsya-bogdana/), [Подолянка](/product/podolyanka/), [Даринка Київська](/product/darynka-kyyivska/), [Катруся Одеська](/product/pshenytsya-katrusya-odeska/) — та тверда пшениця [Блискучий](/product/pshenytsya-tverda-blyskuchyy/), [Янтарний](/product/pshenytsya-tverda-yantarnyy/), [Шляхетний](/product/pshenytsya-tverda-shlyahetnyy/).
+В каталозі Пульс Агро представлені сорти м'якої озимої пшениці — [Подолянка](/product/podolyanka/), [Богдана](/product/pshenytsya-bogdana/), [Катруся Одеська](/product/pshenytsya-katrusya-odeska/), [Астарта](/product/pshenytsya-astarta/), [Тайра](/product/pshenytsya-tayra/), [Мальованка](/product/pshenytsya-malyovanka/).
 
 ## Обробіток ґрунту під озиму пшеницю
 

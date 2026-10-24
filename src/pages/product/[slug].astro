@@ -59,7 +59,7 @@ const minPrice = Math.min(...product.priceTiers.map((t) => t.price));
 const priceValidUntil = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0];
 
 const GENERIC_STOCK_PHOTOS = new Set([
-  '/images/products/gorodnyczya/psh02.webp',
+  '/images/products/wheat-generic/psh02.webp',
   '/images/products/podolyanka/psh03.jpg',
 ]);
 const usesGenericPhoto = product.images.some((img) => GENERIC_STOCK_PHOTOS.has(img));
@@ -324,6 +324,7 @@ if (offers) productLd.offers = offers;
               title={p.data.title}
               image={p.data.images[0]}
               minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
+              hasRange={p.data.priceTiers.length > 1}
               tagline={p.data.tagline}
             />
           ))}

@@ -5,7 +5,5 @@
   {"id": "sgi", "name": "СГІ", "sortOrder": 6},
   {"id": "ifrig", "name": "ІФРіГ", "sortOrder": 7},
   {"id": "fg-bor", "name": "ФГ «Бор»", "sortOrder": 8},
-  {"id": "ir-yurieva", "name": "ІР ім. Юр'єва НААН", "sortOrder": 9},
-  {"id": "limagrain", "name": "Лімагрейн Україна", "sortOrder": 10},
-  {"id": "kws", "name": "KWS", "sortOrder": 11}
+  {"id": "ir-yurieva", "name": "ІР ім. Юр'єва НААН", "sortOrder": 9}
 ]
