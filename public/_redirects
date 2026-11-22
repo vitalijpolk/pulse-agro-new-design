@@ -33,6 +33,9 @@
 /product-tag/gibrydy-kukurudzy-magazyn/     /product-category/seed/corn/       301
 /product-tag/gibrydy-sonyashnyka/           /product-category/seed/sunflower/  301
 /product-tag/nasinnya-sonyashnyka-pid-yevrolajtning-plyus/ /product-category/seed/sunflower/ 301
+/product-tag/nasinnya-soyi-optom/          /opt/                              301
+/product-tag/nasinnya-kukurudzy-na-sylos/  /product-category/seed/corn/       301
+/product-category/seed/sunflower/feed/     /product-category/seed/sunflower/  301
 /product-tag/nasinnya-sonyashnyka-pid-granstar/            /product-category/seed/sunflower/ 301
 /product-tag/kupyty-nasinnya-sonyashnyka/   /product-category/seed/sunflower/  301
 /product-tag/nasinnya-soyi-pid-raundap/     /product-category/seed/soy/        301

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LeadBlock from '../../components/LeadBlock.astro';
 
 const contactsPage = (await getCollection('pages')).find((p) => p.data.slug === 'contacts');
 const phone = contactsPage?.data.phone ?? '+38 (097) 312-53-18';
@@ -92,6 +93,8 @@ const email = contactsPage?.data.email ?? 'info@pulse-agro.com';
       <p class="section-note">Ціни в каталозі — роздрібні, для кінцевого покупця. Оптова ціна залежить від культури, обсягу і форми співпраці, тому розраховується індивідуально під кожне замовлення.</p>
       <p class="section-note">Зателефонуйте або залиште заявку — вкажіть культуру і орієнтовний обсяг, і ми порахуємо ціну під ваше замовлення.</p>
     </section>
+
+    <LeadBlock source="opt" heading="Розрахуємо оптову ціну під ваш обсяг" />
 
     <!-- ───── CTA ───── -->
     <div class="cta-block">

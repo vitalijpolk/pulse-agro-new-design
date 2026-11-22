@@ -1,6 +1,7 @@
 // Заявки з сайту → повідомлення в Telegram:
 //   type 'order'    — форма «Замовити» на сторінці товару
 //   type 'callback' — кнопка «Передзвоніть мені» (на всіх сторінках)
+//                     intent 'price' — запит прайсу у Viber/Telegram; source — з якого блоку заявка
 // Netlify Function, доступна за адресою /api/order.
 // Токен бота і ID чату задаються в Netlify: Site configuration → Environment variables
 //   TELEGRAM_BOT_TOKEN — токен від @BotFather
@@ -15,6 +16,16 @@ const json = (status, body) =>
 const clean = (v, max) => String(v ?? '').trim().slice(0, max);
 
 const FAIL = 'Не вдалося відправити. Зателефонуйте нам: +38 (097) 312-53-18';
+
+const SOURCES = { widget: 'кнопка «Передзвоніть мені»', bar: 'нижня панель (мобільний)', inline: 'блок у статті', category: 'блок у каталозі', opt: 'сторінка «Опт»' };
+
+// Робочий час: Пн–Пт, 9:00–18:00 за Києвом
+const isWorkingHours = () => {
+  const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Kyiv', weekday: 'short', hour: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+  const day = parts.find((p) => p.type === 'weekday')?.value;
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value);
+  return !['Sat', 'Sun'].includes(day) && hour >= 9 && hour < 18;
+};
 
 export default async (req) => {
   if (req.method !== 'POST') return json(405, { ok: false, message: 'Method not allowed' });
@@ -40,6 +51,8 @@ export default async (req) => {
   const qty = clean(data.qty, 10) || '1';
   const comment = clean(data.comment, 2000);
   const page = clean(data.page, 500);
+  const isPrice = isCallback && data.intent === 'price';
+  const source = SOURCES[clean(data.source, 20)] || '';
 
   if (!phone || (!isCallback && (!name || !product))) {
     return json(400, { ok: false, message: isCallback ? 'Вкажіть номер телефону' : "Заповніть ім'я і телефон" });
@@ -58,13 +71,14 @@ export default async (req) => {
   const time = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' });
   const lines = isCallback
     ? [
-        '📞 Запит на зворотний дзвінок — pulse-agro.com',
+        isPrice ? '📄 Запит прайсу у Viber/Telegram — pulse-agro.com' : '📞 Запит на зворотний дзвінок — pulse-agro.com',
         '',
         name ? `Ім'я: ${name}` : null,
         `Телефон: ${phone}`,
         comment ? `Коментар: ${comment}` : null,
         '',
         page ? `Сторінка: ${page}` : null,
+        source ? `Джерело: ${source}` : null,
         `Час: ${time}`,
       ]
     : [
@@ -97,11 +111,14 @@ export default async (req) => {
     return json(502, { ok: false, message: FAIL });
   }
 
+  const when = isWorkingHours() ? 'найближчим часом' : 'у найближчий робочий день з 9:00';
   return json(200, {
     ok: true,
-    message: isCallback
-      ? 'Дякуємо! Ми передзвонимо вам найближчим часом.'
-      : "Дякуємо! Ми зв'яжемося з вами найближчим часом.",
+    message: isPrice
+      ? `Дякуємо! Надішлемо прайс у Viber/Telegram на цей номер ${when}.`
+      : isCallback
+        ? `Дякуємо! Ми передзвонимо вам ${when}.`
+        : `Дякуємо! Ми зв'яжемося з вами ${when}.`,
   });
 };
 

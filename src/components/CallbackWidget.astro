@@ -20,6 +20,7 @@
 
     <input type="hidden" name="type" value="callback" />
     <input type="hidden" name="page" value="" />
+    <input type="hidden" name="source" value="widget" />
     <input type="hidden" name="startedAt" value="" />
     <input type="text" name="company" class="cb-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
@@ -98,17 +99,22 @@
   const bubble = document.querySelector<HTMLButtonElement>('.cb-bubble');
   const hint = document.querySelector<HTMLElement>('.cb-hint');
 
-  const open = () => {
+  const open = (source = 'widget') => {
     if (!dialog || !form) return;
     form.querySelector<HTMLInputElement>('input[name="page"]')!.value = window.location.href;
+    form.querySelector<HTMLInputElement>('input[name="source"]')!.value = source;
     form.querySelector<HTMLInputElement>('input[name="startedAt"]')!.value = String(Date.now());
     if (hint) hint.hidden = true;
     dialog.showModal();
     form.querySelector<HTMLInputElement>('input[name="phone"]')?.focus();
   };
 
-  bubble?.addEventListener('click', open);
-  hint?.addEventListener('click', open);
+  bubble?.addEventListener('click', () => open());
+  hint?.addEventListener('click', () => open());
+  // Будь-яка кнопка з data-callback-open (напр. нижня панель на мобільному) відкриває це вікно
+  document.querySelectorAll<HTMLElement>('[data-callback-open]').forEach((el) =>
+    el.addEventListener('click', () => open(el.dataset.callbackOpen || 'widget')),
+  );
   dialog?.querySelector('.cb-close')?.addEventListener('click', () => dialog.close());
   // Закрити кліком по затемненню навколо вікна
   dialog?.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
@@ -139,6 +145,10 @@
       });
       const result = await res.json().catch(() => ({}));
       if (!res.ok || !result.ok) throw new Error(result.message || 'error');
+      (window as any).gtag?.('event', 'generate_lead', {
+        form_type: 'callback',
+        source: form.querySelector<HTMLInputElement>('input[name="source"]')?.value,
+      });
 
       if (status) {
         status.textContent = result.message || 'Дякуємо! Ми передзвонимо вам найближчим часом.';

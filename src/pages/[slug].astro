@@ -1,6 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadBlock from '../components/LeadBlock.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { detectCrops } from '../lib/crops';
 import sharp from 'sharp';
 import path from 'node:path';
 
@@ -22,6 +25,40 @@ export async function getStaticPaths() {
 
 const { kind, entry } = Astro.props;
 const { Content } = await render(entry);
+
+const leadTopic = kind === 'post' ? [entry.data.slug, entry.data.title].join(' ') : '';
+
+// Перелінковка: схожі статті за культурою і насіння з каталогу для статті про одну культуру
+const postCrops = detectCrops(leadTopic);
+const isCalendar = (slug: string) => slug.startsWith('posivniy-kalendar');
+let related: { slug: string; title: string; cover?: string }[] = [];
+let crossProducts: Awaited<ReturnType<typeof getCollection<'products'>>> = [];
+if (kind === 'post') {
+  const others = (await getCollection('posts')).filter((p) => p.data.slug !== entry.data.slug);
+  // Спільні культури (частка від усіх культур статті) + спільна тема в slug (напр. «gerbiczydy», «norma-vysivu»)
+  const generic = ['nasinnya', 'tsina', 'ukrayini', 'ukrayina', 'kalendar'];
+  const tokens = (slug: string) => slug.split('-').filter((t) => t.length >= 5 && !generic.includes(t) && !/\d/.test(t));
+  const ownTokens = tokens(entry.data.slug);
+  const score = (p: (typeof others)[number]) => {
+    const crops = detectCrops([p.data.slug, p.data.title].join(' '));
+    const shared = crops.filter((c) => postCrops.includes(c)).length;
+    const topic = tokens(p.data.slug).some((t) => ownTokens.includes(t)) ? 6 : 0;
+    return (shared / Math.max(crops.length, 1)) * 10 + topic + (isCalendar(p.data.slug) === isCalendar(entry.data.slug) ? 3 : 0);
+  };
+  related = others
+    .map((p) => ({ p, s: score(p) }))
+    .sort((a, b) => b.s - a.s || b.p.data.publishDate.valueOf() - a.p.data.publishDate.valueOf())
+    .slice(0, 3)
+    .map(({ p }) => ({ slug: p.data.slug, title: p.data.title, cover: p.data.coverImage }));
+  if (postCrops.length === 1) {
+    crossProducts = (await getCollection('products'))
+      .filter((p) => p.data.category === postCrops[0] && p.data.priceTiers.some((t) => t.price > 0))
+      .slice(0, 3);
+  }
+}
+const cropLabels: Record<string, string> = {
+  corn: 'кукурудзи', sunflower: 'соняшнику', soy: 'сої', wheat: 'пшениці', barley: 'ячменю', rapeseed: 'ріпаку', pea: 'гороху',
+};
 
 const coverImage = 'coverImage' in entry.data ? entry.data.coverImage : undefined;
 let coverSize: { width: number; height: number } | undefined;
@@ -88,11 +125,67 @@ if (coverImage) {
     <div class="prose">
       <Content />
     </div>
+    {kind === 'post' && (
+      <>
+        <LeadBlock topic={leadTopic} />
+        <template id="lead-mid-tpl"><LeadBlock topic={leadTopic} /></template>
+      </>
+    )}
+    {crossProducts.length > 0 && (
+      <section class="xsell">
+        <h2>Насіння {cropLabels[postCrops[0]]} в каталозі</h2>
+        <div class="xsell-grid">
+          {crossProducts.map((p) => (
+            <ProductCard
+              slug={p.data.slug}
+              title={p.data.title}
+              image={p.data.images[0]}
+              minPrice={Math.min(...p.data.priceTiers.map((t) => t.price))}
+              hasRange={p.data.priceTiers.length > 1}
+              tagline={p.data.tagline}
+            />
+          ))}
+        </div>
+        <a class="xsell-all" href={`/product-category/seed/${postCrops[0]}/`}>Усе насіння {cropLabels[postCrops[0]]} →</a>
+      </section>
+    )}
+    {related.length > 0 && (
+      <section class="related">
+        <h2>Схожі статті</h2>
+        <div class="related-grid">
+          {related.map((r) => (
+            <a class="related-card" href={`/${r.slug}/`}>
+              {r.cover && <img src={r.cover} alt="" loading="lazy" decoding="async" />}
+              <span>{r.title}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
   </article>
 </BaseLayout>
 
+<script>
+  // Копія блоку заявки — у місце посередині статті (його ставить rehypeLeadSlot в astro.config.mjs)
+  const tpl = document.getElementById('lead-mid-tpl') as HTMLTemplateElement | null;
+  const slot = document.querySelector('.lead-slot');
+  if (tpl && slot) slot.replaceWith(tpl.content.cloneNode(true));
+</script>
+
 <style>
   .content-page { padding: 30px 20px 60px; max-width: 760px; }
+  .xsell, .related { margin-top: 2.5em; }
+  .xsell h2, .related h2 { font-size: 1.3rem; margin-bottom: 14px; }
+  .xsell-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; align-items: start; }
+  .xsell-all { display: inline-block; margin-top: 12px; font-weight: 700; color: #bc5615; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .related-card {
+    display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: #f7f4ef;
+    color: #1a1a1a; font-weight: 700; font-size: 0.95rem; line-height: 1.35; text-decoration: none;
+  }
+  .related-card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+  .related-card span { padding: 10px 12px 12px; }
+  .related-card:hover { background: #efe7da; }
   .cover { width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; }
   .date { color: #6b6b6b; font-size: 0.9rem; }
   .prose { line-height: 1.7; }
@@ -103,6 +196,8 @@ if (coverImage) {
   .prose :global(img) { display: block; width: 100%; height: auto; border-radius: 10px; margin: 1.5em 0 0.4em; }
   .prose :global(p:has(> img) + p > em:only-child) { display: block; color: #6b6b6b; font-size: 0.9rem; margin-top: -0.6em; }
   .prose :global(table) { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
+  /* Широкі таблиці на телефоні гортаються всередині, а не розтягують сторінку */
+  @media (max-width: 640px) { .prose :global(table) { display: block; overflow-x: auto; } }
   .prose :global(th), .prose :global(td) { border: 1px solid #e5e0da; padding: 8px 10px; text-align: left; }
   .prose :global(blockquote) {
     background: #fff8f2;

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CategoryListing from '../../../components/CategoryListing.astro';
+import LeadBlock from '../../../components/LeadBlock.astro';
 
 type CropMeta = {
   label: string;
@@ -118,12 +119,14 @@ const { meta } = Astro.props;
 ---
 <BaseLayout title={meta.title} description={meta.description}>
   <CategoryListing categoryGroup="seed" category={crop} title={meta.h1} />
+  <div class="lead-wrap wrap"><LeadBlock topic={crop} source="category" /></div>
   <div class="seo-block wrap">
     <p set:html={meta.seoText.replace(/\n\n/g, '</p><p>')}></p>
   </div>
 </BaseLayout>
 
 <style>
+  .lead-wrap { padding: 0 20px; max-width: 860px; }
   .seo-block {
     padding: 0 20px 60px;
     max-width: 860px;

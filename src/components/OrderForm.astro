@@ -107,10 +107,11 @@ const { slug, title, priceTiers } = Astro.props;
 
         if (res.ok && result.ok) {
           if (status) {
-            status.textContent = "Дякуємо! Ми зв'яжемося з вами найближчим часом.";
+            status.textContent = result.message || "Дякуємо! Ми зв'яжемося з вами найближчим часом.";
             status.className = 'form-status ok';
             status.hidden = false;
           }
+          (window as any).gtag?.('event', 'generate_lead', { form_type: 'order', source: 'product' });
           form.reset();
           if (startedAt) startedAt.value = String(Date.now());
         } else {

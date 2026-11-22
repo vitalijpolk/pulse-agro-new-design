@@ -1,0 +1,136 @@
+---
+// Блок заявки всередині статей і каталогів: телефон → «Передзвоніть мені» або «Надіслати прайс».
+// Заявка йде в Telegram через /api/order (type: callback, intent: callback | price).
+// topic — slug, теги або назва категорії: з них визначаємо культуру для заголовка.
+import { detectCrops } from '../lib/crops';
+
+interface Props {
+  topic?: string;
+  source?: 'inline' | 'category' | 'opt';
+  heading?: string;
+}
+
+const { topic = '', source = 'inline', heading } = Astro.props;
+
+const titles: Record<string, string> = {
+  corn: 'Підберемо гібрид кукурудзи під ваш регіон',
+  sunflower: 'Підберемо гібрид соняшнику під ваш регіон і технологію',
+  soy: 'Підберемо сорт сої під ваш регіон',
+  wheat: 'Підберемо сорт озимої пшениці під ваш регіон',
+  barley: 'Підберемо сорт ячменю під ваш регіон',
+  rapeseed: 'Підберемо гібрид ріпаку під ваш регіон',
+  pea: 'Підберемо сорт гороху під ваш регіон',
+};
+// Стаття про кілька культур одразу — загальний заголовок
+const matched = detectCrops(topic);
+const title = heading ?? (matched.length === 1 ? titles[matched[0]] : 'Підберемо насіння під ваше господарство');
+---
+
+<aside class="lead-block" aria-label="Консультація агронома">
+  <p class="lead-title">{title}</p>
+  <p class="lead-sub">
+    Агроном безкоштовно порахує норму висіву і потребу в насінні на вашу площу та підкаже ціну під ваш обсяг.
+  </p>
+  <form class="lead-form" novalidate>
+    <input type="hidden" name="type" value="callback" />
+    <input type="hidden" name="source" value={source} />
+    <input type="hidden" name="page" value="" />
+    <input type="hidden" name="startedAt" value="" />
+    <input type="text" name="company" class="lead-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <input class="lead-phone" type="tel" name="phone" placeholder="Ваш телефон, +380" autocomplete="tel" aria-label="Телефон" required />
+    <div class="lead-buttons">
+      <button class="lead-btn lead-btn-main" type="submit" name="intent" value="callback">Передзвоніть мені</button>
+      <button class="lead-btn lead-btn-alt" type="submit" name="intent" value="price">Надіслати прайс у Viber/Telegram</button>
+    </div>
+    <p class="lead-status" hidden></p>
+  </form>
+  <p class="lead-alt">
+    Або напишіть: <a href="https://t.me/+380994527949" target="_blank" rel="noopener">Telegram</a> ·
+    <a href="https://msng.link/o/?380994527949=vi" target="_blank" rel="noopener">Viber</a> ·
+    <a href="tel:+380973125318">+38 (097) 312-53-18</a>
+  </p>
+</aside>
+
+<style>
+  .lead-block {
+    background: #fff8f2; border: 1.5px solid #f0c89a; border-left: 4px solid #e8772e;
+    border-radius: 12px; padding: 22px 24px; margin: 2em 0; line-height: 1.5;
+  }
+  .lead-title { margin: 0 0 6px; font-size: 1.15rem; font-weight: 700; color: #1a1a0e; }
+  .lead-sub { margin: 0 0 14px; color: #555; font-size: 0.95rem; }
+  .lead-form { display: flex; flex-direction: column; gap: 10px; }
+  .lead-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .lead-phone {
+    width: 100%; box-sizing: border-box; padding: 12px 14px; font: inherit; font-size: 1rem;
+    border: 1px solid #ddd6cc; border-radius: 8px; background: #fff; color: #2b2b2b;
+  }
+  .lead-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+  .lead-btn {
+    flex: 1 1 200px; padding: 12px 16px; border-radius: 999px; font: inherit; font-weight: 700;
+    font-size: 0.95rem; cursor: pointer; border: 2px solid #e8772e;
+  }
+  .lead-btn-main { background: #e8772e; color: #fff; }
+  .lead-btn-main:hover { background: #d9691f; border-color: #d9691f; }
+  .lead-btn-alt { background: #fff; color: #bc5615; }
+  .lead-btn-alt:hover { background: #fff1e6; }
+  .lead-btn:disabled { opacity: 0.6; cursor: default; }
+  .lead-status { margin: 2px 0 0; font-size: 0.92rem; }
+  .lead-status.ok { color: #2a7a2a; }
+  .lead-status.err { color: #c00; }
+  .lead-alt { margin: 12px 0 0; font-size: 0.88rem; color: #6b6b6b; }
+  .lead-alt a { color: #bc5615; font-weight: 600; }
+</style>
+
+<script>
+  // Делегування: блоки можуть з'явитися пізніше (копія в середину статті), тому слухаємо document
+  document.addEventListener('focusin', (e) => {
+    const form = (e.target as HTMLElement).closest?.('.lead-form');
+    const startedAt = form?.querySelector<HTMLInputElement>('input[name="startedAt"]');
+    if (startedAt && !startedAt.value) startedAt.value = String(Date.now());
+  });
+
+  document.addEventListener('submit', async (e) => {
+    const form = e.target as HTMLFormElement;
+    if (!form.matches('.lead-form')) return;
+    e.preventDefault();
+
+    const status = form.querySelector<HTMLElement>('.lead-status');
+    const buttons = form.querySelectorAll<HTMLButtonElement>('.lead-btn');
+    const intent = (e.submitter as HTMLButtonElement | null)?.value || 'callback';
+    const show = (text: string, ok: boolean) => {
+      if (!status) return;
+      status.textContent = text;
+      status.className = `lead-status ${ok ? 'ok' : 'err'}`;
+      status.hidden = false;
+    };
+
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+    if (String(data.phone || '').replace(/\D/g, '').length < 9) {
+      show('Вкажіть номер телефону', false);
+      form.querySelector<HTMLInputElement>('.lead-phone')?.focus();
+      return;
+    }
+    data.intent = intent;
+    data.page = window.location.href;
+    if (!data.startedAt) data.startedAt = '0';
+
+    buttons.forEach((b) => (b.disabled = true));
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || !result.ok) throw new Error(result.message || 'error');
+      (window as any).gtag?.('event', 'generate_lead', { form_type: intent, source: data.source });
+      show(result.message || 'Дякуємо! Ми передзвонимо вам найближчим часом.', true);
+      form.reset();
+    } catch (err) {
+      const msg = err instanceof Error && err.message !== 'error' ? err.message : '';
+      show(msg || 'Не вдалося відправити. Зателефонуйте нам: +38 (097) 312-53-18', false);
+    } finally {
+      buttons.forEach((b) => (b.disabled = false));
+    }
+  });
+</script>
