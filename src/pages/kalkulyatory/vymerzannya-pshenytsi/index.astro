@@ -1,0 +1,149 @@
+---
+import CalcPage from '../../../components/CalcPage.astro';
+
+// Орієнтовні критичні температури вимерзання на глибині вузла кущіння (°C).
+// Діапазон — за даними агрометеорологів: від −11…−15 °C залежно від фази до −18…−20 °C для добре загартованих морозостійких сортів.
+const states = [
+  { v: -18, label: 'Загартовані, висока морозостійкість сорту' },
+  { v: -16, label: 'Загартовані, середня морозостійкість сорту' },
+  { v: -13, label: 'Після тривалих відлиг' },
+  { v: -12, label: 'Слабкі посіви, до 3 листків' },
+  { v: -11, label: 'Після відновлення весняної вегетації' },
+];
+
+const faq = [
+  { q: 'За якої температури вимерзає озима пшениця?', a: 'Вирішальною є температура ґрунту на глибині вузла кущіння (близько 3 см), а не повітря. Критична температура вимерзання для озимої пшениці залежно від стану рослин — від −11…−15 °C, а в добре загартованих морозостійких сортів — до −18…−20 °C.' },
+  { q: 'Як сніг захищає озимі від морозу?', a: 'Сніг погано проводить тепло, тому кожен сантиметр снігового покриву до 10 см підвищує температуру на глибині вузла кущіння приблизно на 1 °C відносно повітря. Далі ефект слабшає: 0,7 °C на сантиметр при 11–20 см, 0,6 °C при 21–30 см, 0,4 °C при 31–40 см. При висоті снігу 30 см і більше озимі практично не вимерзають навіть за сильних морозів.' },
+  { q: 'Що небезпечніше для озимих, крім морозу?', a: 'Морози без снігу і з сильним вітром, різкі похолодання після відлиг, льодяна кірка на полі, а також випрівання під товстим шаром снігу на непромерзлому ґрунті.' },
+];
+---
+
+<CalcPage
+  title="Калькулятор вимерзання озимої пшениці — температура на вузлі кущіння під снігом"
+  description="Оцініть ризик вимерзання озимої пшениці: калькулятор рахує температуру на глибині вузла кущіння за мінімальною температурою повітря і висотою снігу та порівнює з критичною."
+  h1="Калькулятор ризику вимерзання озимої пшениці"
+  path="/kalkulyatory/vymerzannya-pshenytsi/"
+  crumb="Ризик вимерзання озимих"
+  intro="Вкажіть прогноз мінімальної температури повітря, висоту снігу і стан посівів — калькулятор оцінить температуру на глибині вузла кущіння і порівняє її з критичною температурою вимерзання."
+  faq={faq}
+  leadTopic="pshenytsya"
+  leadHeading="Підберемо морозостійкий сорт озимої пшениці"
+  leadSub="Залиште номер — агроном підкаже, які сорти з нашого каталогу краще перезимовують у вашій зоні, і назве ціну насіння на ваш обсяг."
+  links={[
+    { href: '/product-category/seed/wheat/', label: 'Насіння озимої пшениці в каталозі' },
+    { href: '/stroky-sivby-ozymoi-pshenytsi-2026/', label: 'Строки сівби озимої пшениці' },
+    { href: '/tekhnolohiya-pshenytsi/', label: 'Технологія вирощування пшениці' },
+  ]}
+>
+  <div class="calc" id="frost-calc" data-states={JSON.stringify(states)}>
+    <div class="calc-fields">
+      <label>Як визначити температуру на вузлі кущіння
+        <select name="mode">
+          <option value="estimate">Розрахувати: мороз + сніг</option>
+          <option value="measured">Ввести виміряну на глибині 3 см</option>
+        </select>
+      </label>
+      <label class="m-estimate">Мінімальна температура повітря, °C <small>прогноз на найхолоднішу ніч</small>
+        <input name="air" type="number" step="any" value="-20" inputmode="decimal" />
+      </label>
+      <label class="m-estimate">Висота снігового покриву, см
+        <input name="snow" type="number" min="0" step="any" value="5" inputmode="decimal" />
+      </label>
+      <label class="m-measured" hidden>Температура ґрунту на глибині 3 см, °C <small>з бюлетеня Укргідрометцентру або власного виміру</small>
+        <input name="soil" type="number" step="any" value="-12" inputmode="decimal" />
+      </label>
+      <label>Стан посівів
+        <select name="state">
+          {states.map((s) => <option value={String(s.v)}>{s.label}</option>)}
+        </select>
+      </label>
+      <label>Критична температура вимерзання, °C <small>заповнюється за станом; можна вказати з бюлетеня для вашої області</small>
+        <input name="crit" type="number" step="any" value="-18" inputmode="decimal" />
+      </label>
+    </div>
+    <div class="calc-result" aria-live="polite">
+      <p class="calc-main-label">Ризик вимерзання</p>
+      <p class="calc-main" data-out="risk">—</p>
+      <ul class="calc-rows">
+        <li>Температура на вузлі кущіння <b data-out="node">—</b></li>
+        <li>Теплозахист снігу <b data-out="gain">—</b></li>
+        <li>Критична температура <b data-out="crit">—</b></li>
+        <li>Запас до критичної <b data-out="margin">—</b></li>
+      </ul>
+      <p class="calc-note" data-out="advice"></p>
+      <p class="calc-note">Оцінка орієнтовна. Без снігу температуру на вузлі кущіння прийнято рівною температурі повітря — це обережна оцінка: фактично ґрунт може бути трохи теплішим. Вітер, льодяна кірка і різкі перепади температур підвищують ризик.</p>
+    </div>
+  </div>
+
+  <section class="how" slot="how">
+    <h2>Як рахує калькулятор</h2>
+    <p>Озимі гинуть від морозу, коли температура на глибині вузла кущіння (близько 3 см) опускається нижче критичної. Сніг утеплює ґрунт: різниця мінімальних температур повітря і ґрунту на глибині вузла кущіння зростає на кожен сантиметр снігу так:</p>
+    <div class="table-wrap">
+      <table class="norms">
+        <thead><tr><th>Шар снігу, см</th><th>до 10</th><th>11–20</th><th>21–30</th><th>31–40</th><th>41–50</th><th>51–60</th><th>61–80</th></tr></thead>
+        <tbody><tr><td>°C на 1 см</td><td>1,0</td><td>0,7</td><td>0,6</td><td>0,4</td><td>0,3</td><td>0,2</td><td>0,1</td></tr></tbody>
+      </table>
+    </div>
+    <p>Теплозахисну дію снігу рахуємо по шарах і додаємо до мінімальної температури повітря. Приклад: мороз −20 °C і 15 см снігу → 10 × 1,0 + 5 × 0,7 = 13,5 °C → на вузлі кущіння приблизно <b>−6,5 °C</b>. Для загартованої пшениці з критичною температурою −16 °C ризик низький. Без снігу за того ж морозу — −20 °C, тобто нижче критичної: ризик дуже високий.</p>
+    <p>Рівні ризику: запас 3 °C і більше — низький; 0–3 °C — помірний; до 2 °C нижче критичної — високий (часткове вимерзання); більше ніж на 2 °C нижче — дуже високий (можлива масова загибель рослин).</p>
+    <p>Джерело коефіцієнтів — методичні вказівки з агрометеорології Уманського національного університету садівництва. Розрахункові критичні температури для вашої області в поточному сезоні публікує Укргідрометцентр.</p>
+  </section>
+</CalcPage>
+
+<script>
+  const root = document.getElementById('frost-calc');
+  if (root) {
+    const $ = (n: string) => root.querySelector<HTMLInputElement & HTMLSelectElement>(`[name="${n}"]`)!;
+    const val = (n: string) => parseFloat($(n).value);
+    const out = (k: string, v: string) => { const el = root.querySelector(`[data-out="${k}"]`); if (el) el.textContent = v; };
+    const fmt = (n: number) => `${n > 0 ? '+' : ''}${n.toLocaleString('uk-UA', { maximumFractionDigits: 1 })} °C`;
+    const LAYERS: [number, number][] = [[10, 1], [10, 0.7], [10, 0.6], [10, 0.4], [10, 0.3], [10, 0.2], [20, 0.1]];
+    const snowGain = (cm: number) => {
+      let left = Math.max(0, cm), g = 0;
+      for (const [h, k] of LAYERS) { const take = Math.min(left, h); g += take * k; left -= take; if (!left) break; }
+      return g;
+    };
+    const LEVELS = [
+      { min: 3, label: 'Низький', color: '#2a7a2a', advice: 'Температура на вузлі кущіння значно вища за критичну — загрози вимерзання немає.' },
+      { min: 0, label: 'Помірний', color: '#b8860b', advice: 'Температура близька до критичної: можливе пошкодження слабких рослин. Стежте за прогнозом і станом посівів.' },
+      { min: -2, label: 'Високий', color: '#d35400', advice: 'Температура нижча за критичну: ймовірне вимерзання частини рослин. Після потепління перевірте відростання рослин з монолітів.' },
+      { min: -Infinity, label: 'Дуже високий', color: '#c0392b', advice: 'Можлива масова загибель рослин. Плануйте оцінку перезимівлі відрощуванням монолітів і запас насіння на пересів.' },
+    ];
+    let used = false;
+
+    const calc = () => {
+      const measured = $('mode').value === 'measured';
+      root.querySelectorAll<HTMLElement>('.m-estimate').forEach((el) => (el.hidden = measured));
+      root.querySelectorAll<HTMLElement>('.m-measured').forEach((el) => (el.hidden = !measured));
+      const crit = val('crit');
+      let node: number, gain = 0;
+      if (measured) node = val('soil');
+      else {
+        const air = val('air');
+        gain = snowGain(val('snow') || 0);
+        node = Math.min(air + gain, 0);
+      }
+      const riskEl = root.querySelector<HTMLElement>('[data-out="risk"]')!;
+      if (Number.isNaN(node) || Number.isNaN(crit)) { ['risk', 'node', 'gain', 'crit', 'margin', 'advice'].forEach((k) => out(k, '—')); return; }
+      const margin = node - crit;
+      const lvl = LEVELS.find((l) => margin >= l.min)!;
+      out('risk', lvl.label);
+      riskEl.style.color = lvl.color;
+      out('node', fmt(node));
+      out('gain', measured ? '—' : fmt(gain));
+      out('crit', fmt(crit));
+      out('margin', fmt(margin));
+      out('advice', lvl.advice);
+      const comment = document.querySelector<HTMLInputElement>('.calc-lead input[name="comment"]');
+      if (comment) comment.value = `Калькулятор вимерзання: на вузлі кущіння ${fmt(node)}, критична ${fmt(crit)} → ризик ${lvl.label.toLowerCase()}`;
+    };
+
+    $('state').addEventListener('change', () => { $('crit').value = $('state').value; calc(); });
+    root.addEventListener('input', () => {
+      calc();
+      if (!used) { used = true; (window as any).gtag?.('event', 'calc_use', { calc: 'frost' }); }
+    });
+    root.addEventListener('change', calc);
+    calc();
+  }
+</script>

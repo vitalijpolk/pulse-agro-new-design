@@ -31,6 +31,9 @@ Pulse Agro підбирає гібриди під ґрунтові й кліма
 
 Вибір гібридів і ціни на насіння:
 - [Гібрид кукурудзи ДН Хотин ФАО 280: характеристики і ціна](https://pulse-agro.com/gibryd-kukurudzy-db-khotyn/)
+- [Гібриди кукурудзи для Полісся і Півночі 2027](https://pulse-agro.com/gibrydy-kukurudzy-dlya-polissya/)
+- [Гібриди кукурудзи для Півдня і Степу 2027](https://pulse-agro.com/gibrydy-kukurudzy-dlya-pivdnya/)
+- [Гібриди соняшнику для Півдня і Степу 2027](https://pulse-agro.com/gibrydy-sonyashnyku-dlya-pivdnya/)
 - [Скільки коштує насіння кукурудзи на 1 га](https://pulse-agro.com/tsina-nasinnya-kukurudzy-na-1-ga/)
 - [Насіння соняшнику під Гранстар: гібриди і ціни](https://pulse-agro.com/nasinnya-sonyashnyku-pid-granstar/)
 - [Високоолеїновий соняшник: що це і як вирощувати](https://pulse-agro.com/vysokooleyinovyy-sonyashnyk/)
@@ -55,6 +58,7 @@ Pulse Agro підбирає гібриди під ґрунтові й кліма
 - [Посівний календар на жовтень 2026](https://pulse-agro.com/posivniy-kalendar-na-zhovten-2026/)
 - [Посівний календар на листопад 2026](https://pulse-agro.com/posivniy-kalendar-na-lystopad-2026/)
 - [Посівний календар на грудень 2026](https://pulse-agro.com/posivniy-kalendar-na-hruden-2026/)
+- [Посівний календар на січень 2027](https://pulse-agro.com/posivniy-kalendar-na-sichen-2027/)
 - [Сівозміна 2027: що сіяти після чого](https://pulse-agro.com/sivozmina-2027-poperedniky/)
 
 Повний список статей — [Блог Pulse Agro](https://pulse-agro.com/category/blog/).
@@ -72,3 +76,4 @@ Pulse Agro підбирає гібриди під ґрунтові й кліма
 - [Доставка і оплата](https://pulse-agro.com/pay-delivery-terms/)
 - [Контакти](https://pulse-agro.com/contacts/)
 - [Новини](https://pulse-agro.com/category/blog/)
+- [Агрокалькулятори](https://pulse-agro.com/kalkulyatory/): калькулятор посівних одиниць насіння на площу, норми висіву в кг/га (окремо для кукурудзи, соняшнику, сої, пшениці, ячменю, ріпаку, гороху), встановлення сівалки на норму висіву, урожайності і прибутку з 1 га, ризику вимерзання озимої пшениці

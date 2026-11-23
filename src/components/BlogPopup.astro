@@ -1,0 +1,107 @@
+---
+// Спливаюче вікно із заявкою в статтях блогу (основний трафік — з блогу).
+// Показ: прочитано ~50% статті, або 40 с на сторінці, або (десктоп) курсор іде до закриття вкладки.
+// Не показуємо: якщо вже залишали заявку, закрили вікно за останні 3 дні, або блок заявки зараз на екрані.
+import LeadBlock from './LeadBlock.astro';
+
+interface Props { topic?: string }
+const { topic = '' } = Astro.props;
+---
+
+<div class="bp" hidden role="dialog" aria-label="Безкоштовний підбір насіння">
+  <button class="bp-close" type="button" aria-label="Закрити">×</button>
+  <p class="bp-badge">Безкоштовно · без зобов'язань</p>
+  <LeadBlock
+    topic={topic}
+    source="popup"
+    sub="Залиште номер — агроном передзвонить, підбере гібрид чи сорт під ваше поле і порахує, скільки насіння потрібно на вашу площу. Або надішлемо прайс 2027 у Viber."
+  />
+</div>
+
+<style>
+  .bp {
+    position: fixed; right: 20px; bottom: 20px; z-index: 1000; width: min(400px, calc(100vw - 32px));
+    max-height: calc(100vh - 40px); overflow-y: auto;
+    background: #fff; border-radius: 16px; box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+    padding: 14px 14px 4px; animation: bp-in 0.35s ease-out;
+  }
+  .bp[hidden] { display: none; }
+  @keyframes bp-in { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .bp-close {
+    position: absolute; top: 8px; right: 8px; z-index: 1; width: 32px; height: 32px; border-radius: 50%;
+    border: none; background: #f3efe8; color: #444; font-size: 1.35rem; line-height: 1; cursor: pointer;
+  }
+  .bp-badge {
+    display: inline-block; margin: 0 0 8px; padding: 4px 10px; border-radius: 999px;
+    background: #e9f5e4; color: #2a6a1f; font-size: 0.8rem; font-weight: 700;
+  }
+  .bp :global(.lead-block) { margin: 0 0 10px; padding: 16px 18px; }
+  .bp :global(.lead-title) { padding-right: 24px; }
+  .bp :global(.lead-alt) { display: none; }
+  @media (max-width: 640px) {
+    /* над нижньою панеллю «Передзвоніть мені» */
+    .bp { right: 8px; left: 8px; width: auto; bottom: calc(72px + env(safe-area-inset-bottom)); max-height: calc(100vh - 100px); }
+    .bp :global(.lead-sub) { font-size: 0.88rem; }
+  }
+</style>
+
+<script>
+  const box = document.querySelector<HTMLElement>('.bp');
+  const DAY = 86400000;
+  const get = (k: string) => { try { return Number(localStorage.getItem(k)) || 0; } catch { return 0; } };
+  const set = (k: string) => { try { localStorage.setItem(k, String(Date.now())); } catch {} };
+
+  const allowed = () =>
+    !!box && box.hidden && !get('leadSent') && Date.now() - get('popupClosed') > 3 * DAY &&
+    !document.querySelector('dialog[open]');
+
+  // Не дублюємо: якщо блок заявки в статті зараз видно — чекаємо далі
+  const inlineVisible = () =>
+    [...document.querySelectorAll('.prose ~ .lead-block, .lead-block')].some((el) => {
+      if (box?.contains(el)) return false;
+      const r = el.getBoundingClientRect();
+      return r.top < innerHeight && r.bottom > 0;
+    });
+
+  let done = false;
+  const show = (trigger: string) => {
+    if (done || !allowed() || inlineVisible()) return;
+    done = true;
+    box!.hidden = false;
+    (window as any).gtag?.('event', 'popup_view', { trigger });
+  };
+
+  if (box) {
+    box.querySelector('.bp-close')?.addEventListener('click', () => {
+      box.hidden = true;
+      set('popupClosed');
+      (window as any).gtag?.('event', 'popup_close');
+    });
+
+    // Після успішної заявки — закриваємо через 4 с
+    box.addEventListener('submit', () => {
+      const t = setInterval(() => {
+        if (get('leadSent')) { clearInterval(t); setTimeout(() => (box.hidden = true), 4000); }
+      }, 500);
+      setTimeout(() => clearInterval(t), 20000);
+    });
+
+    const prose = document.querySelector<HTMLElement>('.prose');
+    const onScroll = () => {
+      if (!prose) return;
+      const r = prose.getBoundingClientRect();
+      const read = (innerHeight - r.top) / r.height;
+      if (read > 0.5) show('scroll');
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    setTimeout(() => show('time'), 40000);
+    // Десктоп: курсор вийшов за верхній край вікна (до вкладок / закриття)
+    if (matchMedia('(pointer: fine)').matches) {
+      setTimeout(() => {
+        document.addEventListener('mouseout', (e) => {
+          if (!e.relatedTarget && e.clientY <= 0) show('exit');
+        });
+      }, 8000);
+    }
+  }
+</script>

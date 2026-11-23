@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CategoryListing from '../../../components/CategoryListing.astro';
 import LeadBlock from '../../../components/LeadBlock.astro';
+import { getCollection } from 'astro:content';
 
 type CropMeta = {
   label: string;
@@ -116,10 +117,107 @@ export function getStaticPaths() {
 
 const { crop } = Astro.params;
 const { meta } = Astro.props;
+
+// Мінімальна ціна в каталозі — для відповіді «скільки коштує» (рахується з товарів при збірці)
+const prices = (await getCollection('products'))
+  .filter((p) => p.data.category === crop)
+  .flatMap((p) => p.data.priceTiers.map((t) => t.price))
+  .filter((v) => v > 0);
+const minPrice = prices.length ? Math.min(...prices) : 0;
+const unit = crop === 'corn' || crop === 'sunflower' ? 'посівну одиницю' : 'одиницю фасування';
+const genitive: Record<string, string> = {"Соняшник": "соняшнику", "Кукурудза": "кукурудзи", "Пшениця": "пшениці", "Рапс": "рапсу", "Ячмінь": "ячменю", "Горох": "гороху", "Соя": "сої"};
+
+const common = [
+  ...(minPrice
+    ? [{
+        q: `Скільки коштує насіння ${genitive[meta.label] ?? meta.label.toLowerCase()} у Pulse Agro?`,
+        a: `Ціни в каталозі — від ${minPrice.toLocaleString('uk-UA')} грн за ${unit}, залежно від гібриду чи сорту і категорії насіння. Актуальна ціна вказана на сторінці кожного товару.`,
+      }]
+    : []),
+  { q: 'Чи є оптові ціни?', a: 'Так. Для господарств, які закуповують від 100 посівних одиниць кукурудзи чи соняшнику або від 20 тонн пшениці, сої чи ячменю, ціна розраховується індивідуально під обсяг. Деталі — на сторінці «Опт».' },
+  { q: 'Як доставляєте насіння?', a: 'По всій Україні: власним транспортом, найманою фурою, Новою поштою або самовивозом зі складу — крім тимчасово окупованих територій.' },
+];
+const specific: Record<string, { q: string; a: string }[]> = {
+  corn: [
+    { q: 'Яке ФАО кукурудзи вибрати?', a: 'Залежить від регіону: для Півночі і Полісся — ФАО 150–199, для Центру і Лісостепу — ФАО 200–270, для Центру і Півдня — ФАО 280–320, для Півдня і Степу — ФАО 350 і пізніші. Для центральної України оптимальні гібриди ФАО 260–300.' },
+    { q: 'На скільки гектарів вистачає посівної одиниці кукурудзи?', a: 'Посівна одиниця кукурудзи містить 80 тис. насінин і розрахована приблизно на 0,9–1,4 га залежно від норми висіву.' },
+  ],
+  sunflower: [
+    { q: 'Яку технологію вибрати — Clearfield чи ExpressSun?', a: "Обирайте за бур'янами на полі. Якщо домінують осоти, амброзія та інші дводольні — Express Sun (під Гранстар). Якщо засміченість змішана, зі злаковими, або поле уражене вовчком — Clearfield (під Євролайтнінг), гербіцид якого також пригнічує вовчок. Незалежно від технології обирайте гібрид, стійкий до рас вовчку, поширених у вашому регіоні." },
+    { q: 'На скільки гектарів вистачає посівної одиниці соняшнику?', a: 'Посівна одиниця соняшнику містить 150 тис. насінин. При нормі висіву 50 тис. насінин/га її вистачає на 3 га.' },
+  ],
+};
+const faq = [...(specific[crop ?? ''] ?? []), ...common];
+
+type GuideRow = { group: string; region: string; items: { name: string; slug: string }[] };
+const guides: Record<string, { title: string; head: string[]; rows: GuideRow[]; more: { href: string; label: string } }> = {
+  corn: {
+    title: 'Як вибрати гібрид кукурудзи: група ФАО під ваш регіон',
+    head: ['Група ФАО', 'Регіон', 'Гібриди в каталозі'],
+    rows: [
+      { group: 'ФАО 150–199', region: 'Північ, Полісся', items: [{ name: 'ДН Півіха', slug: 'piviha' }] },
+      { group: 'ФАО 200–270', region: 'Центр, Лісостеп', items: [{ name: 'ДН Хортиця', slug: 'hortyczya' }, { name: 'Бентота', slug: 'bentota' }, { name: 'Ангора', slug: 'gibryd-kukurudzy-angora-fao-260' }] },
+      { group: 'ФАО 280–320', region: 'Центр, Південь', items: [{ name: 'ДН Хотин', slug: 'hotyn' }, { name: 'Мірісса', slug: 'mirissa' }, { name: 'Самарія', slug: 'gibryd-kukurudzy-samariya-fao-300' }, { name: 'Тавіра', slug: 'tavira' }] },
+      { group: 'ФАО 350+', region: 'Південь, Степ', items: [{ name: 'Сігірія', slug: 'gibryd-kukurudzy-sigiriya-fao-350' }] },
+    ],
+    more: { href: '/gibrydy-kukurudzy-2027/', label: 'Детальний огляд гібридів кукурудзи 2027' },
+  },
+  sunflower: {
+    title: "Як вибрати гібрид соняшнику: технологія під бур'яни на полі",
+    head: ['Технологія', 'Гербіцид', 'Гібриди в каталозі'],
+    rows: [
+      { group: 'Класична', region: 'Звичайні гербіциди', items: [{ name: 'Ампара', slug: 'gibryd-sonyashnyka-ampara' }, { name: 'Набаро', slug: 'nabaro' }] },
+      { group: 'Clearfield', region: 'Євролайтнінг', items: [{ name: 'Ласса', slug: 'lassa' }, { name: 'Страйк', slug: 'strajk' }] },
+      { group: 'Clearfield Plus', region: 'Євролайтнінг Плюс', items: [{ name: 'Сілена', slug: 'silena' }, { name: 'Браун', slug: 'gibryd-sonyashnyka-braun' }] },
+      { group: 'ExpressSun', region: 'Гранстар', items: [{ name: 'Аркона', slug: 'arkona' }, { name: 'Каскара', slug: 'kaskara' }, { name: 'Сонора', slug: 'sonora' }, { name: 'Лусон', slug: 'gibryd-sonyashnyka-luson' }, { name: 'Кейт', slug: 'kejt' }] },
+    ],
+    more: { href: '/gibrydy-sonyashnyka/', label: 'Детальний огляд гібридів соняшнику 2027' },
+  },
+};
+const guide = guides[crop ?? ''];
+// Калькулятор норми висіву для цієї культури
+const rateCalcSlug: Record<string, string> = { corn: 'kukurudza', sunflower: 'sonyashnyk', soy: 'soya', wheat: 'pshenytsya', barley: 'yachmin', rapeseed: 'ripak', pea: 'horokh' };
+const rateCalc = rateCalcSlug[crop ?? ''];
 ---
 <BaseLayout title={meta.title} description={meta.description}>
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map((f) => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })),
+  })} />
   <CategoryListing categoryGroup="seed" category={crop} title={meta.h1} />
   <div class="lead-wrap wrap"><LeadBlock topic={crop} source="category" /></div>
+  {guide && (
+    <section class="guide wrap">
+      <h2>{guide.title}</h2>
+      <table>
+        <thead><tr>{guide.head.map((h) => <th>{h}</th>)}</tr></thead>
+        <tbody>
+          {guide.rows.map((r) => (
+            <tr>
+              <td>{r.group}</td>
+              <td>{r.region}</td>
+              <td>{r.items.map((it, i) => <>{i > 0 && ', '}<a href={`/product/${it.slug}/`}>{it.name}</a></>)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <a class="guide-more" href={guide.more.href}>{guide.more.label} →</a>
+      <a class="guide-more" href="/kalkulyatory/nasinnya/">Скільки посівних одиниць вам потрібно? Порахувати →</a>
+    </section>
+  )}
+  {rateCalc && (
+    <p class="calc-link wrap"><a href={`/kalkulyatory/norma-vysivu/${rateCalc}/`}>Калькулятор норми висіву {genitive[meta.label] ?? meta.label.toLowerCase()} в кг/га →</a></p>
+  )}
+  <section class="cat-faq wrap">
+    <h2>Часті запитання</h2>
+    {faq.map((f) => (
+      <>
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </>
+    ))}
+  </section>
   <div class="seo-block wrap">
     <p set:html={meta.seoText.replace(/\n\n/g, '</p><p>')}></p>
   </div>
@@ -127,6 +225,18 @@ const { meta } = Astro.props;
 
 <style>
   .lead-wrap { padding: 0 20px; max-width: 860px; }
+  .guide, .cat-faq { padding: 10px 20px 20px; max-width: 860px; }
+  .guide h2, .cat-faq h2 { font-size: 1.4rem; margin: 10px 0 14px; }
+  .guide table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  .guide th, .guide td { border: 1px solid #e5e0da; padding: 8px 10px; text-align: left; vertical-align: top; }
+  .guide th { background: #f7f4ef; }
+  .guide td a { color: #bc5615; font-weight: 600; }
+  .guide-more { display: block; margin-top: 10px; font-weight: 700; color: #bc5615; }
+  .calc-link { padding: 0 20px; max-width: 860px; margin: 6px 0 0; }
+  .calc-link a { font-weight: 700; color: #bc5615; }
+  .cat-faq h3 { font-size: 1.05rem; margin: 18px 0 6px; }
+  .cat-faq p { color: #4a4a4a; line-height: 1.65; margin: 0; }
+  @media (max-width: 640px) { .guide table { display: block; overflow-x: auto; } }
   .seo-block {
     padding: 0 20px 60px;
     max-width: 860px;

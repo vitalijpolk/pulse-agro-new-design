@@ -1,0 +1,108 @@
+---
+// Калькулятор норми висіву (кг/га, насінин на м і м², насіння на площу). crop — культура за замовчуванням.
+import { presets } from '../lib/seedRates';
+
+interface Props { crop?: string }
+const { crop = 'corn' } = Astro.props;
+const p = presets[crop] ?? presets.corn;
+---
+
+<div class="calc" id="rate-calc" data-presets={JSON.stringify(presets)}>
+  <div class="calc-fields">
+    <label>Культура
+      <select name="crop">
+        {Object.entries(presets).map(([k, v]) => <option value={k} selected={k === crop}>{v.label}</option>)}
+      </select>
+    </label>
+    <label>Бажана густота рослин
+      <span class="calc-pair">
+        <input name="density" type="number" min="0" step="any" value={p.density} inputmode="decimal" />
+        <select name="dunit" aria-label="Одиниці густоти">
+          <option value="k">тис./га</option>
+          <option value="m2">шт./м²</option>
+        </select>
+      </span>
+    </label>
+    <label>Маса 1000 насінин, г <small>з етикетки партії</small>
+      <input name="mass" type="number" min="0.1" step="any" value={p.mass} inputmode="decimal" />
+    </label>
+    <label>Лабораторна схожість, %
+      <input name="lab" type="number" min="1" max="100" step="any" value={p.lab} inputmode="decimal" />
+    </label>
+    <label>Чистота насіння, % <small>з сертифіката партії</small>
+      <input name="purity" type="number" min="1" max="100" step="any" value={p.purity} inputmode="decimal" />
+    </label>
+    <label>Польова схожість, %
+      <input name="field" type="number" min="1" max="100" step="any" value={p.field} inputmode="decimal" />
+    </label>
+    <label>Ширина міжряддя, см
+      <input name="row" type="number" min="1" step="any" value={p.row} inputmode="decimal" />
+    </label>
+    <label>Площа, га <small>щоб порахувати насіння на все поле</small>
+      <input name="area" type="number" min="0" step="any" value="100" inputmode="decimal" />
+    </label>
+  </div>
+  <div class="calc-result" aria-live="polite">
+    <p class="calc-main-label">Норма висіву</p>
+    <p class="calc-main" data-out="kg">—</p>
+    <ul class="calc-rows">
+      <li>Висівати насінин на 1 га <b data-out="seeds">—</b></li>
+      <li>Насінин на 1 м² <b data-out="perM2">—</b></li>
+      <li>Посівна придатність <b data-out="fit">—</b></li>
+      <li>Насінин на 1 м рядка <b data-out="perM">—</b></li>
+      <li>Відстань між насінинами <b data-out="gap">—</b></li>
+      <li>Насіння на всю площу <b data-out="total">—</b></li>
+    </ul>
+    <p class="calc-note">Стартові значення — типові для культури. Для точного розрахунку підставте масу 1000 насінин і схожість з документів на вашу партію та рекомендовану густоту для гібриду чи сорту.</p>
+  </div>
+</div>
+
+<script>
+  const root = document.getElementById('rate-calc');
+  if (root) {
+    const presets = JSON.parse(root.dataset.presets || '{}') as Record<string, Record<string, number | string>>;
+    const $ = (n: string) => root.querySelector<HTMLInputElement & HTMLSelectElement>(`[name="${n}"]`)!;
+    const num = (n: string) => Math.max(0, parseFloat($(n).value) || 0);
+    const out = (k: string, v: string) => { const el = root.querySelector(`[data-out="${k}"]`); if (el) el.textContent = v; };
+    const fmt = (n: number, d = 0) => n.toLocaleString('uk-UA', { maximumFractionDigits: d });
+    let used = false;
+
+    const calc = () => {
+      const density = num('density') * ($('dunit').value === 'm2' ? 10000 : 1000), mass = num('mass'), lab = num('lab') / 100, purity = num('purity') / 100, field = num('field') / 100, row = num('row') / 100, area = num('area');
+      if (!density || !mass || !lab || !purity || !field) { ['kg', 'seeds', 'perM2', 'fit', 'perM', 'gap', 'total'].forEach((k) => out(k, '—')); return; }
+      const seeds = density / (lab * purity * field);
+      const kg = (seeds * mass) / 1e6;
+      out('kg', `${fmt(kg, kg < 100 ? 1 : 0)} кг/га`);
+      out('seeds', fmt(Math.round(seeds / 100) * 100));
+      out('perM2', fmt(seeds / 10000, 1));
+      out('fit', `${fmt(lab * purity * 100, 1)}%`);
+      const t = kg * area;
+      out('total', area ? (t >= 1000 ? `${fmt(t / 1000, 2)} т` : `${fmt(t)} кг`) : '—');
+      if (row) {
+        const perM = (seeds * row) / 10000;
+        out('perM', fmt(perM, 1));
+        out('gap', `${fmt(100 / perM, 1)} см`);
+      } else { out('perM', '—'); out('gap', '—'); }
+      const comment = document.querySelector<HTMLInputElement>('.calc-lead input[name="comment"]');
+      const crop = presets[$('crop').value]?.label;
+      if (comment) comment.value = `Калькулятор норми висіву: ${crop}, густота ${fmt(density / 1000)} тис./га → ${fmt(kg, 1)} кг/га${area ? `, ${fmt(area)} га → ${fmt(kg * area)} кг` : ''}`;
+    };
+
+    $('dunit').addEventListener('change', () => {
+      const v = parseFloat($('density').value) || 0;
+      $('density').value = String(+($('dunit').value === 'm2' ? v / 10 : v * 10).toFixed(2));
+      calc();
+    });
+    $('crop').addEventListener('change', () => {
+      const p = presets[$('crop').value];
+      for (const k of ['density', 'mass', 'lab', 'purity', 'field', 'row']) $(k).value = String(p[k]);
+      $('dunit').value = 'k';
+      calc();
+    });
+    root.addEventListener('input', () => {
+      calc();
+      if (!used) { used = true; (window as any).gtag?.('event', 'calc_use', { calc: 'seeding_rate' }); }
+    });
+    calc();
+  }
+</script>

@@ -1,0 +1,95 @@
+---
+import CalcPage from '../../../components/CalcPage.astro';
+
+const faq = [
+  { q: 'Як порахувати валовий збір?', a: 'Валовий збір = урожайність (т/га) × площа (га). Наприклад, 9 т/га на 100 га — це 900 тонн зерна.' },
+  { q: 'Як розрахувати прибуток з 1 гектара?', a: 'Прибуток з 1 га = урожайність × ціна реалізації − витрати на 1 га. Витрати включають насіння, добрива, засоби захисту, пальне, оренду землі, збирання і доробку зерна.' },
+  { q: 'Що таке собівартість тонни зерна?', a: 'Собівартість тонни = витрати на 1 га ÷ урожайність. Якщо ціна продажу нижча за собівартість, культура на цьому полі збиткова.' },
+];
+---
+
+<CalcPage
+  title="Калькулятор урожайності і прибутку з 1 га — валовий збір, виручка, собівартість"
+  description="Порахуйте валовий збір, виручку, прибуток і собівартість тонни зерна за урожайністю, площею, ціною і витратами на гектар."
+  h1="Калькулятор урожайності: валовий збір, виручка і прибуток з гектара"
+  path="/kalkulyatory/vrozhaynist/"
+  crumb="Урожайність і прибуток"
+  intro="Вкажіть площу, очікувану урожайність, ціну реалізації і витрати на гектар — калькулятор покаже валовий збір, виручку, прибуток і собівартість тонни зерна."
+  faq={faq}
+  leadTopic="nasinnya"
+  links={[
+    { href: '/vrozhaynist-z-1-ga/', label: 'Урожайність з 1 га: кукурудза, соняшник, пшениця, соя' },
+    { href: '/tsina-nasinnya-kukurudzy-na-1-ga/', label: 'Ціна насіння кукурудзи на 1 га' },
+    { href: '/kalkulyatory/nasinnya/', label: 'Калькулятор насіння на площу' },
+  ]}
+>
+  <div class="calc" id="yield-calc">
+    <div class="calc-fields">
+      <label>Площа, га
+        <input name="area" type="number" min="0" step="any" value="100" inputmode="decimal" />
+      </label>
+      <label>Урожайність, т/га
+        <input name="yield" type="number" min="0" step="any" value="8" inputmode="decimal" />
+      </label>
+      <label>Ціна реалізації, грн/т <small>актуальна ціна у вашому регіоні</small>
+        <input name="price" type="number" min="0" step="any" value="" placeholder="наприклад, 8000" inputmode="decimal" />
+      </label>
+      <label>Витрати на 1 га, грн <small>насіння, добрива, ЗЗР, техніка, оренда</small>
+        <input name="cost" type="number" min="0" step="any" value="" placeholder="наприклад, 30000" inputmode="decimal" />
+      </label>
+    </div>
+    <div class="calc-result" aria-live="polite">
+      <p class="calc-main-label">Валовий збір</p>
+      <p class="calc-main" data-out="gross">—</p>
+      <ul class="calc-rows">
+        <li>Виручка <b data-out="revenue">—</b></li>
+        <li>Виручка з 1 га <b data-out="revHa">—</b></li>
+        <li>Витрати всього <b data-out="costAll">—</b></li>
+        <li>Прибуток <b data-out="profit">—</b></li>
+        <li>Прибуток з 1 га <b data-out="profitHa">—</b></li>
+        <li>Собівартість 1 т <b data-out="unitCost">—</b></li>
+      </ul>
+      <p class="calc-note">Розрахунок орієнтовний: не враховує податки, втрати при зберіганні і доробці та різницю цін за класом зерна.</p>
+    </div>
+  </div>
+
+  <section class="how" slot="how">
+    <h2>Як рахує калькулятор</h2>
+    <ul>
+      <li>Валовий збір = урожайність × площа.</li>
+      <li>Виручка = валовий збір × ціна реалізації.</li>
+      <li>Прибуток = виручка − витрати на 1 га × площа.</li>
+      <li>Собівартість тонни = витрати на 1 га ÷ урожайність.</li>
+    </ul>
+    <p>Найбільше на прибуток впливає урожайність, а вона починається з правильно підібраного гібриду під ваш регіон і строки сівби. Середні показники по культурах — у статті <a href="/vrozhaynist-z-1-ga/">урожайність з 1 га</a>.</p>
+  </section>
+</CalcPage>
+
+<script>
+  const root = document.getElementById('yield-calc');
+  if (root) {
+    const num = (n: string) => Math.max(0, parseFloat(root.querySelector<HTMLInputElement>(`[name="${n}"]`)!.value) || 0);
+    const out = (k: string, v: string) => { const el = root.querySelector(`[data-out="${k}"]`); if (el) el.textContent = v; };
+    const fmt = (n: number, d = 0) => n.toLocaleString('uk-UA', { maximumFractionDigits: d });
+    const uah = (n: number) => `${fmt(n)} грн`;
+    let used = false;
+
+    const calc = () => {
+      const area = num('area'), y = num('yield'), price = num('price'), cost = num('cost');
+      out('gross', area && y ? `${fmt(area * y, 1)} т` : '—');
+      out('revenue', area && y && price ? uah(area * y * price) : '—');
+      out('revHa', y && price ? uah(y * price) : '—');
+      out('costAll', area && cost ? uah(area * cost) : '—');
+      out('profit', area && y && price && cost ? uah(area * (y * price - cost)) : '—');
+      out('profitHa', y && price && cost ? uah(y * price - cost) : '—');
+      out('unitCost', y && cost ? uah(cost / y) : '—');
+      const comment = document.querySelector<HTMLInputElement>('.calc-lead input[name="comment"]');
+      if (comment) comment.value = `Калькулятор урожайності: ${fmt(area)} га, ${fmt(y, 1)} т/га`;
+    };
+    root.addEventListener('input', () => {
+      calc();
+      if (!used) { used = true; (window as any).gtag?.('event', 'calc_use', { calc: 'yield' }); }
+    });
+    calc();
+  }
+</script>

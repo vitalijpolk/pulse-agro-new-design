@@ -1,0 +1,61 @@
+---
+import CalcPage from '../../../components/CalcPage.astro';
+import RateCalc from '../../../components/RateCalc.astro';
+import NormsTable from '../../../components/NormsTable.astro';
+import { cropPages, presets } from '../../../lib/seedRates';
+
+export function getStaticPaths() {
+  return Object.keys(cropPages).map((crop) => ({ params: { crop } }));
+}
+
+const slug = Astro.params.crop as string;
+const page = cropPages[slug];
+const p = presets[page.crop];
+const catalogSlug = page.crop;
+const commonFaq = [
+  { q: `Як розрахувати норму висіву ${page.gen} в кг/га?`, a: 'Норма висіву (кг/га) = кількість насінин на гектар × маса 1000 насінин (г) ÷ 1 000 000. Кількість насінин беруть з урахуванням схожості і чистоти: бажана густота ÷ (лабораторна схожість × чистота × польова схожість).' },
+];
+const faq = [...page.faq, ...commonFaq];
+const links = [
+  page.post,
+  { href: `/product-category/seed/${catalogSlug}/`, label: `Насіння: ${p.label.toLowerCase()} — каталог Pulse Agro` },
+  ...(page.crop === 'corn' || page.crop === 'sunflower' ? [{ href: '/kalkulyatory/nasinnya/', label: 'Калькулятор посівних одиниць на площу' }] : []),
+  { href: '/kalkulyatory/nalashtuvannya-sivalky/', label: 'Калькулятор встановлення сівалки на норму висіву' },
+];
+---
+
+<CalcPage
+  title={`Калькулятор норми висіву ${page.gen} в кг/га — онлайн розрахунок`}
+  description={`Норма висіву ${page.gen} на 1 га в кг: розрахунок за масою 1000 насінин, схожістю і чистотою, насінин на метр рядка і на м², потреба в насінні на все поле.`}
+  h1={`Калькулятор норми висіву ${page.gen}`}
+  path={`/kalkulyatory/norma-vysivu/${slug}/`}
+  crumb={`Норма висіву ${page.gen}`}
+  intro={page.intro}
+  faq={faq}
+  leadTopic={page.leadTopic}
+  links={links}
+>
+  <RateCalc crop={page.crop} />
+  <div class="crop-chips" role="navigation" aria-label="Калькулятор для інших культур">
+    <a href="/kalkulyatory/norma-vysivu/">Усі культури</a>
+    {Object.entries(cropPages).filter(([s]) => s !== slug).map(([s, c]) => <a href={`/kalkulyatory/norma-vysivu/${s}/`}>{presets[c.crop].label}</a>)}
+  </div>
+
+  <section class="how" slot="how">
+    <h2>Як рахує калькулятор</h2>
+    <ol>
+      <li>Посівна придатність = лабораторна схожість × чистота насіння.</li>
+      <li>Кількість насінин на 1 га = бажана густота ÷ (посівна придатність × польова схожість).</li>
+      <li>Норма висіву, кг/га = кількість насінин × маса 1000 насінин (г) ÷ 1 000 000.</li>
+      <li>Насінин на метр рядка = кількість насінин на 1 га × ширина міжряддя (м) ÷ 10 000.</li>
+    </ol>
+    <p>Детально про норми висіву {page.gen} по регіонах — у статті <a href={page.post.href}>{page.post.label.toLowerCase()}</a>.</p>
+    <NormsTable crop={page.crop} />
+  </section>
+</CalcPage>
+
+<style>
+  .crop-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+  .crop-chips a { padding: 6px 12px; border-radius: 999px; background: #f7f4ef; color: #bc5615; font-weight: 600; font-size: 0.88rem; }
+  .crop-chips a:hover { background: #fff1e6; }
+</style>

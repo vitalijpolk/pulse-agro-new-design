@@ -102,7 +102,6 @@ const topBarPhones = [
           </button>
 
           <nav id="main-nav">
-            <a href="/">Головна</a>
             <div class="dropdown">
               <button type="button" class="dropdown-toggle">Насіння, гібриди</button>
               <div class="dropdown-menu">
@@ -111,11 +110,22 @@ const topBarPhones = [
                 ))}
               </div>
             </div>
-          <a href="/about-company/">Про компанію</a>
-          <a href="/pay-delivery-terms/">Доставка і оплата</a>
-          <a href="/opt/">Опт</a>
-          <a href="/category/blog/">Блог</a>
-          <a href="/contacts/">Контакти</a>
+            <a href="/opt/">Опт</a>
+            <div class="dropdown">
+              <button type="button" class="dropdown-toggle">Блог</button>
+              <div class="dropdown-menu">
+                <a href="/category/blog/">Статті</a>
+                <a href="/kalkulyatory/">Агрокалькулятори</a>
+              </div>
+            </div>
+            <div class="dropdown">
+              <button type="button" class="dropdown-toggle">Покупцям</button>
+              <div class="dropdown-menu">
+                <a href="/pay-delivery-terms/">Доставка і оплата</a>
+                <a href="/about-company/">Про компанію</a>
+                <a href="/contacts/">Контакти</a>
+              </div>
+            </div>
           </nav>
         </div>
       </div>
@@ -137,6 +147,17 @@ const topBarPhones = [
             {seedCrops.map((c) => (
               <li><a href={`/product-category/seed/${c.slug}/`}>{c.label}</a></li>
             ))}
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Покупцям</p>
+          <ul>
+            <li><a href="/pay-delivery-terms/">Доставка і оплата</a></li>
+            <li><a href="/opt/">Оптовим покупцям</a></li>
+            <li><a href="/about-company/">Про компанію</a></li>
+            <li><a href="/contacts/">Контакти</a></li>
+            <li><a href="/category/blog/">Блог</a></li>
+            <li><a href="/kalkulyatory/">Агрокалькулятори</a></li>
           </ul>
         </div>
         <div class="footer-contacts">
@@ -168,7 +189,7 @@ const topBarPhones = [
     <div class="mobile-cta" role="navigation" aria-label="Зв'язатися з нами">
       <a href="tel:+380973125318">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        Подзвонити
+        Подзвонити нам
       </a>
       <a href="https://t.me/+380994527949" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
@@ -231,7 +252,7 @@ const topBarPhones = [
   .nav-toggle span { display: block; height: 2px; background: #fff; border-radius: 2px; }
 
   .site-footer { background: var(--dark); color: #c9c9c9; margin-top: 60px; padding: 50px 0 20px; }
-  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.3fr; gap: 30px; align-items: start; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.3fr; gap: 30px; align-items: start; }
   .footer-heading { color: #fff; font-weight: 700; margin: 0 0 12px; }
   .footer-grid ul { list-style: none; padding: 0; margin: 0; }
   .footer-grid li { margin-bottom: 6px; }

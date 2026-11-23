@@ -6,11 +6,12 @@ import { detectCrops } from '../lib/crops';
 
 interface Props {
   topic?: string;
-  source?: 'inline' | 'category' | 'opt';
+  source?: 'inline' | 'category' | 'opt' | 'popup' | 'calc';
   heading?: string;
+  sub?: string;
 }
 
-const { topic = '', source = 'inline', heading } = Astro.props;
+const { topic = '', source = 'inline', heading, sub } = Astro.props;
 
 const titles: Record<string, string> = {
   corn: 'Підберемо гібрид кукурудзи під ваш регіон',
@@ -29,13 +30,14 @@ const title = heading ?? (matched.length === 1 ? titles[matched[0]] : 'Підб�
 <aside class="lead-block" aria-label="Консультація агронома">
   <p class="lead-title">{title}</p>
   <p class="lead-sub">
-    Агроном безкоштовно порахує норму висіву і потребу в насінні на вашу площу та підкаже ціну під ваш обсяг.
+    {sub ?? 'Агроном безкоштовно порахує норму висіву і потребу в насінні на вашу площу та підкаже ціну під ваш обсяг.'}
   </p>
   <form class="lead-form" novalidate>
     <input type="hidden" name="type" value="callback" />
     <input type="hidden" name="source" value={source} />
     <input type="hidden" name="page" value="" />
     <input type="hidden" name="startedAt" value="" />
+    <input type="hidden" name="comment" value="" />
     <input type="text" name="company" class="lead-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
     <input class="lead-phone" type="tel" name="phone" placeholder="Ваш телефон, +380" autocomplete="tel" aria-label="Телефон" required />
     <div class="lead-buttons">
@@ -124,6 +126,7 @@ const title = heading ?? (matched.length === 1 ? titles[matched[0]] : 'Підб�
       const result = await res.json().catch(() => ({}));
       if (!res.ok || !result.ok) throw new Error(result.message || 'error');
       (window as any).gtag?.('event', 'generate_lead', { form_type: intent, source: data.source });
+      try { localStorage.setItem('leadSent', String(Date.now())); } catch {}
       show(result.message || 'Дякуємо! Ми передзвонимо вам найближчим часом.', true);
       form.reset();
     } catch (err) {

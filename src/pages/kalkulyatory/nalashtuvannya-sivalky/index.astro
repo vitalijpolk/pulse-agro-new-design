@@ -1,0 +1,161 @@
+---
+import CalcPage from '../../../components/CalcPage.astro';
+
+const faq = [
+  { q: 'Як встановити зернову сівалку на норму висіву?', a: 'Підніміть сівалку так, щоб опорно-приводне колесо вільно оберталося, підставте ємності під висівні апарати і проверніть колесо задану кількість обертів (зазвичай 20–30). Зважте зібране насіння і порівняйте з розрахунковою масою. Якщо різниця більша за 3–5%, змініть налаштування висівного апарата і повторіть перевірку.' },
+  { q: 'Що таке коефіцієнт буксування колеса?', a: 'Під час роботи приводне колесо сівалки ковзає по ґрунту, тому за один оберт сівалка проходить трохи більшу відстань, ніж довжина кола колеса. Це враховує коефіцієнт буксування — зазвичай 5–12% залежно від стану ґрунту.' },
+  { q: 'Як перевірити сівалку точного висіву в полі?', a: 'Після проходу 20–30 м відкопайте насіння на ділянці 10 м рядка і порахуйте кількість насінин. Порівняйте з розрахунковою кількістю на 10 м і перевірте рівномірність: пропуски і двійники показують, що швидкість завелика або вакуум налаштований неправильно.' },
+];
+---
+
+<CalcPage
+  title="Калькулятор встановлення сівалки на норму висіву — зернова і точного висіву"
+  description="Розрахуйте, скільки насіння має висіятися за 20 обертів колеса зернової сівалки, на 1/10 га, а для сівалки точного висіву — насінин на метр, на 10 м рядка і оберти диска."
+  h1="Калькулятор встановлення сівалки на норму висіву"
+  path="/kalkulyatory/nalashtuvannya-sivalky/"
+  crumb="Налаштування сівалки"
+  intro="Для зернової сівалки калькулятор покаже, скільки насіння має висіятися за задану кількість обертів приводного колеса, на 1/10 і 1/40 га. Для сівалки точного висіву — скільки насінин класти на метр і на 10 м рядка, частоту висіву і оберти висівного диска на вашій швидкості."
+  faq={faq}
+  leadTopic="nasinnya"
+  leadHeading="Допоможемо з нормою висіву під ваш гібрид"
+  leadSub="Залиште номер — агроном підкаже рекомендовану густоту для гібриду чи сорту під ваше поле і назве ціну насіння на ваш обсяг. Результат калькулятора додамо до заявки автоматично."
+  links={[
+    { href: '/kalkulyatory/norma-vysivu/', label: 'Калькулятор норми висіву в кг/га' },
+    { href: '/kalkulyatory/nasinnya/', label: 'Калькулятор насіння на площу' },
+    { href: '/norma-vysivu-kukurudzy/', label: 'Норма висіву кукурудзи' },
+    { href: '/norma-vysivu-sonyashnyka/', label: 'Норма висіву соняшнику' },
+  ]}
+>
+  <div class="calc" id="drill-calc">
+    <div class="calc-fields">
+      <label>Тип сівалки
+        <select name="mode">
+          <option value="grain">Зернова (рядкова) — пшениця, ячмінь, соя, ріпак</option>
+          <option value="precision">Точного висіву — кукурудза, соняшник, соя</option>
+        </select>
+      </label>
+
+      <div class="m-grain calc-fields">
+        <label>Норма висіву, кг/га
+          <input name="norm" type="number" min="0" step="any" value="220" inputmode="decimal" />
+        </label>
+        <label>Ширина захвату, м
+          <input name="width" type="number" min="0" step="any" value="3.6" inputmode="decimal" />
+        </label>
+        <label>Діаметр приводного колеса, м <small>виміряйте на своїй сівалці</small>
+          <input name="diam" type="number" min="0" step="any" value="1.18" inputmode="decimal" />
+        </label>
+        <label>Кількість обертів колеса при перевірці
+          <input name="turns" type="number" min="1" step="1" value="20" inputmode="numeric" />
+        </label>
+        <label>Коефіцієнт буксування, % <small>зазвичай 5–12</small>
+          <input name="slip" type="number" min="0" max="30" step="any" value="5" inputmode="decimal" />
+        </label>
+        <label>Кількість висівних апаратів (сошників) <small>необов'язково</small>
+          <input name="coulters" type="number" min="0" step="1" value="24" inputmode="numeric" />
+        </label>
+      </div>
+
+      <div class="m-precision calc-fields" hidden>
+        <label>Норма висіву, тис. насінин/га
+          <input name="rate" type="number" min="0" step="any" value="75" inputmode="decimal" />
+        </label>
+        <label>Ширина міжряддя, см
+          <input name="row" type="number" min="1" step="any" value="70" inputmode="decimal" />
+        </label>
+        <label>Робоча швидкість, км/год
+          <input name="speed" type="number" min="0" step="any" value="8" inputmode="decimal" />
+        </label>
+        <label>Отворів у висівному диску <small>необов'язково</small>
+          <input name="holes" type="number" min="0" step="1" value="24" inputmode="numeric" />
+        </label>
+      </div>
+    </div>
+
+    <div class="calc-result" aria-live="polite">
+      <div class="m-grain">
+        <p class="calc-main-label">Має висіятися за <span data-out="turnsLbl">20</span> обертів колеса</p>
+        <p class="calc-main" data-out="perTurns">—</p>
+        <ul class="calc-rows">
+          <li>Площа перевірки <b data-out="testArea">—</b></li>
+          <li>На один висівний апарат <b data-out="perCoulter">—</b></li>
+          <li>За 1 оберт колеса <b data-out="perTurn">—</b></li>
+          <li>Тест на 1/10 га <b data-out="tenth">—</b></li>
+          <li>Тест на 1/40 га <b data-out="fortieth">—</b></li>
+        </ul>
+        <p class="calc-note">Тести на 1/10 і 1/40 га — для сівалок з електронним або ручним тестом висіву (кількість обертів задає сама сівалка). Допустиме відхилення фактичної маси від розрахункової — до 3–5%.</p>
+      </div>
+      <div class="m-precision" hidden>
+        <p class="calc-main-label">Насінин на 1 м рядка</p>
+        <p class="calc-main" data-out="perM">—</p>
+        <ul class="calc-rows">
+          <li>Відстань між насінинами <b data-out="gap">—</b></li>
+          <li>Насінин на 10 м рядка <b data-out="per10">—</b></li>
+          <li>Частота висіву <b data-out="perSec">—</b></li>
+          <li>Оберти висівного диска <b data-out="rpm">—</b></li>
+        </ul>
+        <p class="calc-note">Перевищення робочої швидкості, рекомендованої виробником сівалки, збільшує кількість пропусків і двійників. Перевіряйте рівномірність на 10 м рядка.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="how" slot="how">
+    <h2>Як рахує калькулятор</h2>
+    <p><b>Зернова сівалка.</b> Площа, яку сівалка проходить за n обертів колеса: S = π × D × n × (1 + δ) × B, де D — діаметр колеса, δ — коефіцієнт буксування, B — ширина захвату. Маса насіння за n обертів = норма висіву (кг/га) × S ÷ 10 000.</p>
+    <p>Приклад: норма 220 кг/га, ширина 3,6 м, колесо 1,18 м, 20 обертів, буксування 5% → S = 3,1416 × 1,18 × 20 × 1,05 × 3,6 ≈ 280 м² → <b>6,17 кг</b> насіння, приблизно 257 г на кожен із 24 апаратів.</p>
+    <p><b>Сівалка точного висіву.</b> Насінин на метр = норма (насінин/га) × міжряддя (м) ÷ 10 000. Частота висіву = швидкість (м/с) × насінин на метр. Оберти диска = частота висіву × 60 ÷ кількість отворів.</p>
+    <p>Норму висіву для конкретної культури порахуйте в <a href="/kalkulyatory/norma-vysivu/">калькуляторі норми висіву</a> за масою 1000 насінин і схожістю вашої партії.</p>
+  </section>
+</CalcPage>
+
+<script>
+  const root = document.getElementById('drill-calc');
+  if (root) {
+    const $ = (n: string) => root.querySelector<HTMLInputElement & HTMLSelectElement>(`[name="${n}"]`)!;
+    const num = (n: string) => Math.max(0, parseFloat($(n).value) || 0);
+    const out = (k: string, v: string) => { const el = root.querySelector(`[data-out="${k}"]`); if (el) el.textContent = v; };
+    const fmt = (n: number, d = 0) => n.toLocaleString('uk-UA', { maximumFractionDigits: d });
+    const mass = (kg: number) => (kg >= 1 ? `${fmt(kg, 2)} кг` : `${fmt(kg * 1000)} г`);
+    let used = false;
+
+    const calc = () => {
+      const mode = $('mode').value;
+      root.querySelectorAll<HTMLElement>('.m-grain').forEach((el) => (el.hidden = mode !== 'grain'));
+      root.querySelectorAll<HTMLElement>('.m-precision').forEach((el) => (el.hidden = mode !== 'precision'));
+      const comment = document.querySelector<HTMLInputElement>('.calc-lead input[name="comment"]');
+
+      if (mode === 'grain') {
+        const norm = num('norm'), width = num('width'), diam = num('diam'), turns = num('turns'), slip = num('slip') / 100, coulters = num('coulters');
+        out('turnsLbl', fmt(turns));
+        if (!norm || !width || !diam || !turns) { ['perTurns', 'testArea', 'perCoulter', 'perTurn', 'tenth', 'fortieth'].forEach((k) => out(k, '—')); return; }
+        const area = Math.PI * diam * turns * (1 + slip) * width;
+        const kg = (norm * area) / 10000;
+        out('perTurns', mass(kg));
+        out('testArea', `${fmt(area, 1)} м²`);
+        out('perCoulter', coulters ? mass(kg / coulters) : '—');
+        out('perTurn', mass(kg / turns));
+        out('tenth', mass(norm / 10));
+        out('fortieth', mass(norm / 40));
+        if (comment) comment.value = `Калькулятор сівалки (зернова): норма ${fmt(norm)} кг/га, ширина ${fmt(width, 2)} м → ${mass(kg)} за ${fmt(turns)} обертів`;
+      } else {
+        const rate = num('rate') * 1000, row = num('row') / 100, speed = num('speed') / 3.6, holes = num('holes');
+        if (!rate || !row) { ['perM', 'gap', 'per10', 'perSec', 'rpm'].forEach((k) => out(k, '—')); return; }
+        const perM = (rate * row) / 10000;
+        const perSec = speed * perM;
+        out('perM', fmt(perM, 2));
+        out('gap', `${fmt(100 / perM, 1)} см`);
+        out('per10', fmt(perM * 10, 1));
+        out('perSec', speed ? `${fmt(perSec, 1)} насінин/с` : '—');
+        out('rpm', speed && holes ? `${fmt((perSec * 60) / holes, 1)} об/хв` : '—');
+        if (comment) comment.value = `Калькулятор сівалки (точного висіву): ${fmt(rate / 1000)} тис./га, міжряддя ${fmt(row * 100)} см → ${fmt(perM, 2)} насінин/м`;
+      }
+    };
+
+    root.addEventListener('input', () => {
+      calc();
+      if (!used) { used = true; (window as any).gtag?.('event', 'calc_use', { calc: 'seeder' }); }
+    });
+    root.addEventListener('change', calc);
+    calc();
+  }
+</script>

@@ -1,0 +1,30 @@
+---
+// Таблиця типових норм висіву; рядок поточної культури підсвічено.
+import { presets, normsTable } from '../lib/seedRates';
+
+interface Props { crop?: string }
+const { crop = '' } = Astro.props;
+---
+
+<div class="rate-norms" data-current={crop}>
+  <h2>Типові норми висіву по культурах</h2>
+  <div class="table-wrap">
+    <table class="norms">
+      <thead><tr><th>Культура</th><th>Маса 1000 насінин, г</th><th>Типова норма висіву</th><th>Міжряддя, см</th></tr></thead>
+      <tbody>
+        {normsTable.map((r) => (
+          <tr class={r.crop === crop ? 'is-current' : undefined}><td>{presets[r.crop].label}</td><td>{r.mass}</td><td>{r.norm}</td><td>{r.row}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>Це орієнтири: точну норму визначає рекомендована густота для конкретного гібриду чи сорту, строки сівби і зона вирощування.</p>
+</div>
+
+<style>
+  .rate-norms { margin-top: 2em; }
+  .rate-norms h2 { font-size: 1.4rem; margin: 0 0 0.6em; }
+  .rate-norms p { line-height: 1.7; color: #3a3a3a; }
+  .rate-norms .is-current td { background: #fff1e6; font-weight: 700; }
+</style>
+

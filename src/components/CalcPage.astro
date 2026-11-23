@@ -1,0 +1,151 @@
+---
+// Спільний каркас сторінки агрокалькулятора: хлібні крихти, H1, калькулятор (slot), пояснення,
+// FAQ (з розміткою FAQPage — текст збігається з видимим), блок заявки і корисні посилання.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadBlock from './LeadBlock.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  h1: string;
+  path: string;
+  crumb: string;
+  intro: string;
+  faq?: { q: string; a: string }[];
+  links?: { href: string; label: string }[];
+  leadTopic?: string;
+  leadHeading?: string;
+  leadSub?: string;
+}
+const {
+  title, description, h1, path, crumb, intro, faq = [], links = [], leadTopic = '',
+  leadHeading = 'Розрахуємо точну ціну на ваш обсяг',
+  leadSub = 'Залиште номер — агроном перевірить розрахунок під ваше поле, підбере гібрид і назве ціну з урахуванням обсягу. Результат калькулятора додамо до заявки автоматично.',
+} = Astro.props;
+const url = `https://pulse-agro.com${path}`;
+const isHub = path === '/kalkulyatory/';
+---
+
+<BaseLayout title={title} description={description}>
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://pulse-agro.com/" },
+      ...(isHub ? [] : [{ "@type": "ListItem", "position": 2, "name": "Агрокалькулятори", "item": "https://pulse-agro.com/kalkulyatory/" }]),
+      { "@type": "ListItem", "position": isHub ? 2 : 3, "name": crumb, "item": url },
+    ],
+  })} />
+  {faq.length > 0 && (
+    <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faq.map((f) => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })),
+    })} />
+  )}
+
+  <div class="calc-page">
+    <p class="crumbs">
+      <a href="/">Головна</a> /
+      {!isHub && <><a href="/kalkulyatory/">Агрокалькулятори</a> / </>}
+      <span>{crumb}</span>
+    </p>
+    <h1>{h1}</h1>
+    <p class="calc-intro">{intro}</p>
+
+    <slot />
+
+    {!isHub && (
+      <button class="calc-print" type="button" onclick="window.print()">Роздрукувати / зберегти PDF</button>
+    )}
+
+    {!isHub && (
+      <div class="calc-lead">
+        <LeadBlock
+          topic={leadTopic}
+          source="calc"
+          heading={leadHeading}
+          sub={leadSub}
+        />
+      </div>
+    )}
+
+    <slot name="how" />
+
+    {faq.length > 0 && (
+      <section class="calc-faq">
+        <h2>Часті запитання</h2>
+        {faq.map((f) => (
+          <>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </>
+        ))}
+      </section>
+    )}
+
+    {links.length > 0 && (
+      <section class="calc-links">
+        <h2>Корисне</h2>
+        <ul>{links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .calc-page { padding: 32px 20px 70px; max-width: 860px; margin: 0 auto; }
+  .crumbs { font-size: 0.85rem; color: #6b6b6b; margin: 0 0 18px; }
+  .crumbs a:hover { color: #bc5615; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 12px; }
+  .calc-intro { color: #4a4a4a; line-height: 1.65; margin: 0 0 26px; font-size: 1.02rem; }
+  .calc-page :global(.calc) {
+    background: #f7f4ef; border-radius: 14px; padding: 24px; display: grid; gap: 22px;
+    grid-template-columns: 1fr 1fr; align-items: start;
+  }
+  .calc-page :global(.calc-fields) { display: grid; gap: 14px; }
+  .calc-page :global(.calc [hidden]) { display: none !important; }
+  .calc-page :global(.calc label) { display: grid; gap: 5px; font-size: 0.88rem; font-weight: 600; color: #3a3a3a; }
+  .calc-page :global(.calc label small) { font-weight: 400; color: #8a8378; }
+  .calc-page :global(.calc input), .calc-page :global(.calc select) {
+    width: 100%; box-sizing: border-box; padding: 11px 12px; font: inherit; font-size: 1rem;
+    border: 1px solid #ddd6cc; border-radius: 8px; background: #fff; color: #2b2b2b;
+  }
+  .calc-page :global(.calc-result) {
+    background: #fff; border-radius: 12px; padding: 20px; border: 1.5px solid #f0c89a; position: sticky; top: 16px;
+  }
+  .calc-page :global(.calc-main) { font-size: 2.1rem; font-weight: 800; color: #bc5615; line-height: 1.1; margin: 4px 0 2px; }
+  .calc-page :global(.calc-main-label) { font-size: 0.85rem; color: #6b6b6b; margin: 0; }
+  .calc-page :global(.calc-rows) { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  .calc-page :global(.calc-rows li) { display: flex; justify-content: space-between; gap: 12px; font-size: 0.93rem; border-top: 1px solid #f1ebe2; padding-top: 8px; }
+  .calc-page :global(.calc-rows b) { text-align: right; }
+  .calc-page :global(.calc-note) { margin: 14px 0 0; font-size: 0.82rem; color: #8a8378; line-height: 1.5; }
+  .calc-lead { margin-top: 10px; }
+  .calc-page :global(h2) { font-size: 1.4rem; margin: 2em 0 0.6em; }
+  .calc-page :global(.how p), .calc-page :global(.how li) { line-height: 1.7; color: #3a3a3a; }
+  .calc-faq h3 { font-size: 1.05rem; margin: 18px 0 6px; }
+  .calc-faq p { margin: 0; color: #4a4a4a; line-height: 1.65; }
+  .calc-links ul { margin: 0; padding-left: 20px; line-height: 1.9; }
+  .calc-links a, .calc-page :global(.how a) { color: #bc5615; font-weight: 600; }
+  .calc-page :global(.calc-pair) { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+  .calc-page :global(.calc-pair select) { width: auto; }
+  .calc-print {
+    margin: 12px 0 0; background: none; border: 1.5px solid #ddd6cc; border-radius: 999px; padding: 8px 16px;
+    font: inherit; font-size: 0.88rem; font-weight: 600; color: #4a4a4a; cursor: pointer;
+  }
+  .calc-print:hover { border-color: #e8772e; color: #bc5615; }
+  .calc-page :global(.table-wrap) { overflow-x: auto; }
+  .calc-page :global(.norms) { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+  .calc-page :global(.norms th), .calc-page :global(.norms td) { border: 1px solid #e5e0da; padding: 8px 10px; text-align: left; }
+  .calc-page :global(.norms th) { background: #f7f4ef; }
+  @media print {
+    :global(.site-header), :global(.site-footer), :global(.chat-bubbles), :global(.mobile-cta), :global(.cb-wrap),
+    .calc-print, .calc-lead, .calc-faq, .calc-links, .crumbs { display: none !important; }
+    .calc-page { padding: 0; }
+    .calc-page :global(.calc) { background: none; border: 1px solid #ccc; }
+  }
+  @media (max-width: 720px) {
+    h1 { font-size: 1.55rem; }
+    .calc-page :global(.calc) { grid-template-columns: 1fr; padding: 18px; }
+  }
+</style>

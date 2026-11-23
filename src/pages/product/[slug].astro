@@ -29,6 +29,52 @@ const manufacturerEntry =
   product.manufacturer === 'unknown' ? undefined : await getEntry('manufacturers', product.manufacturer);
 const technologyEntry = product.technology ? await getEntry('technologies', product.technology) : undefined;
 
+// FAQ картки — тільки з характеристик самого товару (без вигаданих даних); показуємо і в розмітці FAQPage
+const specValue = (...labels: string[]) => {
+  for (const label of labels) {
+    for (const group of product.specs) {
+      const item = group.items.find((i) => i.label.toLowerCase() === label.toLowerCase());
+      if (item?.value) return item.value;
+    }
+  }
+  return undefined;
+};
+const shortName = product.title.match(/«(.+?)»/)?.[1]
+  ?? product.title.replace(/^(Гібрид\s+\S+|Пшениця(\s+тверда)?|Соя|Ріпак|Горох|Ячмінь(\s+\S+)?)\s+/i, '').replace(/\s*\(.*\)\s*$/, '');
+const noun = /^гібрид/i.test(product.title) ? 'гібриду' : 'сорту';
+const nameQ = `${noun} ${shortName}`;
+const nameNom = `${noun === 'гібриду' ? 'гібрид' : 'сорт'} ${shortName}`;
+const productFaq: { q: string; a: string }[] = [];
+const pricedTiers = product.priceTiers.filter((t) => t.price > 0);
+if (pricedTiers.length) {
+  const pack = specValue('Фасовка');
+  productFaq.push({
+    q: `Скільки коштує насіння ${nameQ}?`,
+    a: `${pricedTiers.map((t) => `${t.label} — ${t.price.toLocaleString('uk-UA')} грн`).join(', ')}${pack ? ` (фасовка: ${pack})` : ''}. Для замовлень від 100 посівних одиниць або від 20 тонн ціна розраховується індивідуально.`,
+  });
+}
+const yieldValue = specValue('Потенціал урожайності', 'Середня врожайність', 'Урожайність', 'Потенціал врожайності');
+if (yieldValue) productFaq.push({ q: `Яка врожайність ${nameQ}?`, a: `${yieldValue[0].toUpperCase()}${yieldValue.slice(1)} за даними виробника. Фактичний результат залежить від регіону, попередника, строків сівби і технології.` });
+const maturity = specValue('Група стиглості');
+const vegetation = specValue('Вегетаційний період');
+if (maturity) productFaq.push({ q: `Яка група стиглості ${nameQ}?`, a: `${maturity[0].toUpperCase()}${maturity.slice(1)}${vegetation ? `, вегетаційний період — ${vegetation}` : ''}.` });
+const zone = specValue('Зона вирощування', 'Рекомендовані зони', 'Регіон вирощування');
+if (zone) productFaq.push({ q: `Для якого регіону підходить ${nameNom}?`, a: `Рекомендована зона вирощування: ${zone}.` });
+const tech = specValue('Технологія вирощування');
+if (tech) productFaq.push({ q: `Під яку технологію вирощується ${nameNom}?`, a: `${tech}.` });
+
+// Корисні статті за культурою товару
+const cropWords: Record<string, string> = {
+  corn: 'kukurudz', sunflower: 'sonyash', soy: 'soy', wheat: 'pshenyt', barley: 'yachmen', rapeseed: 'rapsu|ripak', pea: 'peas',
+};
+const cropRe = cropWords[product.category] ? new RegExp(cropWords[product.category]) : null;
+const guidePosts = cropRe
+  ? (await getCollection('posts'))
+      .filter((p) => cropRe.test(p.data.slug))
+      .sort((a, b) => (b.data.updatedDate ?? b.data.publishDate).valueOf() - (a.data.updatedDate ?? a.data.publishDate).valueOf())
+      .slice(0, 4)
+  : [];
+
 const related = product.relatedProducts
   .map((slug) => allProducts.find((p) => p.data.slug === slug))
   .filter((p): p is NonNullable<typeof p> => Boolean(p));
@@ -314,6 +360,32 @@ if (offers) productLd.offers = offers;
       </ul>
     </section>
 
+    {productFaq.length > 0 && (
+      <section class="product-faq">
+        <script is:inline type="application/ld+json" set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": productFaq.map((f) => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })),
+        })} />
+        <h2>Часті запитання про {nameNom}</h2>
+        {productFaq.map((f) => (
+          <>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </>
+        ))}
+      </section>
+    )}
+
+    {guidePosts.length > 0 && (
+      <section class="guide-posts">
+        <h2>Корисні статті</h2>
+        <ul>
+          {guidePosts.map((p) => <li><a href={`/${p.data.slug}/`}>{p.data.title}</a></li>)}
+        </ul>
+      </section>
+    )}
+
     {related.length > 0 && (
       <section class="related">
         <h2>Супутні товари</h2>
@@ -427,6 +499,12 @@ if (offers) productLd.offers = offers;
   .why-list strong { display: block; font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
   .why-list span { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
 
+  .product-faq, .guide-posts { margin-top: 50px; max-width: 860px; }
+  .product-faq h2, .guide-posts h2 { font-size: 1.4rem; margin-bottom: 10px; }
+  .product-faq h3 { font-size: 1.05rem; margin: 18px 0 6px; }
+  .product-faq p { margin: 0; color: #4a4a4a; line-height: 1.65; }
+  .guide-posts ul { margin: 0; padding-left: 20px; line-height: 1.9; }
+  .guide-posts a { color: #bc5615; font-weight: 600; }
   .related { margin-top: 60px; }
   .related .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; margin-top: 16px; align-items: start; }
 

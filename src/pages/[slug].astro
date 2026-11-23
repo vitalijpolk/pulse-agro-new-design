@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadBlock from '../components/LeadBlock.astro';
+import BlogPopup from '../components/BlogPopup.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { detectCrops } from '../lib/crops';
 import sharp from 'sharp';
@@ -78,7 +79,7 @@ if (coverImage) {
         ? [`https://pulse-agro.com${entry.data.coverImage}`]
         : [],
       "datePublished": entry.data.publishDate.toISOString(),
-      "dateModified": entry.data.publishDate.toISOString(),
+      "dateModified": (entry.data.updatedDate ?? entry.data.publishDate).toISOString(),
       "url": `https://pulse-agro.com/${entry.data.slug}/`,
       "author": { "@type": "Organization", "name": "Pulse Agro", "url": "https://pulse-agro.com" },
       "publisher": {
@@ -120,7 +121,10 @@ if (coverImage) {
     )}
     <h1>{entry.data.title}</h1>
     {kind === 'post' && 'publishDate' in entry.data && (
-      <p class="date">{entry.data.publishDate.toLocaleDateString('uk-UA')}</p>
+      <p class="date">
+        {entry.data.publishDate.toLocaleDateString('uk-UA')}
+        {entry.data.updatedDate && <> · Оновлено {entry.data.updatedDate.toLocaleDateString('uk-UA')}</>}
+      </p>
     )}
     <div class="prose">
       <Content />
@@ -129,6 +133,7 @@ if (coverImage) {
       <>
         <LeadBlock topic={leadTopic} />
         <template id="lead-mid-tpl"><LeadBlock topic={leadTopic} /></template>
+        <BlogPopup topic={leadTopic} />
       </>
     )}
     {crossProducts.length > 0 && (

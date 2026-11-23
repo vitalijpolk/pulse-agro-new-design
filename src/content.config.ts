@@ -51,6 +51,8 @@ const posts = defineCollection({
     title: z.string(),
     slug: z.string(),
     publishDate: z.coerce.date(),
+    // Дата суттєвого оновлення статті — для dateModified у розмітці і підпису «Оновлено»
+    updatedDate: z.coerce.date().optional(),
     excerpt: z.string().default(''),
     coverImage: z.string().optional(),
     tags: z.array(z.string()).default([]),

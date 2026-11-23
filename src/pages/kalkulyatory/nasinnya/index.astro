@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import CalcPage from '../../../components/CalcPage.astro';
+
+// Діапазон цін за посівну одиницю — з каталогу на момент збірки
+const products = await getCollection('products');
+const range = (cat: string) => {
+  const v = products.filter((p) => p.data.category === cat).flatMap((p) => p.data.priceTiers.map((t) => t.price)).filter((x) => x > 0);
+  return v.length ? [Math.min(...v), Math.max(...v)] : [0, 0];
+};
+const [cMin, cMax] = range('corn');
+const [sMin, sMax] = range('sunflower');
+
+const faq = [
+  { q: 'Скільки насінин у посівній одиниці?', a: 'Посівна одиниця кукурудзи містить 80 тис. насінин, посівна одиниця соняшнику — 150 тис. насінин.' },
+  { q: 'Скільки посівних одиниць кукурудзи потрібно на 1 га?', a: 'При нормі висіву 70–80 тис. насінин на гектар потрібно приблизно 0,9–1 посівної одиниці на 1 га. На 100 га — 88–100 посівних одиниць.' },
+  { q: 'Скільки посівних одиниць соняшнику потрібно на 1 га?', a: 'При нормі висіву 50–60 тис. насінин на гектар однієї посівної одиниці вистачає на 2,5–3 га. На 100 га потрібно 34–40 посівних одиниць.' },
+  { q: 'Яку норму висіву вказувати в калькуляторі?', a: 'Вказуйте кількість насінин, яку висіваєте на гектар, з урахуванням польової схожості. Орієнтир для кукурудзи — 55–85 тис., для соняшнику — 35–62 тис. насінин на гектар залежно від гібриду і регіону.' },
+];
+---
+
+<CalcPage
+  title="Калькулятор насіння кукурудзи і соняшнику на гектар — посівні одиниці"
+  description="Порахуйте, скільки посівних одиниць насіння кукурудзи чи соняшнику потрібно на вашу площу, на скільки гектарів вистачить одиниці і скільки це коштує за цінами каталогу."
+  h1="Калькулятор насіння: скільки посівних одиниць потрібно на вашу площу"
+  path="/kalkulyatory/nasinnya/"
+  crumb="Калькулятор насіння"
+  intro="Вкажіть культуру, площу і норму висіву — калькулятор порахує кількість посівних одиниць, на скільки гектарів вистачить однієї одиниці та орієнтовну вартість насіння за цінами нашого каталогу."
+  faq={faq}
+  leadTopic="kukurudza sonyashnyk"
+  links={[
+    { href: '/norma-vysivu-kukurudzy/', label: 'Норма висіву кукурудзи: таблиця по ФАО і регіонах' },
+    { href: '/norma-vysivu-sonyashnyka/', label: 'Норма висіву соняшнику на 1 га' },
+    { href: '/tsina-nasinnya-kukurudzy-na-1-ga/', label: 'Ціна насіння кукурудзи на 1 га' },
+    { href: '/kalkulyatory/norma-vysivu/', label: 'Калькулятор норми висіву в кг/га' },
+  ]}
+>
+  <div class="calc" id="seed-calc" data-prices={JSON.stringify({ corn: [cMin, cMax], sunflower: [sMin, sMax] })}>
+    <div class="calc-fields">
+      <label>Культура
+        <select name="crop">
+          <option value="corn">Кукурудза (п.о. = 80 тис. насінин)</option>
+          <option value="sunflower">Соняшник (п.о. = 150 тис. насінин)</option>
+        </select>
+      </label>
+      <label>Площа, га
+        <input name="area" type="number" min="0" step="1" value="100" inputmode="decimal" />
+      </label>
+      <label>Норма висіву, тис. насінин/га <small class="hint">Кукурудза: 55–85 тис.</small>
+        <input name="rate" type="number" min="1" step="1" value="75" inputmode="decimal" />
+      </label>
+      <label>Насінин в посівній одиниці, тис. <small>стандарт: кукурудза 80, соняшник 150</small>
+        <input name="unit" type="number" min="1" step="any" value="80" inputmode="decimal" />
+      </label>
+    </div>
+    <div class="calc-result" aria-live="polite">
+      <p class="calc-main-label">Потрібно посівних одиниць</p>
+      <p class="calc-main" data-out="units">—</p>
+      <ul class="calc-rows">
+        <li>Насінин усього <b data-out="seeds">—</b></li>
+        <li>Однієї п.о. вистачає на <b data-out="haPerUnit">—</b></li>
+        <li>Посівних одиниць на 1 га <b data-out="unitsPerHa">—</b></li>
+        <li>Орієнтовна вартість <b data-out="cost">—</b></li>
+      </ul>
+      <p class="calc-note">Вартість — за цінами каталогу Pulse Agro, від найдешевшого до найдорожчого гібриду. Для замовлень від 100 п.о. ціна розраховується індивідуально.</p>
+    </div>
+  </div>
+
+  <section class="how" slot="how">
+    <h2>Як рахує калькулятор</h2>
+    <p>Кількість насінин на поле = норма висіву (тис. насінин/га) × площа. Посівні одиниці = кількість насінин ÷ 80 000 для кукурудзи або ÷ 150 000 для соняшнику, з округленням угору до цілої одиниці.</p>
+    <p>Приклад: кукурудза, 100 га, норма 75 тис./га → 7 500 000 насінин → 7 500 000 ÷ 80 000 = 93,75 → <b>94 посівні одиниці</b>. Однієї одиниці вистачає на 80 ÷ 75 = 1,07 га.</p>
+    <p>Норму висіву беріть із рекомендацій для конкретного гібриду: вона залежить від групи ФАО, зони і вологозабезпечення. Детально — у статтях <a href="/norma-vysivu-kukurudzy/">норма висіву кукурудзи</a> і <a href="/norma-vysivu-sonyashnyka/">норма висіву соняшнику</a>.</p>
+  </section>
+</CalcPage>
+
+<script>
+  const root = document.getElementById('seed-calc');
+  if (root) {
+    const prices = JSON.parse(root.dataset.prices || '{}') as Record<string, [number, number]>;
+    const UNIT: Record<string, number> = { corn: 80000, sunflower: 150000 };
+    const HINT: Record<string, [string, number]> = { corn: ['Кукурудза: 55–85 тис.', 75], sunflower: ['Соняшник: 35–62 тис.', 55] };
+    const NAME: Record<string, string> = { corn: 'кукурудза', sunflower: 'соняшник' };
+    const $ = (n: string) => root.querySelector<HTMLInputElement & HTMLSelectElement>(`[name="${n}"]`)!;
+    const out = (k: string, v: string) => { const el = root.querySelector(`[data-out="${k}"]`); if (el) el.textContent = v; };
+    const fmt = (n: number, d = 0) => n.toLocaleString('uk-UA', { maximumFractionDigits: d });
+    let used = false;
+
+    const calc = () => {
+      const crop = $('crop').value;
+      const area = Math.max(0, parseFloat($('area').value) || 0);
+      const rate = Math.max(0, parseFloat($('rate').value) || 0);
+      if (!area || !rate) { ['units', 'seeds', 'haPerUnit', 'unitsPerHa', 'cost'].forEach((k) => out(k, '—')); return; }
+      const unit = (parseFloat($('unit').value) || UNIT[crop] / 1000) * 1000;
+      const seeds = rate * 1000 * area;
+      const units = Math.ceil(seeds / unit);
+      const [pMin, pMax] = prices[crop] || [0, 0];
+      out('units', fmt(units));
+      out('seeds', fmt(seeds));
+      out('haPerUnit', `${fmt(unit / (rate * 1000), 2)} га`);
+      out('unitsPerHa', fmt((rate * 1000) / unit, 2));
+      out('cost', pMin ? `${fmt(units * pMin)} – ${fmt(units * pMax)} грн` : 'уточнюйте');
+      const comment = document.querySelector<HTMLInputElement>('.calc-lead input[name="comment"]');
+      if (comment) comment.value = `Калькулятор насіння: ${NAME[crop]}, ${fmt(area)} га, норма ${fmt(rate)} тис./га → ${fmt(units)} п.о.`;
+    };
+
+    $('crop').addEventListener('change', () => {
+      const [hint, def] = HINT[$('crop').value];
+      root.querySelector('.hint')!.textContent = hint;
+      $('rate').value = String(def);
+      $('unit').value = String(UNIT[$('crop').value] / 1000);
+      calc();
+    });
+    root.addEventListener('input', () => {
+      calc();
+      if (!used) { used = true; (window as any).gtag?.('event', 'calc_use', { calc: 'seeds' }); }
+    });
+    calc();
+  }
+</script>

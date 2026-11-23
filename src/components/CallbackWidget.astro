@@ -145,6 +145,7 @@
       });
       const result = await res.json().catch(() => ({}));
       if (!res.ok || !result.ok) throw new Error(result.message || 'error');
+      try { localStorage.setItem('leadSent', String(Date.now())); } catch {}
       (window as any).gtag?.('event', 'generate_lead', {
         form_type: 'callback',
         source: form.querySelector<HTMLInputElement>('input[name="source"]')?.value,

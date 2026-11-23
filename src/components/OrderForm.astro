@@ -111,6 +111,7 @@ const { slug, title, priceTiers } = Astro.props;
             status.className = 'form-status ok';
             status.hidden = false;
           }
+          try { localStorage.setItem('leadSent', String(Date.now())); } catch {}
           (window as any).gtag?.('event', 'generate_lead', { form_type: 'order', source: 'product' });
           form.reset();
           if (startedAt) startedAt.value = String(Date.now());

@@ -1,0 +1,40 @@
+---
+import CalcPage from '../../components/CalcPage.astro';
+
+const calcs = [
+  { href: '/kalkulyatory/nasinnya/', title: 'Калькулятор насіння', text: 'Скільки посівних одиниць кукурудзи чи соняшнику потрібно на вашу площу і скільки це коштує.' },
+  { href: '/kalkulyatory/norma-vysivu/', title: 'Норма висіву, кг/га', text: 'Норма в кілограмах за масою 1000 насінин і схожістю, насінин на метр рядка — для налаштування сівалки.' },
+  { href: '/kalkulyatory/nalashtuvannya-sivalky/', title: 'Налаштування сівалки', text: 'Скільки насіння має висіятися за 20 обертів колеса зернової сівалки; насінин на метр і оберти диска для сівалки точного висіву.' },
+  { href: '/kalkulyatory/vrozhaynist/', title: 'Урожайність і прибуток', text: 'Валовий збір, виручка, прибуток з гектара і собівартість тонни зерна.' },
+  { href: '/kalkulyatory/vymerzannya-pshenytsi/', title: 'Ризик вимерзання озимих', text: 'Температура на вузлі кущіння під снігом і ризик вимерзання озимої пшениці за прогнозом морозу.' },
+];
+---
+
+<CalcPage
+  title="Агрокалькулятори онлайн — насіння, норма висіву, урожайність"
+  description="Безкоштовні агрокалькулятори: посівні одиниці насіння на площу, норма висіву в кг/га, налаштування сівалки, урожайність і прибуток з 1 га, ризик вимерзання озимих."
+  h1="Агрокалькулятори"
+  path="/kalkulyatory/"
+  crumb="Агрокалькулятори"
+  intro="Безкоштовні калькулятори для планування сівби: порахуйте потребу в насінні, норму висіву і прибутковість поля. Якщо потрібна допомога з розрахунком — агроном Pulse Agro перевірить його під ваше господарство."
+>
+  <div class="hub">
+    {calcs.map((c) => (
+      <a class="hub-card" href={c.href}>
+        <span class="hub-title">{c.title} →</span>
+        <span class="hub-text">{c.text}</span>
+      </a>
+    ))}
+  </div>
+</CalcPage>
+
+<style>
+  .hub { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .hub-card {
+    display: grid; gap: 8px; padding: 20px; border-radius: 12px; background: #f7f4ef;
+    border: 1.5px solid transparent; color: #2b2b2b; text-decoration: none;
+  }
+  .hub-card:hover { border-color: #f0c89a; background: #fff8f2; }
+  .hub-title { font-weight: 800; font-size: 1.08rem; color: #bc5615; }
+  .hub-text { font-size: 0.93rem; line-height: 1.55; color: #4a4a4a; }
+</style>
